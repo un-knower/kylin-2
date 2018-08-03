@@ -1,0 +1,62 @@
+/*
+created by wyp in 2018/1/31
+提货签收单查询
+*/
+@CHARSET "UTF-8";
+.com_box{ padding:0 2%}
+.comUl {padding: 1% 2%;}
+.comUl li {float: left;margin-right: 20px;}
+.comUl li  label{font-weight: normal;}
+.layui-body{overflow-y: scroll;}
+.breadcrumb{margin: 15px;display: block;}
+.layui-form-label{padding: 9px 0px;width:100px;}
+.layui-form-select .layui-input {
+    padding-right: 0px;
+}
+.bold{font-weight:bold}
+.orderLi{ float:left;width: 10%;border-right: 1px solid #e2e2e2;}
+.layui-elem-field legend {font-size: 16px;}
+.layui-textarea{ width: 100%;padding:0;min-height:20px;}
+.btnBox {position:relative;top:-3px;}
+.formBox{margin:0 0 2% 2%}
+.box_con { margin: 2%;}
+.clear{clear:both}
+.clearfix:after{content: ''; display: block; height: 0; clear: both;}
+.clearfix{zoom: 1;}
+.fl{float: left;}
+.fr{float:right}
+.layui-table-view{width:100% !important}
+.layui-btn-normal{ margin:0 5% 1% 0 !important}
+.layui-btn-sm {
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    font-size: 12px;
+}
+.layui-table select{width:100%}
+ .layui-table thead tr th{padding: 5px 2px;text-align: center }
+ .layui-table .trBox th{padding: 0 2px;}
+ .layui-table tr td{padding:5px;text-align: center}
+.layui-table tbody tr:hover{background:none !important}
+.layui-table tbody input{width:100%;height:30px;}
+.layui-btn{ position: relative;}
+em {width: 0px;display: inline-block;color: red;padding-right: 5px}
+@media screen and (max-width: 1400px){
+/* 	.btn-group{
+		margin:0 !important;
+	}
+	.layui-table td, .layui-table th {
+	    padding: 9px 5px !important;
+	}
+	.layui-input, .layui-select {
+    height: 30px;
+    }
+    .layui-form-label {
+       padding: 5px 0px
+    }
+    .layui-btn {
+    height: 30px;
+    line-height: 30px;
+    } */
+}
+

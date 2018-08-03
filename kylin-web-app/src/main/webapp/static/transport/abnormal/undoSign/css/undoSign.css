@@ -1,0 +1,93 @@
+@CHARSET "UTF-8";
+html{height: auto;}
+.layui-form-label{width: 120px;text-align: center;}
+.layui-input-block {
+    margin-left: 120px; 
+}
+.check-form{
+	text-align:center; 
+	display: inline-block;
+	width: 100%;
+}
+.check-waybill{display: inline-block;margin-bottom: 0px;}
+.check-form .layui-inline, .check-form label{
+	margin-bottom: 0px;
+}
+.breadcrumb {
+    margin: 15px;
+    display: block;
+}
+.select-condition{
+	text-align: center;
+}
+.btn-operation{
+	text-align: left;
+	display: inline-block;
+	margin-left: 2%;
+}
+.toSave{margin-top: 2%;}
+.beizhu{width: auto;}
+.textarea-div{margin-left: 75px;}
+.layui-textarea{min-height: 200px;}
+.layui-elem-field legend {
+    font-size: 16px;
+    font-weight: 900;
+}
+.isVIP{display: none;text-align: center;}
+#fhdwmch{
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.must-item{
+	display: inline-block;
+	background: url(../../common/images/must.png) no-repeat;
+	width: 10px;
+    height: 10px;
+}
+.layui-input, .layui-select, .layui-textarea{
+    border: 1px solid lightslategrey !important;
+}
+.toTips{
+	width: 80%;
+    margin-left: 10%;
+}
+.table-div{
+	width: 96%;
+    margin-left: 2%;
+}
+.layui-table td, .layui-table th{text-align: center; border: 1px solid darkgrey;}
+.layui-table thead tr, .layui-table-fixed-l tr, .layui-table-header, .layui-table-mend, .layui-table-patch, .layui-table-tool {
+    background-color: #DDECFF;
+}
+.short-div{
+		margin-bottom: 0px !important; 
+	    margin-right: 0px !important;
+	    width: 24%;
+	}
+.laydate-time-list{padding-bottom:0 !important;overflow:hidden !important;}
+.laydate-time-list>li{width:50% !important;}
+#sign-state{display: none;}
+.layui-btn-disabled, .layui-btn-disabled:active, .layui-btn-disabled:hover{
+	border: 1px solid lightslategrey !important;
+    color: lightslategrey;
+    background-color: #ddd;
+}
+@media screen and (min-width: 1400px){
+	.select-condition{
+		width: 90%;
+	    margin-left: 5%;
+	}
+}
+@media screen and (max-width: 1400px){
+	.layui-field-title{
+		margin: 0 !important;
+	}
+	.short-label{
+	    width: 90px !important;
+	}
+	.short-input{
+	    margin-left: 90px !important;
+	} 
+	.layui-textarea{min-height: 100px !important;}
+}

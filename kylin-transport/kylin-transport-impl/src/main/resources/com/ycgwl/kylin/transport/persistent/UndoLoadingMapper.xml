@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.UndoLoadingMapper">
+
+	<delete id="deleteHczzqdSourceByXuhao">
+		DELETE FROM HCZZQD_source WHERE xuhao = #{xuhao}
+	</delete>
+	
+	<delete id="deleteHczzqdBeizhuByXuhao">
+		DELETE FROM HCZZQD_beizhu WHERE xuhao = #{xuhao}
+	</delete>
+	
+	<delete id="deleteHwydRoute">
+		<![CDATA[ 
+		DELETE FROM hwyd_route WHERE xuhao = #{xuhao} and cztype <> '货物入库' and ydbhid = #{ydbhid}
+		]]>
+	</delete>
+	
+	<delete id="deleteIncome_DByxuhao">
+		delete from T_INCOME_COST_D where xuhao =#{xuhao}
+	</delete>
+	
+	<select id="countIncome_Dbyxuhao" resultType="java.lang.Integer">
+		select count(*) from T_INCOME_COST_D where INS_NO = 
+		(
+			select INS_NO from T_INCOME_COST_D where xuhao= #{xuhao}
+		)
+	</select>
+	
+	<delete id="deleteIncome_HByxuhao">
+		delete from T_INCOME_COST_H where INS_NO = 
+		(
+			select max(INS_NO) from T_INCOME_COST_D where xuhao= #{xuhao}
+		)
+	</delete>
+	
+</mapper>
+
+

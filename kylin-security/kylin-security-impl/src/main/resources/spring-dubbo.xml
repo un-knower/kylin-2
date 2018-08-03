@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<description>Spring dubbo service configuration</description>
+
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="${dubbo.server.name}" logger="slf4j" />
+
+	<!-- 使用zookeeper广播注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper" client="curator" address="${dubbo.server.registry.address}" timeout="6000000"/>
+	<dubbo:provider timeout="6000000" retries="0"/>
+	<!-- 远程服务调用超时时间(毫秒) -->
+	<dubbo:consumer timeout="6000000" retries="0" check="false"/>
+
+	<!-- 用dubbo协议在20880端口暴露服务, 将访问日志输出到当前应用的slf4j日志： -->
+	<dubbo:protocol name="dubbo" port="${dubbo.server.protocol.port}" accesslog="true" charset="UTF-8"/>
+
+	<!-- 
+	<import resource="classpath*:dubbo-reference-schedule.xml" />
+	<import resource="classpath*:dubbo-reference-mapping.xml" />
+	<import resource="classpath*:dubbo-reference-register.xml" />
+	<import resource="classpath*:dubbo-reference-base.xml" />
+	<import resource="classpath*:dubbo-reference-user.xml" />
+ 	-->
+
+	<!-- 声明需要暴露的服务接口  -->
+	<!-- <dubbo:service interface="com.ycgwl.kylin.security.service.api.SecurityService" ref="kylin.security.dubbo.local.securityService" retries="0"  version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.security.service.api.ISecurityMetadataSource" ref="kylin.security.dubbo.local.securityMetadataSourceService" retries="0"  version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.security.service.api.ISecurityDecideService" ref="kylin.security.dubbo.local.securityDecideService" retries="0"  version="1.0.0"/> -->
+	<dubbo:service interface="com.ycgwl.kylin.security.service.api.SysMenuService" ref="kylin.security.dubbo.local.sysMenuService" retries="0"  version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.security.service.api.SysUserMenuService" ref="kylin.security.dubbo.local.sysUserMenuService" retries="0"  version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.security.service.api.SysUserService" ref="kylin.security.dubbo.local.sysUserService" retries="0"  version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.security.service.api.SysRoleService" ref="kylin.security.dubbo.local.sysRoleService" retries="0"  version="1.0.0"/>
+    <dubbo:service interface="com.ycgwl.kylin.security.service.api.IKylinTUserGsService" ref="kylin.security.dubbo.local.kylinTUserGsService" retries="0"  version="1.0.0"/>
+</beans>

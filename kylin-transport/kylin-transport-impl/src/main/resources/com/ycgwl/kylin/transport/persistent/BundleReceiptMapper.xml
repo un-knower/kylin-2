@@ -1,0 +1,1046 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.BundleReceiptMapper">
+
+	<resultMap id="bundleReceipt"
+		type="com.ycgwl.kylin.transport.entity.BundleReceipt">
+		<id column="xuhao" property="xuhao" jdbcType="INTEGER" />
+		<result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+		<result column="CHXH" property="chxh" jdbcType="VARCHAR" />
+		<result column="cl_owner" property="clOwner" jdbcType="VARCHAR" />
+		<result column="company" property="company" jdbcType="VARCHAR" />
+		<result column="DAOZHAN" property="daozhan" jdbcType="VARCHAR" />
+		<result column="dhgrid" property="dhgrid" jdbcType="VARCHAR" />
+		<result column="dhsj" property="dhsj" jdbcType="TIMESTAMP" />
+		<result column="dzshhd" property="dzshhd" jdbcType="VARCHAR" />
+		<result column="else_cost" property="elseCost" jdbcType="NUMERIC" />
+		<result column="FAZHAN" property="fazhan" jdbcType="VARCHAR" />
+		<result column="FCHRQ" property="fchrq" jdbcType="TIMESTAMP" />
+		<result column="fhdwmch" property="fhdwmch" jdbcType="VARCHAR" />
+		<result column="fhshj" property="fhshj" jdbcType="TIMESTAMP" />
+		<result column="fzshhd" property="fzshhd" jdbcType="VARCHAR" />
+		<result column="grid" property="grid" jdbcType="VARCHAR" />
+		<result column="hyy" property="hyy" jdbcType="VARCHAR" />
+		<result column="i_type" property="iType" jdbcType="INTEGER" />
+		<result column="is_kaiyun" property="isKaiyun" jdbcType="SMALLINT" />
+		<result column="JIANSHU" property="jianshu" jdbcType="INTEGER" />
+		<result column="khdh" property="khdh" jdbcType="VARCHAR" />
+		<result column="list_no" property="listNo" jdbcType="VARCHAR" />
+		<result column="lrsj" property="lrsj" jdbcType="TIMESTAMP" />
+		<result column="PINMING" property="pinming" jdbcType="VARCHAR" />
+		<result column="qd_cost" property="qdCost" jdbcType="NUMERIC" />
+		<result column="sent" property="sent" jdbcType="INTEGER" />
+		<result column="SHHRLXDH" property="shhrlxdh" jdbcType="VARCHAR" />
+		<result column="SHHRMCH" property="shhrmch" jdbcType="VARCHAR" />
+		<result column="sourceflag" property="sourceflag" jdbcType="INTEGER" />
+		<result column="TIJI" property="tiji" jdbcType="NUMERIC" />
+		<result column="wx_con_name" property="wxConName" jdbcType="VARCHAR" />
+		<result column="wx_item" property="wxItem" jdbcType="VARCHAR" />
+		<result column="wx_name" property="wxName" jdbcType="VARCHAR" />
+		<result column="wx_tel" property="wxTel" jdbcType="VARCHAR" />
+		<result column="xh" property="xh" jdbcType="VARCHAR" />
+		<result column="xiechechexin" property="xiechechexin" jdbcType="VARCHAR" />
+		<result column="xiechegrid" property="xiechegrid" jdbcType="VARCHAR" />
+		<result column="xiechesj" property="xiechesj" jdbcType="TIMESTAMP" />
+		<result column="YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+		<result column="ydxzh" property="ydxzh" jdbcType="INTEGER" />
+		<result column="ydzh" property="ydzh" jdbcType="INTEGER" />
+		<result column="yiti" property="yiti" jdbcType="INTEGER" />
+		<result column="yjddshj" property="yjddshj" jdbcType="TIMESTAMP" />
+		<result column="ysfs" property="ysfs" jdbcType="VARCHAR" />
+		<result column="yxieche" property="yxieche" jdbcType="INTEGER" />
+		<result column="ZHCHRQ" property="zhchrq" jdbcType="TIMESTAMP" />
+		<result column="zhipiao" property="zhipiao" jdbcType="VARCHAR" />
+		<result column="zhipiao2" property="zhipiao2" jdbcType="VARCHAR" />
+		<result column="ZHL" property="zhl" jdbcType="NUMERIC" />
+		<result column="ZITI" property="ziti" jdbcType="BIT" />
+		<result column="driver_name" property="driverName" jdbcType="VARCHAR" />
+		<result column="driver_tel" property="driverTel" jdbcType="VARCHAR" />
+		<result column="transfer_flag" property="transferFlag" jdbcType="VARCHAR" />
+		<result column="sys_name" property="sysName" jdbcType="VARCHAR" />
+		<result column="yslx" property="yslx" jdbcType="VARCHAR"/>
+		<result column="new_bill" property="newbill" jdbcType="INTEGER"/>
+		<result column="auto_arrive" property="autoArrive" jdbcType="INTEGER"/>
+		<result column="parent_xuhao" property="parentXuhao" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<!-- 2017-09-12 -->
+	<select id="queryLastBundleReceiptByYdbhid" resultMap="bundleReceipt">
+		SELECT * FROM HCZZQD_source WHERE YDBHID =#{ydbhid} ORDER BY ZHCHRQ DESC
+	</select>
+	
+	<select id="queryTransportOrderDetailByYdbhid" resultMap="detailResult">
+		SELECT * FROM
+		HWYDXZ
+		WHERE YDBHID = #{ydbhid}
+	</select>
+	<!--运单细则 -->
+	<resultMap type="com.ycgwl.kylin.transport.entity.TransportOrderDetail"
+		id="detailResult">
+		<id column="YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+		<result column="YDXZH" property="ydxzh" jdbcType="INTEGER" />
+		<result column="BZH" property="bzh" jdbcType="VARCHAR" />
+		<result column="JIANSHU" property="jianshu" jdbcType="INTEGER" />
+		<result column="PINMING" property="pinming" jdbcType="VARCHAR" />
+		<result column="TIJI" property="tiji" jdbcType="DECIMAL" />
+		<result column="ZHL" property="zhl" jdbcType="DECIMAL" />
+		<result column="YFH" property="yfh" jdbcType="BIT" />
+		<result column="CHXH" property="chxh" jdbcType="VARCHAR" />
+		<result column="BEIZHU" property="beizhu" jdbcType="VARCHAR" />
+		<result column="TBJE" property="tbje" jdbcType="DECIMAL" />
+		<result column="cangwei" property="cangwei" jdbcType="VARCHAR" />
+		<result column="xh" property="xh" jdbcType="VARCHAR" />
+		<result column="zchl" property="zchl" jdbcType="DECIMAL" />
+		<result column="zzxl" property="zzxl" jdbcType="DECIMAL" />
+		<result column="qchl" property="qchl" jdbcType="DECIMAL" />
+		<result column="qzxl" property="qzxl" jdbcType="DECIMAL" />
+		<result column="jffs" property="jffs" jdbcType="INTEGER" />
+		<result column="decprice" property="decprice" jdbcType="DECIMAL" />
+		<result column="rowguid" property="rowguid" jdbcType="VARCHAR" />
+		<result column="yunjia" property="yunjia" jdbcType="DECIMAL" />
+		<result column="is_kaiyun" property="isKaiyun" jdbcType="SMALLINT" />
+	</resultMap>
+
+	<insert id="insertBundleReceiptList" parameterType="java.util.List">
+		Insert Into HCZZQD_source
+		( DAOZHAN,
+		FCHRQ,
+		ZHCHRQ,
+		CHXH,
+		JIANSHU,
+		PINMING,
+		SHHRLXDH,
+		SHHRMCH,
+		TIJI,
+		YDBHID,
+		ZHL,
+		FAZHAN,
+		beizhu,
+		xh,
+		ydxzh,
+		zhipiao2,
+		hyy,
+		i_type,
+		ysfs,
+		grid,
+		lrsj,
+		dzshhd,
+		fzshhd,
+		yjddshj,
+		wx_item,
+		wx_name,
+		wx_con_name,
+		wx_tel,
+		cl_owner,
+		qd_cost ,
+		list_no ,
+		fhshj,
+		company,
+		fhdwmch,
+		khdh,
+		else_cost,
+		transfer_flag,
+		sys_name,
+		buildincome
+		)
+		VALUES
+		<foreach collection="bundleReceipts" separator="," item="bundleReceipt">
+			( #{bundleReceipt.daozhan}, #{bundleReceipt.fchrq},
+			#{bundleReceipt.zhchrq}, #{bundleReceipt.chxh},
+			#{bundleReceipt.jianshu}, #{bundleReceipt.pinming},
+			#{bundleReceipt.shhrlxdh}, #{bundleReceipt.shhrmch},
+			#{bundleReceipt.tiji}, #{bundleReceipt.ydbhid}, #{bundleReceipt.zhl},
+			#{bundleReceipt.fazhan},
+			#{bundleReceipt.beizhu},
+			#{bundleReceipt.xh},#{bundleReceipt.ydxzh}, #{bundleReceipt.zhipiao2}, #{bundleReceipt.hyy},
+			#{bundleReceipt.iType},
+			#{bundleReceipt.ysfs}, #{bundleReceipt.grid}, #{bundleReceipt.lrsj},
+			#{bundleReceipt.dzshhd}, #{bundleReceipt.fzshhd},
+			#{bundleReceipt.yjddshj},#{bundleReceipt.wxItem},
+			#{bundleReceipt.wxName}, #{bundleReceipt.wxConName},
+			#{bundleReceipt.wxTel},
+			#{bundleReceipt.clOwner},#{bundleReceipt.qdCost},
+			#{bundleReceipt.listNo}, #{bundleReceipt.fhshj},
+			#{bundleReceipt.company},
+			#{bundleReceipt.fhdwmch}, #{bundleReceipt.khdh}, #{bundleReceipt.elseCost}
+			,#{bundleReceipt.transferFlag},#{sysName},#{buildincome}
+			)
+		</foreach>
+	</insert>
+
+	<insert id="inserthczzqdbeizhu" parameterType="java.util.List">
+		INSERT INTO hczzqd_beizhu(
+		hczzqd_beizhu.ydbhid ,hczzqd_beizhu.ydxzh , hczzqd_beizhu.chxh , hczzqd_beizhu.FCHRQ ,
+		hczzqd_beizhu.beizhu , hczzqd_beizhu.daozhan ,hczzqd_beizhu.fazhan )
+		VALUES
+		<foreach collection="bundleReceipts" separator="," item="bundleReceipt">
+			(
+			#{bundleReceipt.ydbhid} , #{ bundleReceipt.ydxzh} , #{bundleReceipt.chxh } ,
+			#{ bundleReceipt.fchrq } , #{ bundleReceipt.beizhu } , #{bundleReceipt.daozhan} ,
+			#{ bundleReceipt.fazhan}
+			)
+		</foreach>
+	</insert>
+	<insert id="insertHczzqd_beizhu">
+		INSERT INTO hczzqd_beizhu(
+		ydbhid ,ydxzh , chxh , FCHRQ ,beizhu , daozhan ,fazhan )
+		VALUES
+			(
+			#{ydbhid}, #{ ydxzh}, #{chxh },#{ fchrq }, #{ beizhu }, #{daozhan},#{ fazhan}
+			)
+	
+	</insert>
+
+	<sql id="where-bundleReceipt">
+		<if test="xuhao != null and xuhao > 0">
+			<![CDATA[ AND A.xuhao = #{xuhao} ]]>
+		</if>
+		<if test="beizhu != null and beizhu != ''">
+			<![CDATA[ AND A.beizhu = #{beizhu} ]]>
+		</if>
+		<if test="chxh != null and chxh != ''">
+			<![CDATA[ AND A.CHXH = #{chxh} ]]>
+		</if>
+		<if test="clOwner != null and clOwner != ''">
+			<![CDATA[ AND A.cl_owner = #{clOwner} ]]>
+		</if>
+		<if test="company != null and company != ''">
+			<![CDATA[ AND A.company  = #{company} ]]>
+		</if>
+		<if test="daozhan != null and daozhan != ''">
+			<![CDATA[ AND A.DAOZHAN  = #{daozhan} ]]>
+		</if>
+		<if test="dhgrid != null and dhgrid != ''">
+			<![CDATA[ AND A.dhgrid = #{dhgrid} ]]>
+		</if>
+		<if test="dhsj != null and dhsj != ''"> 
+			<![CDATA[ AND A.dhsj >= #{dhsj} ]]>
+		</if>
+		<if test="dhsj != null  and dhsj != ''">
+  				<![CDATA[ AND A.dhsj <= #{dhsj} ]]>
+		</if>
+		<if test="dzshhd != null and dzshhd != ''">
+			<![CDATA[ AND A.dzshhd = #{dzshhd} ]]>
+		</if>
+		<if test="elseCost != null and elseCost > 0">
+			<![CDATA[ AND A.else_cost = #{elseCost} ]]>
+		</if>
+		<if test="fazhan != null and fazhan != ''">
+			<![CDATA[ AND A.FAZHAN = #{fazhan} ]]>
+		</if>
+		<if test="fchrq != null and fchrq != ''">
+			<![CDATA[ AND A.FCHRQ = #{fchrq} ]]>
+		</if>
+		<if test="fhdwmch != null and fhdwmch != ''">
+			<![CDATA[ AND A.fhdwmch = #{fhdwmch} ]]>
+		</if>
+		<if test="fhshj != null and fhshj != ''"> 
+			<![CDATA[ AND A.fhshj >= #{fhshj} ]]>
+		</if>
+		<if test="fhshj != null  and fhshj != ''">
+  				<![CDATA[ AND A.fhshj <= #{fhshj} ]]>
+		</if>
+		<if test="fzshhd != null and fzshhd != ''">
+			<![CDATA[ AND A.fzshhd = #{fzshhd} ]]>
+		</if>
+		<if test="grid != null and grid != ''">
+			<![CDATA[ AND A.grid = #{grid} ]]>
+		</if>
+		<if test="hyy != null and hyy != ''">
+			<![CDATA[ AND A.hyy = #{hyy} ]]>
+		</if>
+		<if test="iType != null and iType >0 ">
+			<![CDATA[ AND A.i_type = #{iType} ]]>
+		</if>
+		<if test="isKaiyun != null and isKaiyun > 0 ">
+			<![CDATA[ AND A.is_kaiyun = #{isKaiyun} ]]>
+		</if>
+		<if test="jianshu != null and jianshu > 0 ">
+			<![CDATA[ AND A.JIANSHU = #{jianshu} ]]>
+		</if>
+		<if test="khdh != null and khdh != ''">
+			<![CDATA[ AND A.khdh = #{khdh} ]]>
+		</if>
+		<if test="listNo != null and listNo != ''">
+			<![CDATA[ AND A.list_no = #{listNo} ]]>
+		</if>
+		<if test="lrsj != null and lrsj != ''"> 
+			<![CDATA[ AND A.lrsj >= #{lrsj} ]]>
+		</if>
+		<if test="lrsj != null  and lrsj != ''">
+  				<![CDATA[ AND A.lrsj <= #{lrsj} ]]>
+		</if>
+		<if test="pinming != null and pinming != ''">
+			<![CDATA[ AND A.PINMING = #{pinming} ]]>
+		</if>
+		<if test="qdCost != null and qdCost >0 ">
+			<![CDATA[ AND A.qd_cost = #{qdCost} ]]>
+		</if>
+		<if test="sent != null and sent >0 ">
+			<![CDATA[ AND A.sent = #{sent} ]]>
+		</if>
+		<if test="shhrlxdh != null and shhrlxdh != ''">
+			<![CDATA[ AND A.SHHRLXDH = #{shhrlxdh} ]]>
+		</if>
+		<if test="shhrmch != null and shhrmch != ''">
+			<![CDATA[ AND A.SHHRMCH = #{shhrmch} ]]>
+		</if>
+		<if test="sourceflag != null and sourceflag > 0 ">
+			<![CDATA[ AND A.sourceflag = #{sourceflag} ]]>
+		</if>
+		<if test="tiji != null and tiji >0 ">
+			<![CDATA[ AND A.TIJI = #{tiji} ]]>
+		</if>
+		<if test="wxConName != null and wxConName != ''">
+			<![CDATA[ AND A.wx_con_name = #{wxConName} ]]>
+		</if>
+		<if test="wxItem != null and wxItem != ''">
+			<![CDATA[ AND A.wx_item = #{wxItem} ]]>
+		</if>
+		<if test="wxName != null and wxName != ''">
+			<![CDATA[ AND A.wx_name = #{wxName} ]]>
+		</if>
+		<if test="wxTel != null and wxTel != ''">
+			<![CDATA[ AND A.wx_tel = #{wxTel} ]]>
+		</if>
+		<if test="xh != null and xh != ''">
+			<![CDATA[ AND A.xh = #{xh} ]]>
+		</if>
+		<if test="xiechechexin != null and xiechechexin != ''">
+			<![CDATA[ AND A.xiechechexin = #{xiechechexin} ]]>
+		</if>
+		<if test="xiechegrid != null and xiechegrid != ''">
+			<![CDATA[ AND A.xiechegrid = #{xiechegrid} ]]>
+		</if>
+		<if test="xiechesj != null and xiechesj != ''"> 
+			<![CDATA[ AND A.xiechesj >= #{xiechesj} ]]>
+		</if>
+		<if test="xiechesj != null  and xiechesj != ''">
+  				<![CDATA[ AND A.xiechesj <= #{xiechesj} ]]>
+		</if>
+		<if test="ydbhid != null and ydbhid != ''">
+			<![CDATA[ AND A.YDBHID = #{ydbhid} ]]>
+		</if>
+		<if test="ydxzh != null and ydxzh > 0 ">
+			<![CDATA[ AND A.ydxzh = #{ydxzh} ]]>
+		</if>
+		<if test="ydzh != null and ydzh >0 ">
+			<![CDATA[ AND A.ydzh = #{ydzh} ]]>
+		</if>
+		<if test="yiti != null and yiti > 0 ">
+			<![CDATA[ AND A.yiti = #{yiti} ]]>
+		</if>
+		<if test="yjddshj != null and yjddshj != ''"> 
+			<![CDATA[ AND A.yjddshj >= #{yjddshj} ]]>
+		</if>
+		<if test="yjddshj != null  and yjddshj != ''">
+  				<![CDATA[ AND A.yjddshj <= #{yjddshj} ]]>
+		</if>
+		<if test="ysfs != null and ysfs != ''">
+			<![CDATA[ AND A.ysfs = #{ysfs} ]]>
+		</if>
+		<if test="yxieche != null and yxieche > 0 ">
+			<![CDATA[ AND A.yxieche = #{yxieche} ]]>
+		</if>
+		<if test="zhchrq != null and zhchrq != ''"> 
+			<![CDATA[ AND A.ZHCHRQ >= #{zhchrq} ]]>
+		</if>
+		<if test="zhchrq != null  and zhchrq != ''">
+  				<![CDATA[ AND A.ZHCHRQ <= #{zhchrq} ]]>
+		</if>
+		<if test="zhipiao != null and zhipiao != ''">
+			<![CDATA[ AND A.zhipiao = #{zhipiao} ]]>
+		</if>
+		<if test="zhipiao2 != null and zhipiao2 != ''">
+			<![CDATA[ AND A.zhipiao2 = #{zhipiao2} ]]>
+		</if>
+		<if test="zhl != null and zhl > 0 ">
+			<![CDATA[ AND A.ZHL = #{zhl} ]]>
+		</if>
+		<if test="ziti != null">
+			<![CDATA[ AND A.ZITI = #{ziti} ]]>
+		</if>
+		<if test="driverName != null">
+			<![CDATA[ AND A.driver_name = #{driverName} ]]>
+		</if>
+		<if test="driverTel != null">
+			<![CDATA[ AND A.driver_tel = #{driverTel} ]]>
+		</if>
+	</sql>
+
+	<update id="updateBundleReceiptByKey" parameterType="com.ycgwl.kylin.transport.entity.BundleReceipt">
+		UPDATE HCZZQD_source
+		<set>
+			<if test="beizhu != null and beizhu != ''">
+				<![CDATA[ beizhu = #{beizhu} ]]>
+			</if>
+			<if test="chxh != null and chxh != ''">
+				<![CDATA[ CHXH = #{chxh} ]]>
+			</if>
+			<if test="clOwner != null and clOwner != ''">
+				<![CDATA[ cl_owner = #{clOwner} ]]>
+			</if>
+			<if test="company != null and company != ''">
+				<![CDATA[ company  = #{company} ]]>
+			</if>
+			<if test="daozhan != null and daozhan != ''">
+				<![CDATA[ DAOZHAN  = #{daozhan} ]]>
+			</if>
+			<if test="dhgrid != null and dhgrid != ''">
+				<![CDATA[ dhgrid = #{dhgrid} ]]>
+			</if>
+			<if test="dhsj != null and dhsj != ''"> 
+				<![CDATA[ dhsj = #{dhsj} ]]>
+			</if>
+			<if test="dzshhd != null and dzshhd != ''">
+				<![CDATA[ dzshhd = #{dzshhd} ]]>
+			</if>
+			<if test="elseCost != null and elseCost != 0">
+				<![CDATA[ else_cost = #{elseCost} ]]>
+			</if>
+			<if test="fazhan != null and fazhan != ''">
+				<![CDATA[ FAZHAN = #{fazhan} ]]>
+			</if>
+			<if test="fchrq != null and fchrq != ''">
+				<![CDATA[ FCHRQ = #{fchrq} ]]>
+			</if>
+			<if test="fhdwmch != null and fhdwmch != ''">
+				<![CDATA[ fhdwmch = #{fhdwmch} ]]>
+			</if>
+			<if test="fhshj != null and fhshj != ''"> 
+				<![CDATA[ fhshj = #{fhshj} ]]>
+			</if>
+			<if test="fzshhd != null and fzshhd != ''">
+				<![CDATA[ fzshhd = #{fzshhd} ]]>
+			</if>
+			<if test="grid != null and grid != ''">
+				<![CDATA[ grid = #{grid} ]]>
+			</if>
+			<if test="hyy != null and hyy != ''">
+				<![CDATA[ hyy = #{hyy} ]]>
+			</if>
+			<if test="iType != null and iType != 0 ">
+				<![CDATA[ i_type = #{iType} ]]>
+			</if>
+			<if test="isKaiyun != null and isKaiyun != 0 ">
+				<![CDATA[ is_kaiyun = #{isKaiyun} ]]>
+			</if>
+			<if test="jianshu != null and jianshu != 0 ">
+				<![CDATA[ JIANSHU = #{jianshu} ]]>
+			</if>
+			<if test="khdh != null and khdh != ''">
+				<![CDATA[ khdh = #{khdh} ]]>
+			</if>
+			<if test="listNo != null and listNo != ''">
+				<![CDATA[ list_no = #{listNo} ]]>
+			</if>
+			<if test="lrsj != null and lrsj != ''"> 
+				<![CDATA[ lrsj = #{lrsj} ]]>
+			</if>
+			<if test="pinming != null and pinming != ''">
+				<![CDATA[ PINMING = #{pinming} ]]>
+			</if>
+			<if test="qdCost != null and qdCost != 0 ">
+				<![CDATA[ qd_cost = #{qdCost} ]]>
+			</if>
+			<if test="sent != null and sent != 0 ">
+				<![CDATA[ sent = #{sent} ]]>
+			</if>
+			<if test="shhrlxdh != null and shhrlxdh != ''">
+				<![CDATA[ SHHRLXDH = #{shhrlxdh} ]]>
+			</if>
+			<if test="shhrmch != null and shhrmch != ''">
+				<![CDATA[ SHHRMCH = #{shhrmch} ]]>
+			</if>
+			<if test="sourceflag != null and sourceflag != 0 ">
+				<![CDATA[ sourceflag = #{sourceflag} ]]>
+			</if>
+			<if test="tiji != null and tiji != 0 ">
+				<![CDATA[ TIJI = #{tiji} ]]>
+			</if>
+			<if test="wxConName != null and wxConName != ''">
+				<![CDATA[ wx_con_name = #{wxConName} ]]>
+			</if>
+			<if test="wxItem != null and wxItem != ''">
+				<![CDATA[ wx_item = #{wxItem} ]]>
+			</if>
+			<if test="wxName != null and wxName != ''">
+				<![CDATA[ wx_name = #{wxName} ]]>
+			</if>
+			<if test="wxTel != null and wxTel != ''">
+				<![CDATA[ wx_tel = #{wxTel} ]]>
+			</if>
+			<if test="xh != null and xh != ''">
+				<![CDATA[ xh = #{xh} ]]>
+			</if>
+			<if test="xiechechexin != null and xiechechexin != ''">
+				<![CDATA[ xiechechexin = #{xiechechexin} ]]>
+			</if>
+			<if test="xiechegrid != null and xiechegrid != ''">
+				<![CDATA[ xiechegrid = #{xiechegrid} ]]>
+			</if>
+			<if test="xiechesj != null and xiechesj != ''"> 
+				<![CDATA[ xiechesj = #{xiechesj} ]]>
+			</if>
+			<if test="ydbhid != null and ydbhid != ''">
+				<![CDATA[ YDBHID = #{ydbhid} ]]>
+			</if>
+			<if test="ydxzh != null and ydxzh != 0 ">
+				<![CDATA[ ydxzh = #{ydxzh} ]]>
+			</if>
+			<if test="yiti != null and yiti != 0 ">
+				<![CDATA[ yiti = #{yiti} ]]>
+			</if>
+			<if test="yjddshj != null and yjddshj != ''"> 
+				<![CDATA[ yjddshj = #{yjddshj} ]]>
+			</if>
+			<if test="ysfs != null and ysfs != ''">
+				<![CDATA[ ysfs = #{ysfs} ]]>
+			</if>
+			<if test="yxieche != null and yxieche != 0 ">
+				<![CDATA[ yxieche = #{yxieche} ]]>
+			</if>
+			<if test="zhchrq != null and zhchrq != ''"> 
+				<![CDATA[ ZHCHRQ = #{zhchrq} ]]>
+			</if>
+			<if test="zhipiao != null and zhipiao != ''">
+				<![CDATA[ zhipiao = #{zhipiao} ]]>
+			</if>
+			<if test="zhipiao2 != null and zhipiao2 != ''">
+				<![CDATA[ zhipiao2 = #{zhipiao2} ]]>
+			</if>
+			<if test="zhl != null and zhl != 0 ">
+				<![CDATA[ ZHL = #{zhl} ]]>
+			</if>
+			<if test="ziti != null">
+				<![CDATA[ ZITI = #{ziti} ]]>
+			</if>
+			<if test="driverName != null">
+				<![CDATA[ driver_name = #{driverName} ]]>
+			</if>
+			<if test="driverTel != null">
+				<![CDATA[ driver_tel = #{driverTel} ]]>
+			</if>
+		</set>
+		<where>
+			xuhao = #{xuhao}
+		</where>
+	</update>
+
+	<select id="countBundleReceiptByConveyKey" resultType="java.lang.Long"
+		parameterType="java.lang.String">
+		SELECT
+		COUNT(H.YDBHID)
+		FROM
+		HCZZQD_source H
+		WHERE
+		H.YDBHID = #{conveyKey};
+	</select>
+
+	<select id="callProcedureInsert" parameterType="com.ycgwl.kylin.transport.entity.BundleProcedure"
+		statementType="CALLABLE">
+		<![CDATA[
+		    {   
+		    	#{flag,mode=OUT,jdbcType=INTEGER} = call dbo.usp_create_incostno (
+		    		#{iType,mode=IN,jdbcType=VARCHAR},
+			    	#{ydbhid,mode=IN,jdbcType=VARCHAR},
+			    	#{cxh,mode=IN,jdbcType=VARCHAR}, 
+			    	#{zcrq,mode=IN,jdbcType=TIMESTAMP}, 
+			    	#{fchrq,mode=IN,jdbcType=TIMESTAMP}, 
+			    	#{user,mode=IN,jdbcType=VARCHAR}, 
+			    	#{grid,mode=IN,jdbcType=VARCHAR}, 
+			    	#{yjddshj,mode=IN,jdbcType=TIMESTAMP}, 
+			    	#{wxId,mode=IN,jdbcType=VARCHAR}, 
+			    	#{wxName,mode=IN,jdbcType=VARCHAR}, 
+			    	#{wxConName,mode=IN,jdbcType=VARCHAR}, 
+			    	#{wxTel,mode=IN,jdbcType=VARCHAR},  
+			    	#{clOwner,mode=IN,jdbcType=VARCHAR},    
+			    	#{qdCost,mode=IN,jdbcType=DECIMAL}, 
+			    	#{elseCost,mode=IN,jdbcType=DECIMAL},   
+			    	#{daozhan,mode=IN,jdbcType=VARCHAR},  
+			    	#{fazhan,mode=IN,jdbcType=VARCHAR},  
+			    	#{dzshhd,mode=IN,jdbcType=VARCHAR},  
+			    	#{message,mode=OUT,jdbcType=VARCHAR}
+		    )}
+		]]>
+	</select>
+
+	<select id="getBundleReceipt" resultMap="bundleReceiptForCheck"
+		parameterType="com.ycgwl.kylin.transport.entity.BundleReceipt">
+		SELECT a.*,b.begin_placename,b.zhipiao AS zpOut
+		FROM
+		HCZZQD_source a
+		LEFT JOIN HWYD b
+		ON
+		a.YDBHID = b.YDBHID
+		WHERE
+		a.chxh = #{chxh} AND a.FCHRQ = #{fchrq}
+		order by a.lrsj desc
+	</select>
+	<resultMap id="bundleReceiptForCheck"
+		type="com.ycgwl.kylin.transport.entity.BundleReceipt">
+		<id column="xuhao" property="xuhao" jdbcType="INTEGER" />
+		<result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+		<result column="CHXH" property="chxh" jdbcType="VARCHAR" />
+		<result column="cl_owner" property="clOwner" jdbcType="VARCHAR" />
+		<result column="company" property="company" jdbcType="VARCHAR" />
+		<result column="DAOZHAN" property="daozhan" jdbcType="VARCHAR" />
+		<result column="dhgrid" property="dhgrid" jdbcType="VARCHAR" />
+		<result column="dhsj" property="dhsj" jdbcType="TIMESTAMP" />
+		<result column="dzshhd" property="dzshhd" jdbcType="VARCHAR" />
+		<result column="else_cost" property="elseCost" jdbcType="NUMERIC" />
+		<result column="FAZHAN" property="fazhan" jdbcType="VARCHAR" />
+		<result column="FCHRQ" property="fchrq" jdbcType="TIMESTAMP" />
+		<result column="fhdwmch" property="fhdwmch" jdbcType="VARCHAR" />
+		<result column="fhshj" property="fhshj" jdbcType="TIMESTAMP" />
+		<result column="begin_placename" property="fzshhd" jdbcType="VARCHAR" />
+		<result column="grid" property="grid" jdbcType="VARCHAR" />
+		<result column="hyy" property="hyy" jdbcType="VARCHAR" />
+		<result column="i_type" property="iType" jdbcType="INTEGER" />
+		<result column="is_kaiyun" property="isKaiyun" jdbcType="SMALLINT" />
+		<result column="JIANSHU" property="jianshu" jdbcType="INTEGER" />
+		<result column="khdh" property="khdh" jdbcType="VARCHAR" />
+		<result column="list_no" property="listNo" jdbcType="VARCHAR" />
+		<result column="lrsj" property="lrsj" jdbcType="TIMESTAMP" />
+		<result column="PINMING" property="pinming" jdbcType="VARCHAR" />
+		<result column="qd_cost" property="qdCost" jdbcType="NUMERIC" />
+		<result column="sent" property="sent" jdbcType="INTEGER" />
+		<result column="SHHRLXDH" property="shhrlxdh" jdbcType="VARCHAR" />
+		<result column="SHHRMCH" property="shhrmch" jdbcType="VARCHAR" />
+		<result column="sourceflag" property="sourceflag" jdbcType="INTEGER" />
+		<result column="TIJI" property="tiji" jdbcType="NUMERIC" />
+		<result column="wx_con_name" property="wxConName" jdbcType="VARCHAR" />
+		<result column="wx_item" property="wxItem" jdbcType="VARCHAR" />
+		<result column="wx_name" property="wxName" jdbcType="VARCHAR" />
+		<result column="wx_tel" property="wxTel" jdbcType="VARCHAR" />
+		<result column="xh" property="xh" jdbcType="VARCHAR" />
+		<result column="xiechechexin" property="xiechechexin" jdbcType="VARCHAR" />
+		<result column="xiechegrid" property="xiechegrid" jdbcType="VARCHAR" />
+		<result column="xiechesj" property="xiechesj" jdbcType="TIMESTAMP" />
+		<result column="YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+		<result column="ydxzh" property="ydxzh" jdbcType="INTEGER" />
+		<result column="ydzh" property="ydzh" jdbcType="INTEGER" />
+		<result column="yiti" property="yiti" jdbcType="INTEGER" />
+		<result column="yjddshj" property="yjddshj" jdbcType="TIMESTAMP" />
+		<result column="ysfs" property="ysfs" jdbcType="VARCHAR" />
+		<result column="yxieche" property="yxieche" jdbcType="INTEGER" />
+		<result column="ZHCHRQ" property="zhchrq" jdbcType="TIMESTAMP" />
+		<result column="zpOut" property="zhipiao" jdbcType="VARCHAR" />
+		<result column="zhipiao2" property="zhipiao2" jdbcType="VARCHAR" />
+		<result column="ZHL" property="zhl" jdbcType="NUMERIC" />
+		<result column="ZITI" property="ziti" jdbcType="BIT" />
+		<result column="driver_name" property="driverName" jdbcType="VARCHAR" />
+		<result column="driver_tel" property="driverTel" jdbcType="VARCHAR" />
+		<result column="transfer_flag" property="transferFlag" jdbcType="VARCHAR"/>
+		<result column="sys_name" property="sysName" jdbcType="VARCHAR"/>
+		<result column="new_bill" property="newbill" jdbcType="INTEGER"/>
+		<result column="auto_arrive" property="autoArrive" jdbcType="INTEGER"/>
+		<result column="parent_xuhao" property="parentXuhao" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<select id="queryBundleReceiptByYdbhidDesc" resultMap="bundleReceipt">
+		SELECT *
+		FROM HCZZQD_source WHERE YDBHID =#{ydbhid} ORDER BY ZHCHRQ DESC
+	</select>
+	<select id="homepage" resultMap="bundleReceipt">
+	<![CDATA[
+		SELECT
+			TOP 10 CHXH,FCHRQ,FAZHAN,MAX(lrsj) AS lrsj
+		FROM
+			HCZZQD_source
+		WHERE
+			FCHRQ > #{start}
+			AND
+			FCHRQ < #{end}
+		GROUP BY
+			CHXH,
+			FCHRQ,
+			FAZHAN
+		ORDER BY
+			lrsj desc
+		]]>
+	</select>
+
+	<select id="getBundleReceiptByYDBHID" resultMap="bundleReceiptForCheck">
+		select * from hczzqd_source where ydbhid in
+		<foreach collection="ydbhids" item="ydbhid" open="("
+			separator="," close=")">
+			#{ydbhid}
+		</foreach>
+	</select>
+
+	<select id="getBundleReceiptByChxh" resultMap="bundleReceiptForCheck">
+	<![CDATA[
+		SELECT a.*,b.begin_placename,b.zhipiao AS zpOut
+		FROM
+		HCZZQD_source a
+		LEFT JOIN HWYD b
+		ON
+		a.YDBHID = b.YDBHID
+		WHERE
+		ltrim(rtrim(a.chxh)) = #{chxh} AND a.FCHRQ >= #{fchrq} AND a.FCHRQ <= #{nextDay}
+		order by a.lrsj desc
+		]]>
+	</select>
+	
+	<insert id="insertBundleReceipt">
+	Insert Into HCZZQD_source
+			(DAOZHAN,
+			FCHRQ,
+			ZHCHRQ,
+			CHXH,
+			JIANSHU,
+			PINMING,
+			SHHRLXDH,
+			SHHRMCH,
+			TIJI,
+			YDBHID,
+			ZHL,
+			ZITI,
+			FAZHAN,
+			xh,
+			ydxzh,
+			zhipiao2,
+			hyy,
+			i_type,
+			ysfs,
+			grid,
+			lrsj,
+			dzshhd,
+			fzshhd,
+			yjddshj,
+			wx_item,
+			wx_name,
+			wx_con_name,
+			wx_tel,
+			cl_owner,
+			qd_cost ,
+			list_no ,
+			fhshj,
+			company,
+			fhdwmch,
+			khdh,
+			else_cost,
+			driver_name,
+			driver_tel,
+			beizhu,
+			transfer_flag,
+			sys_name,
+			buildincome,
+			yslx,
+			new_bill,
+			auto_arrive,
+			parent_xuhao
+			)
+			values (
+			 #{daozhan},#{fchrq},#{zhchrq},#{chxh},#{entruckingjianshu},#{pinming}
+			,#{shhrlxdh},#{shhrmch},#{entruckingtiji},#{ydbhid},#{entruckingzhl}
+			,#{ziti},#{fazhan},#{xh},#{ydxzh},#{zhipiao2},#{hyy},#{iType}
+			,#{ysfs},#{grid},#{lrsj},#{dzshhd},#{fzshhd},#{yjddshj},#{wxItem},#{wxName}
+			,#{wxConName},#{wxTel},#{clOwner},#{qdCost},#{listNo},#{fhshj},#{company}
+			,#{fhdwmch},#{khdh},#{elseCost},#{driverName},#{driverTel},#{beizhu}
+			,#{istransfer},#{sysName},#{buildIncome},#{yslx},#{newbill},#{autoArrive},#{parentXuhao}
+			)
+	</insert>
+	<update id="updateBundleReceiptyiti">
+	update hczzqd_source set hczzqd_source.yiti=3
+				where ydbhid=#{ydbhid} and ydxzh=#{ydxzh} and hczzqd_source.daozhan=#{fazhan} and ydzh=1			
+	</update>
+	
+	<select id="getDaozhanBundleReceiptByChxhAndYdbhids" resultMap="bundleReceipt">
+		select * from hczzqd_source where chxh = #{chxh} and daozhan = #{company} and ydzh= 0 and ydbhid in
+		(
+		<foreach collection="ydbhids" item="ydbhid" separator="," >
+		 	#{ydbhid} 
+		</foreach>
+		)
+	</select>
+	
+	<update id="updateStateArrive">
+		UPDATE HCZZQD_source SET dhgrid = #{grid}, dhsj=#{dhsj} ,ydzh=1,auto_arrive=0 WHERE
+		chxh = #{chxh} and daozhan = #{company} and ydzh= 0 and ydbhid in
+		(
+		<foreach collection="ydbhids" item="ydbhid" separator="," >
+		 	#{ydbhid} 
+		</foreach>
+		)
+	</update>
+	<update id="recoverGoodArriveState">
+		UPDATE HCZZQD_source SET dhgrid = '', dhsj=null ,ydzh=0 WHERE
+		chxh = #{chxh} 
+		 and ydzh= 1 and ydbhid in
+		(
+		<foreach collection="ydbhids" item="ydbhid" separator="," >
+		 	#{ydbhid} 
+		</foreach>
+		)
+	
+	</update>
+	<select id="getBundleReceiptByXuhao" resultMap="bundleReceiptForCheck">
+		select * from hczzqd_source where xuhao = #{xuhao}
+	</select>
+	
+	<select id="findBundleReceiptByXuhao" resultMap="bundleReceiptForCheck">
+		select * from hczzqd_source where xuhao = #{xuhao}
+	</select>
+	
+	<!--         分界线     试试新的查询首页                      -->
+	<select id="getBundleReceiptHomePageEntityByMap" resultType="com.ycgwl.kylin.transport.entity.BundleReceiptHomePageEntity">
+		SELECT chxh,driver_name,ydbhid,fhdwmch,pinming,lrsj,fazhan,daozhan,qd_Cost,else_Cost,fchrq,yjddshj,JIANSHU,TIJI,ZHL,
+			buildIncome,wx_name,wx_item,cl_owner
+		 FROM HCZZQD_source 
+		WHERE CHXH= #{chxh}
+		AND FCHRQ= #{fchrq}
+	</select>
+	
+		<select id="listBundleReceiptCounts" parameterType="com.ycgwl.kylin.transport.entity.BundleReceiptSearch"
+		resultType="int">
+			select count(*) num from
+			(SELECT chxh FROM HCZZQD_source where chxh  is not null 
+			<include refid="resultWhereSqlv2" />
+			group BY fchrq,chxh) t
+		</select>
+		
+		<select id="searchTop10BundleReceiptList" resultType= "com.ycgwl.kylin.transport.entity.BundleReceiptHomePageEntity">
+			
+			SELECT	TOP 10 fchrq,chxh
+			FROM
+				(
+					SELECT
+						ROW_NUMBER () OVER (ORDER BY lrsj DESC) PAGE_ROW_NUMBER,
+						fchrq,
+						chxh
+					FROM
+						(
+						SELECT fchrq,chxh,MAX (lrsj) AS lrsj
+					FROM
+						HCZZQD_source
+					WHERE
+						chxh IS NOT NULL
+					<include refid="resultWhereSqlv2" />
+					GROUP BY
+						fchrq,
+						chxh
+					) AS PAGE_TABLE_ALIAS
+				) AS PAGE_TABLE_ALIAS
+			WHERE
+				PAGE_ROW_NUMBER BETWEEN #{rowNumberStart} AND #{rowNumberEnd}
+			ORDER BY
+				PAGE_ROW_NUMBER
+		</select>
+		
+		<sql id="resultWhereSqlv2">
+		<if test="ydbhid != null and ydbhid != ''"><![CDATA[ AND HCZZQD_source.YDBHID = #{ydbhid} ]]>
+		</if>
+		<if test="fazhan != null and fazhan != ''"><![CDATA[ AND HCZZQD_source.FAZHAN =#{fazhan} ]]>
+		</if>
+		<if test="daozhan != null and daozhan != ''"><![CDATA[ AND HCZZQD_source.DAOZHAN = #{daozhan} ]]>
+		</if>
+		<if test="wxName != null and wxName != ''"><![CDATA[ AND HCZZQD_source.wx_name = #{wxName}  ]]>
+		</if>
+		<if test="chxh != null and chxh != ''"><![CDATA[ AND HCZZQD_source.CHXH= #{chxh}   ]]>
+		</if>
+		<if test="fchstarttime != null and fchstarttime != ''"><![CDATA[ AND HCZZQD_source.FCHRQ >= #{fchstarttime} ]]>
+		</if>
+		<if test="fchendtime != null and fchendtime != ''"><![CDATA[ AND HCZZQD_source.FCHRQ <= #{fchendtime} ]]>
+		</if>
+		<if test="yjstarttime != null and yjstarttime != ''"><![CDATA[ AND HCZZQD_source.yjddshj >= #{yjstarttime} ]]>
+		</if>
+		<if test="yjendtime != null and yjendtime != ''"><![CDATA[ AND HCZZQD_source.yjddshj <= #{yjendtime} ]]>
+		</if>
+		<if test="lrsjstarttime != null and lrsjstarttime != ''"><![CDATA[ AND HCZZQD_source.lrsj >= #{lrsjstarttime} ]]>
+		</if>
+		<if test="lrsjendtime != null and lrsjendtime != ''"><![CDATA[ AND HCZZQD_source.lrsj <= #{lrsjendtime} ]]>
+		</if>
+		<if test="clientName != null and clientName != ''"><![CDATA[ AND HCZZQD_source.fhdwmch =  #{clientName}]]>
+		</if>
+	</sql>
+	
+	<!--         分界线                           -->
+	
+	
+	<update id="modifyHczzqd_sourceIncome">
+	UPDATE HCZZQD_source
+		<trim prefix="set" suffixOverrides=",">
+			<if test="qdCost!= null and qdCost.length()>0 ">qd_Cost = #{qdCost} ,</if>
+			<if test="elseCost!= null and elseCost.length()>0 ">else_Cost = #{elseCost} ,</if>
+			<if test="wxName!=null and wxName.length()>0"> wx_name = #{wxName},</if>
+			<if test="wxItem!=null and wxItem.length()>0"> wx_item = #{wxItem} ,</if>
+			<if test="num!=null"> buildincome = #{num} ,</if>
+		</trim>
+	<![CDATA[
+		WHERE
+			FCHRQ >= #{fchrq}
+		AND FCHRQ <=#{end}
+		AND chxh =  #{chxh}	
+	 ]]>
+	</update>
+	
+	<select id="getInsNoByFchrqAndChxh" resultType="java.lang.String">
+	<![CDATA[
+		SELECT max(INS_NO) FROM T_INCOME_COST_D WHERE xuhao = (
+		SELECT max(xuhao) from HCZZQD_source WHERE FCHRQ >= #{fchrq} 
+		and FCHRQ <= #{end} and chxh=#{chxh} 
+		)
+	]]>
+	</select>
+	
+	<select id="getBundleReceiptByChxhAndFchrq" resultMap="bundleReceipt">
+		<![CDATA[
+			select * from hczzqd_source WHERE
+			ltrim(rtrim(chxh)) = #{chxh}
+			AND  fchrq >= #{before}
+			AND  fchrq < #{after}
+		]]>
+	</select>
+	<insert id="insertIntoIncome_D">
+		INSERT INTO T_INCOME_COST_D
+		(INS_NO , INS_XH , YDBHID , YDXZH ,
+		PINGMING , JIANSHU ,ZHL ,
+		TIJI , YSFS , FAZHAN , DAOZHAN , ZHCHRQ ,
+		YSHM , xuhao) values(
+		#{insNo},#{insXh},#{receipt.ydbhid},#{receipt.ydxzh},#{receipt.pinming},
+		#{receipt.jianshu},#{receipt.zhl},#{receipt.tiji},#{receipt.ysfs},
+		#{receipt.fazhan},#{receipt.daozhan},#{receipt.zhchrq},#{yshhm},#{receipt.xuhao}
+		)
+	</insert>
+	<insert id="insertIntoIncome_H">
+		INSERT INTO T_INCOME_COST_H
+		(
+		INS_NO ,CXH, ZHCHRQ ,
+		WX_GSNAME , T_COST , CREATE_GS , CREATE_USER,
+		CREATE_USERNAME , FAZHAN
+		, YSFS , DAOZHAN , YSHM , wx_type , wx_id ,
+		T_COST_SALE , T_COST_ELSE ,
+		i_type
+		)
+		VALUES
+		(
+		#{insNo},#{receipt.chxh},#{receipt.zhchrq},#{receipt.wxName},
+		 #{tCost}, #{company},#{account},#{username},#{receipt.fazhan},
+		 #{receipt.ysfs},#{receipt.daozhan},#{yshhm},#{receipt.clOwner},
+		 #{receipt.wxItem},#{receipt.qdCost},#{receipt.elseCost},#{receipt.iType}
+		)
+	</insert>
+	<select id="getInsNoFromIncome" resultType="java.lang.String">
+		<![CDATA[
+		select INS_NO from T_INCOME_COST_H where CONVERT(varchar(20),ZHCHRQ,120)=#{before} AND cxh = #{chxh}
+		]]>
+	</select>
+	
+	<update id="recoverGoodArriveStates">
+		UPDATE HCZZQD_source SET dhgrid = '', dhsj=null ,ydzh=0 WHERE
+		ydzh= 1 and ydbhid = #{ydbhid} 
+	</update>
+	
+	<update id="deleteGoodArriveStatesByXuhao">
+		UPDATE HCZZQD_source SET dhgrid = '', dhsj=null ,ydzh=0 WHERE xuhao = #{xuhao} 
+	</update>
+	
+	<select id="searchBundleReceiptForPrint" resultType="java.util.HashMap">
+	<![CDATA[
+	     SELECT HCZZQD_source.DAOZHAN,   
+         HCZZQD_source.FCHRQ,   
+         HCZZQD_source.ZHCHRQ,   
+         HCZZQD_source.CHXH,   
+         HCZZQD_source.JIANSHU,   
+         HCZZQD_source.PINMING,   
+         HWYD.SHHRLXDH,   
+         HWYD.SHHRMCH,  
+         HWYD.shhryb, 
+         HCZZQD_source.TIJI,   
+         HCZZQD_source.ZHL,   
+         HCZZQD_source.ZITI,   
+         HCZZQD_source.FAZHAN,   
+         HCZZQD_source.beizhu,   
+         HCZZQD_source.ydxzh,   
+         HCZZQD_source.xh,   
+         HCZZQD_source.xuhao,   
+         HCZZQD_source.zhipiao,   
+         HCZZQD_source.zhipiao2,   
+         HCZZQD_source.YDBHID,   
+         HCZZQD_source.hyy,   
+         HWYD.YSHHM,   
+         HCZZQD_source.ydzh,   
+         HCZZQD_source.yiti,   
+         convert(text,HWYD.FHDWMCH)as FHDWMCH, 
+         HWYDXZ.TBJE, 
+         HWYD.begin_placename,
+         HWYD.end_placename,  
+         HWYD.ysfs hwyd_ysfs,   
+         HWYD.DAOZHAN hwyd_daozhan,   
+         HCZZQD_source.ysfs,   
+         HCZZQD_source.grid,   
+         HCZZQD_source.lrsj,   
+         HCZZQD_source.dhgrid,   
+         HCZZQD_source.dhsj,   
+         HWYD.FAZHAN hwyd_fazhan,   
+         HWYD.FHSHJ,   
+         HCZZQD_source.fzshhd,   
+         HCZZQD_source.dzshhd,   
+         V_SHQSD.hdfk,   
+         HWYD.isfd,   
+         HWYDXZ.JIANSHU hwyd_jianshu,   
+         HWYD.ywlx,   
+         V_SHQSD.dsk,   
+         HWYDXZ.jffs,   
+         HWYD.pszhsh,   
+         HWYD.ydts,   
+         HWYD.SHHRDZH,   
+         HWYD.shhd,   
+         HWYD.dzshhd hwyd_dzshhd,   
+         T_QS.lrtime,   
+         HWYD.yxzt,
+         V_SHQSD.hjje,   
+         hwyd.is_kaiyun,
+         HCZZQD_source.yjddshj,
+         HWYD.ky_kind ,hwyd.xiaoshoucode ,hwyd.fhkhhy,
+         (select  isnull(tzfhzt,0)  from hwyd_ddfh where hwyd_ddfh.ydbhid=hczzqd_source.ydbhid) as tzfhzt,
+         HCZZQD_source.wx_item,
+         HCZZQD_source.wx_name,
+         HCZZQD_source.wx_con_name,
+         HCZZQD_source.wx_tel,
+         HCZZQD_source.list_no,
+         HCZZQD_source.i_type
+    FROM HWYD LEFT OUTER JOIN V_SHQSD ON HWYD.YDBHID = V_SHQSD.HWY_YDBHID,   
+         HCZZQD_source,   
+         HWYDXZ,   
+         T_QS  
+   WHERE ( HCZZQD_source.YDBHID = HWYD.YDBHID ) and  
+         ( HCZZQD_source.YDBHID = HWYDXZ.YDBHID ) and  
+         ( HCZZQD_source.ydxzh = HWYDXZ.YDXZH ) and  
+         ( HCZZQD_source.YDBHID = T_QS.ydbhid ) 
+	]]>
+         <include refid="resultWhereSqlv2" />
+	</select>
+	
+	<select id="getBundleReceiptByYdbhid" resultMap="bundleReceiptForCheck">
+		select top 1 * from hczzqd_source where ydbhid = #{ydbhid} order by FCHRQ desc
+	</select>
+	
+	<delete id="removeRouteByCztype" parameterType="java.lang.String">
+		delete from hwyd_route where ydbhid = #{ydbhid} and cztype = #{cztype}
+	</delete>
+
+
+	<select id="callProcedureOfUndoCargoStorage" parameterType="java.util.Map" resultType="java.lang.Integer" statementType="CALLABLE">
+		<![CDATA[
+			{
+				call dbo.usp_checkuserdelrec(
+					#{ydbhid,mode=IN,jdbcType=VARCHAR},
+					#{result,mode=OUT,jdbcType=INTEGER}
+				)
+			}
+		]]>
+	</select>
+	<delete id="deleteHczzqdSourceByYdbhid">
+		delete from hczzqd_source
+		where ydbhid = #{ydbhid}
+	</delete>
+	<delete id="deleteHczzqdSourceBeiZhuByYdbhid">
+		delete from hczzqd_beizhu
+		      where ydbhid = #{ydbhid}
+	</delete>
+</mapper>
+
+

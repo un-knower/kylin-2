@@ -1,0 +1,202 @@
+html, body{
+	height: 100%;
+}
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td { margin: 0; padding: 0; border: 0;box-sizing: border-box;-o-box-sizing: border-box;-ms-box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+ul,ol,li,dl,dd,dt{list-style: none;}
+em,i{ font-style: normal; }
+a { text-decoration: none;}
+a:hover { text-decoration: none; }
+.div-layout {
+	height: 100%;
+}
+.layui-tab-card{
+	height: calc(100% - 46px);
+}
+.layui-tab-content{height: 100%;}
+iframe{
+	width: 100% !important;
+	height: 100% !important;
+}
+#navigation{
+	width:190px;
+	background: #344566;
+	position: fixed;
+	top:0%;
+	left:0px;
+	z-index:99;
+	height: 100%;
+	transition: all 0.5s ease-out;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+}
+.nav-controll{
+	width: 40px;
+    height: 40px;
+    position: absolute;
+    bottom: 0.5%;
+    background: #f2f2f2;
+    left: 100%;
+    border: 1px solid #e2e2e2;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.nav-controll i{
+	width: 60%;
+    border: 1px solid #000;
+    display: block;
+    margin-top: 6px;
+    margin-left: 15%;
+    transition: all 0.5s ease-in;
+    -webkit-transition: all 0.5s ease-in;
+    -moz-transition: all 0.5s ease-in;
+    -ms-transition: all 0.5s ease-in;
+    -o-transition: all 0.5s ease-in;
+}
+.nav-controll i:first-child{margin-top: 8px !important;}
+.line_hide{
+	opacity: 0;
+	top: '10px';
+}
+.line_3{transform: translate(3%,-200%) rotate(45deg);}
+.line_4{transform: translate(3%,-600%) rotate(-45deg);}
+#navigation h1{
+	width:100%;
+	height:49px;
+	padding: 14px 10px;
+	border-bottom: 3px solid #4e6799;
+	opacity: 0;
+}
+.show-logo{
+	opacity: 1 !important;
+	position: fixed;
+	background: #344566;
+	top: 0;
+    width: 200px !important;
+    left: 0px;
+}
+#navigation h1 img{
+	display: block;
+	width: 130px;
+    height: 20px;
+}
+.nav-list ul li a{
+	display: block;
+	width:100%;
+	padding:8px 0;
+	color:#ccdeff;
+	text-indent:42px;
+	font-size:13px;
+}
+.parent-menu{font-size:15px !important;}
+.menu-icon{font-size: 20px;margin-right: 6px;}
+.nav-list>ul>li.selected>a{
+	color:#fff;
+	background:#2B2E37;
+}
+.nav-list>ul>li>a{
+	position: relative;
+	text-indent: 18px;
+}
+.nav-list>ul>li .span-icon{
+	width:20px;
+	height:22px;
+	position: absolute;
+	top:15px;
+	left:40px;
+	background:url(images/icon.png) no-repeat;
+}
+.nav-list>ul>li.nav1 .span-icon{
+	background-position-x: 0;
+	background-position-y: -39px ;
+}
+.nav-list>ul>li.nav2 .span-icon{
+	width:22px;
+	height:23px;
+	background-position-x: -30px;
+	background-position-y: -39px ;
+}
+.nav-list>ul>li.selected .span-icon{
+	background-position-y: -75px;
+}
+.nav-list>ul>li>a i.icon{
+	width:20px;
+	height:18px;
+	background:url(images/up-small.png) no-repeat center;
+	position: absolute;
+	top:13px;
+	right: 28px;
+}
+.nav-list>ul>li.selected>a i.icon{
+	background:url(images/down-small.png) no-repeat center;
+}
+.nav-list .sub-menu{
+	display: none;
+} 
+.list-group-item.active{
+	background-color: #4e6799;
+}
+#content{
+	position: relative;
+	height:100%;
+	padding:0 0 60px 190px;
+	box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	overflow: hidden;
+	transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+}
+.layui-tab {
+    margin: 0 !important;
+}
+.layui-tab-item{
+	height: 100%;
+}
+.first-tab i{
+	display: none !important;
+}
+.headMenu {
+    background-color: #344566;
+    height: 46px;
+    border-bottom: 3px solid #4e6799;
+}
+.headBox {
+    float: right;
+    line-height: 46px;
+}
+.tips {
+    font-size: 14px;
+    color: #E65934;
+}
+@media screen and (max-width: 1400px){ 
+	.tab-ul{height: 30px;}
+	.tab-ul>li{line-height: 30px; font-size: 12px;}
+	.layui-tab-title .layui-this:after{height: 30px;}
+	.nav-controll{
+		width: 25px;
+	    height: 25px;
+	}
+	/* .nav-controll i {
+		margin-top: 2px;
+	} */
+	.nav-controll i:first-child {
+	    margin-top: 3px !important;
+	}
+}
+@media screen and (max-width: 1366px){
+	.nav-list ul li a {
+	    padding: 8px 0;
+	    font-size: 12px;
+	}
+	.parent-menu{font-size:13px !important;}
+	.nav-list>ul>li>a i.icon{
+		top: 12px;
+	}
+}

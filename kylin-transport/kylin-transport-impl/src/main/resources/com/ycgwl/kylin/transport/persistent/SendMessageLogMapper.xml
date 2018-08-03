@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.SendMessageLogMapper">
+<insert id="saveMessageLog" parameterType="com.ycgwl.kylin.transport.entity.SendMessageLogEntity">
+insert into t_sendmessage_log(ydbhid,sendphoneNb,sendstatus,jianshu,sendContent,confirmphone) 
+values(#{ydbhid},#{sendphoneNb},0,#{jianshu},#{context},#{confirmphone})
+</insert>
+<select id="getMessageInfo" resultType="com.ycgwl.kylin.transport.entity.SendMessageLogEntity"  parameterType="com.ycgwl.kylin.transport.entity.SendMessageLogEntity">
+select top 1 ydbhid,sendphoneNb,sendContent,confirmphone from t_sendmessage_log where sendstatus=0 order by sys_date
+</select>
+<update id="updateByYdbhid" >
+update t_sendmessage_log set sendstatus=#{flag},errorMessage=#{errorMessage},sendtime=getdate() where ydbhid = #{ydbhid}
+</update>
+</mapper>

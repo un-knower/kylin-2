@@ -1,0 +1,176 @@
+@CHARSET "UTF-8";
+/*created by lhz*/
+#content .form-con,.form-con.col-25 .txt, .form-con.col-50 .txt, .form-con.col-100 .txt{height: 38px;}
+.form-con .labe-l{height: 38px; line-height: 38px;}
+.sub-part .sub-part-form>table td, .sub-part .sub-part-form>table th{padding: 9px 0;}
+.btn-save{
+	display: inline-block;
+    height: 38px !important;
+    width: 64px !important;
+    line-height: 38px !important;
+    padding: 0 18px !important;
+    background-color: #009688 !important;
+    color: #fff !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    font-size: 14px !important;
+    border: none !important;
+    border-radius: 2px !important;
+    cursor: pointer !important;
+}
+.layui-form-radioed i{color: #5FB878 !important;}
+#content .form-con{font-size: 14px;}
+#content .con-main .part>.sub-part{clear: both;}
+.layui-form-radio{padding: 0px;}
+.layui-inline{width: 500px;}
+.part_box .layui-inline{width: auto !important;}
+.form-con .labe-l{width: 95px;}
+@media screen and (max-width: 1400px){
+	*{font-size: 12px;}
+	#content .form-con,.form-con.col-25 .txt, .form-con.col-50 .txt, .form-con.col-100 .txt{height: 30px;}
+	.form-con .labe-l{height: 30px;line-height: 30px;}
+	.layui-breadcrumb a,.layui-form-radio span{font-size: 12px;}
+	.breadcrumb{margin:5px;padding: 3px 15px;}
+	
+	.layui-inline{width: 400px;}
+	.cyMehod{width: 320px !important;}
+}
+/*created by lhz*/
+.layui-body{overflow-y: scroll;}
+.breadcrumb{margin: 15px;display: block; visibility: visible !important;}
+.layui-form-label{padding: 9px 0px;width:100px;}
+.layui-input{width: 180px;}
+.layui-form-item .layui-input-inline {
+    float: left;
+    width: 180px;
+}
+.radio-div{
+	width: auto !important; 
+	margin-right: 0px !important;
+	margin-left: 10px;
+}
+.part_box {
+    margin:0 15px 25px 15px;
+    min-width: 80px;
+    clear: both;
+}
+.clear{clear:both}
+.clearfix:after{content: ''; display: block; height: 0; clear: both;}
+.clearfix{zoom: 1;}
+.fl{float: left;}
+.fr{float:right}
+.layui-table-view{width:100% !important}
+.layui-btn{
+	height: 38px;
+	line-height: 38px;
+	margin: 0 0 0 10px;
+	display: inline-block;
+	position: relative;
+    top: -2px;
+    margin-left: 20px;
+}
+.no-data-copy{
+	color: #666;
+    font-weight: 900;
+    font-size: 20px;
+}
+hr {margin-bottom: 2%;}
+
+.margL30{ margin-left:30px;}
+.radioBox{  margin-right:20px}
+.radioBox label{width: 100px !important;text-align:right}
+.layui-form-radio{color:#666}
+h4{font-size:16px;padding:0 0 10px 10px; border-bottom: 1px solid #D1D1D1; margin-bottom:15px}
+
+em {width: 0px;display: inline-block;color: red;padding-right: 5px}
+.layui-table th {
+    padding: 9px 0px;
+
+}
+.layui-table td {
+    padding: 0px 2px;
+
+}
+
+.selectUl,com_select {
+	margin-top:5px;
+    display: none;
+    z-index: 1;
+    background-color: #fff;
+    border: 1px solid #eee;
+    display: none;
+    width: 100%;
+    clear: both;
+    overflow: auto;
+    position: absolute;
+    max-height: 250px;
+}
+.selectUl li,com_select li {
+    padding:8px 0 8px 8px;
+    cursor: pointer;
+}
+.selectUl li:hover{background:#EBEBEB;}
+.layui-table tbody tr:hover{background:none !important}
+.layui-table tbody input{width:100%}
+.layui-table tbody .layui-btn{margin-left:0px}
+.layui-table tbody tr td{text-align:center}
+.removeTr{width: 16px;
+     height: 16px;
+     display: block;
+     background: #fff url(../../common/images/icon-remove.png) no-repeat center;}
+table.tabBox{margin-bottom:0px!important}
+table.DataTab{margin:0px 0 20px 0!important;border-top:none !important} 
+table.DataTab  ul li{border-bottom:1px solid #e2e2e2;}
+table.DataTab  ul li:last-child{border-bottom:none}
+table.DataTab input {text-align: center;}
+.borderLine{border:1px solid #E2E2E2 !important};
+ table.DataTab  td{padding:0 !important}
+ 
+ .layui-inline a:hover,
+.layui-inline a:focus {
+  color: #fff;
+  text-decoration: none;
+}
+.sPart,.subPart{float:left}
+
+@media screen and (max-width: 1400px){
+	.btn-group{
+		margin:0 !important;
+	}
+	.layui-table td, .layui-table th {
+	   font-size:12px;
+	}
+	.layui-input, .layui-select, .layui-textarea {
+    height: 30px;
+    line-height: 30px;
+    }
+    .part_box .layui-form-label {
+       padding: 5px 0px;  
+    }
+    
+    .part_box:first-child .layui-form-label {
+    padding: 9px 0px;
+    } 
+    .radioBox {
+    margin-right: 0px;
+    }
+    .layui-input,.easy-autocomplete{
+    width: 180px !important;
+    }
+    
+    .layui-form-item .layui-inline {
+    margin-right: 0px;
+   }
+   .part_box {
+    margin: 0 15px;
+    }
+    .layui-form-item { margin-bottom: 0px;}
+    .sPart:first-child .layui-input-inline:first-child{width:283px !important}
+   .layui-form-item .layui-input-inline {
+    width: auto;
+    margin-right: 0px;
+}
+}
+
+
+

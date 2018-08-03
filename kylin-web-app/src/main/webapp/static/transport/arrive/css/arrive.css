@@ -1,0 +1,33 @@
+@CHARSET "UTF-8";
+.layui-table td, .layui-table th{text-align: center;}
+.breadcrumb{margin: 15px;display: block;}
+.layui-form-label{padding: 9px 0px;}
+.input-div{width: 300px;}
+.radio-div{
+	width: auto !important; 
+	margin-right: 0px !important;
+	margin-left: 10px;
+}
+.check-form{float: left;}
+.btn-group{float: left;height: 150px; margin: 0 3%;}
+.layui-btn{
+	height: 30px;
+	line-height: 30px;
+	margin: 5px 0 0 10px;
+	display: block;
+}
+.select-condition{float:left;}
+.no-data-copy{
+	color: #666;
+    font-weight: 900;
+    font-size: 20px;
+}
+hr {margin-bottom: 2%;}
+@media screen and (max-width: 1366px){
+	.btn-group{
+		margin:0 !important;
+	}
+	.layui-table td, .layui-table th {
+	    padding: 9px 5px !important;
+	}
+}

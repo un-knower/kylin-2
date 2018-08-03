@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.ReportMapper">
+    <resultMap type="com.ycgwl.kylin.transport.entity.ReportConfig" id="reportConfig">
+        <id column="report_id" property="reportId" jdbcType="INTEGER" />
+        <result column="report_name" property="reportName" jdbcType="VARCHAR" />
+        <result column="report_headers" property="reportHeaders" jdbcType="VARCHAR" />
+        <result column="report_select_sql" property="reportSelectSql" jdbcType="VARCHAR" />
+        <result column="report_query_keys" property="reportQueryKeys" jdbcType="VARCHAR" />
+        <result column="order_by_key" property="orderByKey" jdbcType="VARCHAR" />
+        <result column="report_header_names" property="reportHeaderNames" jdbcType="VARCHAR" />    
+        <result column="report_sum_sql" property="reportSumSql" jdbcType="VARCHAR" />     
+        <result column="report_sum_key" property="reportSumKey" jdbcType="VARCHAR" />                
+        <result column="data_base_key" property="dataBaseKey" jdbcType="VARCHAR" />
+        <result column="stored_procedure_name" property="storedProcedureName" jdbcType="VARCHAR" />                                        
+        <result column="group_by_key" property="groupByKey" jdbcType="VARCHAR" /> 
+        <result column="is_list_group" property="isListGroup" jdbcType="INTEGER" />
+        <result column="replace_sql" property="replaceSql" jdbcType="VARCHAR" />
+        <result column="lock_flag"  property="lockFlag" jdbcType="INTEGER"/>
+                                                       
+    </resultMap>
+    <resultMap type="com.ycgwl.kylin.transport.entity.ReportQuery" id="reportQuery">
+        <id column="query_id" property="queryId" jdbcType="INTEGER" />
+        <result column="query_name" property="queryName" jdbcType="VARCHAR" />
+        <result column="query_key" property="queryKey" jdbcType="VARCHAR" />
+        <result column="query_default_value" property="queryDefaultValue" jdbcType="VARCHAR" />
+        <result column="query_type" property="queryType" jdbcType="VARCHAR" />
+        <result column="query_src_type" property="querySrcType" jdbcType="VARCHAR" />
+        <result column="query_src" property="querySrc" jdbcType="VARCHAR" />                   
+        <result column="report_name" property="reportName" jdbcType="VARCHAR" />        
+    </resultMap>
+    
+    <!-- 查询报表配置 -->
+    <select id="listConfig" resultMap="reportConfig">
+        SELECT * FROM report_config
+    </select>
+    
+    <!-- 根据主键查询报表配置 -->
+    <select id="getConfigByKey" resultMap="reportConfig" parameterType="java.lang.Integer">
+        SELECT * FROM report_config WHERE report_id = #{reportId}
+    </select>
+    
+    <!-- 根据名称查询报表配置 -->
+    <select id="getConfigByName" resultMap="reportConfig" parameterType="java.lang.String">
+        SELECT * FROM report_config WHERE report_name = #{reportName}
+    </select>
+    
+        <!-- 查询报表查询条件-->
+    <select id="listReportQueryByName" resultType="java.util.LinkedHashMap" parameterType="java.lang.String">
+    	SELECT query_id FROM report_query WHERE query_name =  #{reportName,jdbcType=VARCHAR}
+    </select>   
+      
+    <!-- 根据主键查询报表查询条件 -->
+    <select id="listQueryByKeys" resultMap="reportQuery" parameterType="java.util.List">
+        SELECT * FROM report_query WHERE query_id IN
+        <foreach collection="list" item="ckey" separator="," open="(" close=")">
+            #{ckey,jdbcType=INTEGER}
+        </foreach>
+    </select>
+    
+    <!-- 执行报表sql语句  查询表格数据-->
+    <select id="listReportBySql" resultType="java.util.LinkedHashMap" parameterType="java.lang.String">
+        ${reportSql}
+    </select>    
+    
+    <!-- 查询总数 -->
+    <select id="findReportCount" resultType="java.util.LinkedHashMap" parameterType="java.lang.String">
+       SELECT COUNT(*) counts from  ( ${reportSql} ) b
+    </select>
+    
+    <sql id="reportQueryFields">
+		query_name,query_default_value,query_type,
+		query_src_type,query_src,query_key,report_name
+	</sql>
+	
+	 <sql id="reportConfigFields">
+		report_name,report_header_names,report_headers,order_by_key,report_sum_key,
+		group_by_key,data_base_key,report_select_sql,report_sum_sql,replace_sql,
+		report_query_keys,lock_flag
+	</sql>
+    
+    <!-- 添加reportConfig -->
+    <insert id="insertReportConfig"  parameterType="com.ycgwl.kylin.transport.entity.ReportConfig">
+		insert into
+		report_Config
+		(
+		<include refid="reportConfigFields" />
+		)
+		VALUES(#{reportName},#{reportHeaderNames} ,#{reportHeaders},#{orderByKey},
+		#{reportSumKey},#{groupByKey},
+		#{dataBaseKey},#{reportSelectSql},#{reportSumSql},
+		#{replaceSql},#{reportQueryKeys},#{lockFlag}
+		)
+	</insert>
+    
+     <!-- 添加reportQuery -->
+     <insert id="insertReportQueryList"  parameterType="java.util.List" >
+		insert into
+		report_query
+		(
+		<include refid="reportQueryFields" />
+		)
+		VALUES
+		
+		<foreach collection="list" item="d" index="index" separator=",">
+	    (
+		#{d.queryId},#{d.queryName},#{d.queryKey} ,#{d.queryDefaultValue},
+		#{d.queryType},#{d.querySrcType} ,#{d.querySrc},#{d.reportName}
+		)
+		</foreach>
+	</insert>
+	
+	 <insert id="insertReportQuery"  parameterType="com.ycgwl.kylin.transport.entity.ReportQuery" >
+		insert into
+		report_query
+		(
+		<include refid="reportQueryFields" />
+		)
+		VALUES		
+	    (
+		#{queryId},#{queryName},#{queryKey} ,#{queryDefaultValue},
+		#{queryType},#{querySrcType} ,#{querySrc},#{reportName}
+		)
+	</insert>
+	
+	<!-- 修改报表配置 -->
+    <update id="updateReportConfig" parameterType="com.ycgwl.kylin.transport.entity.ReportConfig">
+    	UPDATE REPORT_CONFIG
+    	 <trim prefix="set" suffixOverrides=","> 
+			<if test="reportHeaders != null">
+				<![CDATA[ report_headers = #{reportHeaders}, ]]>
+			</if>
+			<if test="reportHeaderNames != null">
+				<![CDATA[ report_header_names = #{reportHeaderNames}, ]]>
+			</if>	
+			<if test="reportSelectSql != null">
+				<![CDATA[ report_select_sql = #{reportSelectSql}, ]]>
+			</if>	
+			<if test="orderByKey != null">
+				<![CDATA[ order_by_key = #{orderByKey}, ]]>
+			</if>	
+			
+			<if test="reportName != null">
+				<![CDATA[ report_name = #{reportName}, ]]>
+			</if>	
+			<if test="reportQueryKeys != null">
+				<![CDATA[ report_query_keys = #{reportQueryKeys}, ]]>
+			</if>	
+			<if test="reportSumSql != null">
+				<![CDATA[ report_sum_sql = #{reportSumSql}, ]]>
+			</if>	
+			<if test="reportSumKey != null">
+				<![CDATA[ report_sum_key = #{reportSumKey}, ]]>
+			</if>	
+			<if test="dataBaseKey != null">
+				<![CDATA[ data_base_key = #{dataBaseKey}, ]]>
+			</if>	
+			<if test="groupByKey != null">
+				<![CDATA[ group_by_key = #{groupByKey}, ]]>
+			</if>	
+			<if test="replaceSql != null">
+				<![CDATA[ replace_sql = #{replaceSql}, ]]>
+			</if>
+			<if test="lockFlag != null">
+				<![CDATA[ lock_flag =#{lockFlag}]]>
+			</if>
+		 </trim>  
+		WHERE report_id = #{reportId} 
+    </update>
+    
+    <!-- 修改报表查询条件-->
+    <update id="updateReportQuery" parameterType="com.ycgwl.kylin.transport.entity.ReportQuery">
+    	UPDATE REPORT_QUERY
+    	 <trim prefix="set" suffixOverrides=","> 
+			<if test="queryKey != null">
+				<![CDATA[ query_key = #{queryKey}, ]]>
+			</if>
+			<if test="queryDefaultValue != null">
+				<![CDATA[ query_default_value = #{queryDefaultValue}, ]]>
+			</if>	
+			<if test="queryType != null">
+				<![CDATA[ query_type = #{queryType}, ]]>
+			</if>	
+			<if test="queryName != null">
+				<![CDATA[ query_name = #{queryName}, ]]>
+			</if>	
+			<if test="querySrcType != null">
+				<![CDATA[ query_src_type = #{querySrcType}, ]]>
+			</if>
+			<if test="querySrc != null">
+				<![CDATA[ query_src = #{querySrc}, ]]>
+			</if>
+		 </trim>  
+		WHERE query_id = #{queryId} 
+    </update>
+    
+    <!--  删除报表配置-->
+    <delete id="deleteReportConfig" parameterType="java.lang.Integer">
+    	delete REPORT_CONFIG where  report_id = #{id}
+    </delete>
+    
+    <!--  删除报表条件-->
+    <delete id="deleteReportQuery" parameterType="java.lang.Integer">
+    	delete report_query where  query_id = #{id}
+    </delete>
+	<select id="callStoredProcedure" parameterType="java.util.Map" statementType="CALLABLE" >
+		<![CDATA[  
+				  {
+				call dbo.${storedProcedureName}('北京',
+					#{dKsrq,mode=IN,jdbcType=VARCHAR},
+					#{dZzrq,mode=IN,jdbcType=VARCHAR},
+					'93333'
+					)
+              }
+		]]>
+	</select>
+	
+	<!--  动态获取存储过程的结果-->
+	<select id="getDynamicProcedure" parameterType="java.lang.String" statementType="CALLABLE">
+		<![CDATA[  
+				${dynamicProcedure}
+		]]>
+	</select>
+	
+	 <!-- 保存reportQuery -->
+     <insert id="saveReportQuery" keyProperty="queryId" keyColumn="query_id" useGeneratedKeys="true" parameterType="java.util.List">
+		insert into report_query (query_name,query_default_value,query_type,query_src_type,query_src,query_key) 
+		VALUES ( #{queryName},#{queryDefaultValue},#{queryType},#{querySrcType} ,#{querySrc},#{queryKey})
+	</insert>
+	
+     <!--修改 reportQuery -->
+     <update id="BatchUpdtReportQuery"  parameterType="java.util.List" >
+        <foreach collection="list" item="d" index="index" separator=",">
+		update  report_query
+		<set>
+		  query_name = #{d.queryName},
+		  query_default_value = #{d.queryDefaultValue},
+		  query_type = #{d.queryType},
+		  query_src_type = #{d.querySrcType},
+		  query_src =#{d.querySrc},
+		  query_key= #{d.queryKey}
+		</set>
+		 where query_id = #{d.queryId} 
+		</foreach>
+    </update>
+	 
+	 <!--获取reportCofig表最大的report_id-->
+	  <select id="getReportId" resultType="java.lang.Integer">
+	      Select IsNull(Max(convert(Int,report_id)),0) maxid From report_config
+	  </select>
+	
+	 <!-- 查询queryid条件是否被占用 -->
+	 <select id="queryCondionUsed"  resultMap="reportConfig">
+        SELECT * from report_config where report_query_keys like '%'+#{reportQueryId}+'%'
+	 </select>
+	 
+	 <!--判断queryid是否重复  -->
+	 <select id="selectQueryId" resultType="java.lang.Integer">
+	 	 select  count(1)  FROM report_query WHERE query_id= #{queryId}
+	 </select>
+	 
+	 <!-- 更新reportconfig表的repoortKeys为空 -->
+	 <update id="updateReportfgQueryKeys" parameterType="com.ycgwl.kylin.transport.entity.ReportConfig">
+	    UPDATE report_config set report_query_keys =#{reportQueryKeys} where report_id = #{reportId} 
+	 </update>
+	 
+	 <!-- 更新reportconfig表的锁定状态 -->
+	 <update id="updateLockstaus" parameterType="com.ycgwl.kylin.transport.entity.ReportConfig">
+	    update report_config set lock_flag =#{lockFlag} where report_id = #{reportId}
+	 </update>
+	
+	<resultMap type="com.ycgwl.kylin.transport.entity.ReportSubReport" id="reportSubReport">
+        <result column="report_config_id" property="reportConfigId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+        <result column="check_type" property="checkType" jdbcType="VARCHAR" />
+        <result column="params" property="params" jdbcType="VARCHAR" />
+        <result column="sub_report_id" property="subReportId" jdbcType="VARCHAR" />        
+        <result column="subparams" property="subParams" jdbcType="VARCHAR" />        
+    </resultMap>
+	
+	<!-- 获取子报表 -->
+	<select id="getSubReportByKey" resultMap="reportSubReport" parameterType="java.util.List">
+        SELECT * FROM report_sub_report WHERE report_config_id = #{reportConfigId}
+    </select>
+	
+	<!-- 获取子报表 -->
+	<insert id="saveSubReport" parameterType="java.util.List">
+        insert into report_sub_report (report_config_id,name,link_url,check_type,params,sub_report_id,subparams) values (
+        		#{reportConfigId},#{name},#{linkUrl},#{checkType},#{params},#{subReportId},#{subParams}
+        )
+    </insert>
+    
+    <!-- 删除子报表 -->
+	<delete id="deleteSubReport">
+        delete from report_sub_report where report_configId=#{reportConfigId} and sub_reportId=#{subReportId}
+    </delete>
+    
+    <!-- 更新子报表 -->
+    <update id="updateSubReport" parameterType="com.ycgwl.kylin.transport.entity.ReportSubReport">
+        update report_sub_report set name = #{name},link_url=#{linkUrl},check_type=#{checkType},
+        params=#{params},sub_report_id=#{subReportId},subparams=#{subParams} 
+        where report_config_id = #{reportConfigId} and sub_report_id=#{subReportId}
+    </update>
+    
+    <!-- 获取子报表 -->
+	<select id="getSubReportByParentIdSubId" resultMap="reportSubReport">
+        SELECT * FROM report_sub_report WHERE report_config_id = #{reportConfigId} and sub_report_id=#{subReportId}
+    </select>
+	
+</mapper>

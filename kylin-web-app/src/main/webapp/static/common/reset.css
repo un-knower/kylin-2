@@ -1,0 +1,42 @@
+/*清除默认样式*/
+body{font-family: "微软雅黑"; font-size: 14px;}
+
+body,div,ul,ol,dl,li,dt,dd,h1,h2,h3,h4,h5,h6,p,img,input{margin: 0; padding: 0;}
+
+ul,ol{list-style: none;}
+
+li{list-style-type: none;}
+
+h1,h2,h3,h4,h5,h6{font-weight: normal;}
+
+img,input{border: none; outline: none;}
+
+a{text-decoration: none;}
+
+.ellipsis{overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+
+.fl{float: left;}
+
+.fr{float: right;}
+
+.fn{float: none !important;}
+
+.clear{display:block; height:0; visibility:hidden; clear:both;}
+
+.cn{clear: none !important;}
+
+.clearAfter{zoom: 1;}
+
+.clearAfter:after{content:"."; display:block; height:0; visibility:hidden; clear:both;}
+
+.ca:after{display: none !important;}
+
+.bb{border-bottom: none !important;}
+
+.br{border-right: none !important;}
+
+.pr{padding-right: 0 !important;}
+
+.mr{margin-right: 0 !important;}
+
+.mn{ margin: 0 !important;}

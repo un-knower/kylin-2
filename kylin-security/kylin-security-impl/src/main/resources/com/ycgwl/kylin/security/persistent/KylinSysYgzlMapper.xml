@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">    
+<mapper namespace="com.ycgwl.kylin.security.persistent.UserMapper">
+	
+	 <resultMap type="com.ycgwl.kylin.security.entity.User" id="kylinSysYgzlEntityMapper">
+        <result property="account" column="grid"/>
+        <result property="userName" column="xm"/>
+        <result property="xb" column="xb"/>
+        <result property="zw" column="zw"/>
+        <result property="company" column="gs"/>
+        <result property="bm" column="bm"/>
+        <result property="password" column="KOULING"/>
+    </resultMap>
+    
+    
+	
+	<select id="queryByGrid" resultMap="kylinSysYgzlEntityMapper">
+	SELECT * from ygzl where grid=#{grid}
+		
+	</select>
+	
+	<select id="queryByUserName" resultMap="kylinSysYgzlEntityMapper">
+		SELECT a.xm,a.xb,a.zw,a.grid,a.bm,a.grid,a.gs,b.KOULING from ygzl a,GRCZQX b 
+		where a.grid=b.HMC_GKH AND a.grid=#{account}
+	</select>
+	
+	<!-- 查询用户的所有权限 -->
+	<select id="queryAllPerms" resultType="String">
+		SELECT c.perms
+         from ygzl a 
+         RIGHT JOIN kylin_sys_user_menu b ON a.grid=b.grid
+          RIGHT JOIN  kylin_sys_menu c ON b.menu_id=c.menu_id
+         where a.grid=#{grid}
+	</select>
+	
+	<!-- 查询用户的所有菜单ID --> 
+	<select id="queryAllMenuId" resultType="Integer">
+		SELECT b.menu_id  from ygzl a 
+        RIGHT JOIN kylin_sys_user_menu b ON a.grid=b.grid
+         where a.grid=#{grid}
+	</select>
+	
+	
+	<select id="queryTotal" resultType="int">
+		select count(*) from ygzl 
+		
+	</select>
+	
+		
+	<select id="queryList" resultMap="kylinSysYgzlEntityMapper">
+			 SELECT u.* FROM
+	(SELECT ROW_NUMBER() OVER (ORDER BY grid) as RowId, * FROM (SELECT * FROM ygzl) u) AS u
+	 where RowId between #{page} and  #{limit} 
+	</select>
+	
+	
+</mapper>

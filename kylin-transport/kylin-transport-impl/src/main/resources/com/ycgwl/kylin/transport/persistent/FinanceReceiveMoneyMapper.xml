@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.FinanceReceiveMoneyMapper">
+	<!-- 财凭表查询 开始-->
+	<select id="findReceiveMoney" resultMap="findReceiveMoneyResultMap" parameterType="com.ycgwl.kylin.transport.entity.FinanceReceiveMoney">
+		SELECT fkfsh.cwpzhbh,
+           fkfsh.yshzhk ,
+           fkfsh.yshzhk_b ,
+           fkfsh.xianjin ,
+           fkfsh.xianjin_b ,
+           fkfsh.hdfk ,
+           fkfsh.hdfk_b ,
+           fkfsh.yhshr ,
+           fkfsh.yhshr_b ,
+           fkfsh.chuna ,
+           fkfsh.bdf ,
+           fkfsh.chcf ,
+           fkfsh.dtf ,
+           fkfsh.bxf ,
+           fkfsh.yfhj ,
+           fkfsh.yshk ,
+           fkfsh.hjje ,
+           fkfsh.type ,
+           fkfsh.dsk ,
+           fkfsh.dsk_b ,
+           fkfsh.yshk_b ,
+           fkfsh.xianlu ,
+           fkfsh.nf     
+        FROM fkfsh      
+        WHERE fkfsh.xianlu = #{xianlu} and  fkfsh.cwpzhbh = #{cwpzhbh} and fkfsh.type = 0 and fkfsh.nf = #{nf}  
+	</select>
+	
+	<resultMap id="findReceiveMoneyResultMap" type="com.ycgwl.kylin.transport.entity.FinanceReceiveMoney">
+		<result column="cwpzhbh" property="cwpzhbh" jdbcType="NUMERIC" />
+		<result column="yshzhk" property="yshzhk" jdbcType="NUMERIC" />
+		<result column="yshzhk_b" property="yshzhkB" jdbcType="NUMERIC" />
+		<result column="xianjin" property="xianjin" jdbcType="NUMERIC" />
+		<result column="xianjin_b" property="xianjinB" jdbcType="NUMERIC" />
+		<result column="hdfk" property="hdfk" jdbcType="NUMERIC" />
+		<result column="hdfk_b" property="hdfkB" jdbcType="NUMERIC" />
+		<result column="yhshr" property="yhshr" jdbcType="NUMERIC" />
+		<result column="yhshr_b" property="yhshrB" jdbcType="NUMERIC" />
+		<result column="chuna" property="chuna" jdbcType="VARCHAR" />
+		<result column="bdf" property="bdf" jdbcType="NUMERIC" />
+		<result column="chcf" property="chcf" jdbcType="NUMERIC" />
+		<result column="dtf" property="dtf" jdbcType="NUMERIC" />
+		<result column="bxf" property="bxf" jdbcType="NUMERIC" />
+		<result column="yfhj" property="yfhj" jdbcType="NUMERIC" />
+		<result column="yshk" property="yshk" jdbcType="DECIMAL" />
+		<result column="hjje" property="hjje" jdbcType="DECIMAL" />
+		<result column="type" property="type" jdbcType="NUMERIC" />
+		<result column="dsk" property="dsk" jdbcType="NUMERIC" />
+		<result column="dsk_b" property="dskB" jdbcType="NUMERIC" />
+		<result column="dsk" property="dsk" jdbcType="NUMERIC" />
+		<result column="yshk_b" property="yshkB" jdbcType="NUMERIC" />
+		<result column="xianlu" property="xianlu" jdbcType="VARCHAR" />
+		<result column="nf" property="nf" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 财凭表查询 结束-->
+	
+	<!-- 打印信息查询开始 -->
+	<select id="findReceiveMoneyPrint" resultMap="findReceiveMoneyPrintResultMap" parameterType="com.ycgwl.kylin.transport.entity.FinanceReceiveMoneyPrint">
+		SELECT FIWT.nf ,
+		   FIWT.cwpzhbh ,
+		   FIWT.FHSHJ ,
+		   fkfsh.yshzhk ,
+           fkfsh.xianjin ,
+           FIWT.beizhu ,
+           FIWT.QHZHXFdj ,
+           FIWT.zhJXZYF ,
+           FIWT.qhyj ,
+           FIWT.zhhyj ,
+           fkfsh.hdfk ,
+           fkfsh.yhshr ,
+           fkfsh.qthj ,
+           fkfsh.hjje ,
+           fkfsh.qtfymch ,
+           fkfsh.qtfy ,
+           fkfsh.yfhj ,
+           HWYD.FAZHAN ,
+           convert(text,HWYD.FHDWMCH)as FHDWMCH ,
+           HWYD.FHDWLXDH ,
+           HWYD.FHDWDZH ,
+           HWYD.SHHRMCH ,
+           HWYD.SHHRLXDH ,
+           HWYD.SHHRDZH ,
+           HWYD.DAOZHAN ,
+           HWYD.YSHHM ,
+           HWYD.FHDWYB ,
+           HWYD.SHHRYB ,
+           fkfsh.chuna ,
+           fkfsh.zhipiao ,
+           FIWT.zhzhxfdj ,
+           FIWT.ajyj ,
+           FIWT.baolu ,
+           FIWT.xianlu ,
+           HWYD.YDBHID ,
+           CONVERT (VARCHAR(20) ,FIWT.sqshj, 120) as sqshj,
+           HWYD.JSHHJ ,
+           CWPZHXZ.JIANSHU ,
+           CWPZHXZ.jffs ,
+           CWPZHXZ.tbje ,
+           CWPZHXZ.TIJI ,
+           CWPZHXZ.ZHL ,
+           CWPZHXZ.zchl ,
+           CWPZHXZ.zzxl ,
+           CWPZHXZ.qchl ,
+           CWPZHXZ.qzxl ,
+           CWPZHXZ.pinming,
+           HWYD.shhd ,
+           FIWT.SHSHMF ,
+           FIWT.SHMSHHF ,
+           FIWT.bdf ,
+           HWYD.fwfs ,
+           HWYD.fpmc ,
+           HWYD.swzh ,
+           fkfsh.yshk ,
+           fkfsh.YSHK_B ,
+           fkfsh.yshzhk_b ,
+           HWYD.fdnr ,
+           HWYD.fdlc ,
+           HWYD.ysfs ,
+           HWYD.dzfk ,
+           FIWT.fpid ,
+           FIWT.dsk ,
+           HWYD.ywlx ,
+           HWYD.fzfk ,
+           HWYD.dzshhd,
+           fkfsh.YouHuiJinE,
+           HWYD.ydly 
+        	FROM FIWT ,
+           fkfsh ,
+           HWYD ,
+           CWPZHXZ     
+        WHERE ( HWYD.YDBHID = FIWT.HWY_YDBHID ) and ( fkfsh.cwpzhbh = FIWT.cwpzhbh ) and ( fkfsh.xianlu = FIWT.xianlu ) 
+        and ( fkfsh.type = FIWT.type ) and ( CWPZHXZ.xianlu = FIWT.xianlu ) and ( CWPZHXZ.CWPZHBH = FIWT.cwpzhbh ) 
+        and ( CWPZHXZ.type = FIWT.type ) and ( FIWT.nf = fkfsh.nf ) and ( FIWT.nf = CWPZHXZ.nf ) 
+        and ( ( FIWT.xianlu = #{xianlu} ) and ( FIWT.cwpzhbh = #{cwpzhbh} ) and  ( FIWT.nf = #{nf} ) and  ( FIWT.type = #{type} ) )  
+	</select>
+
+	<resultMap id="findReceiveMoneyPrintResultMap" type="com.ycgwl.kylin.transport.entity.FinanceReceiveMoneyPrint">
+		<result column="gkh" property="grid" jdbcType="VARCHAR" />
+		<result column="nf" property="nf" jdbcType="VARCHAR" />
+		<result column="cwpzhbh" property="cwpzhbh" jdbcType="NUMERIC" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="xianlu" property="xianlu" jdbcType="VARCHAR" />
+		<result column="YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+		<result column="QHZHXFdj" property="qhzhxfdj" jdbcType="NUMERIC" />
+		<result column="zhJXZYF" property="zhjxzyf" jdbcType="NUMERIC" />
+		<result column="FHSHJ" property="fhshj" jdbcType="TIMESTAMP" />
+		<result column="qhyj" property="qhyj" jdbcType="NUMERIC" />
+		<result column="zhhyj" property="zhhyj" jdbcType="NUMERIC" />
+		<result column="yshzhk" property="yshzhk" jdbcType="TIMESTAMP" />
+		<result column="xianjin" property="xianjin" jdbcType="NUMERIC" />
+		<result column="hdfk" property="hdfk" jdbcType="NUMERIC" />
+		<result column="yhshr" property="yhshr" jdbcType="NUMERIC" />
+		<result column="qthj" property="qthj" jdbcType="NUMERIC" />
+		<result column="hjje" property="hjje" jdbcType="NUMERIC" />
+		<result column="qtfymch" property="qtfymch" jdbcType="VARCHAR" />
+		<result column="qtfy" property="qtfy" jdbcType="NUMERIC" />
+		<result column="yfhj" property="yfhj" jdbcType="NUMERIC" />
+		<result column="FAZHAN" property="fazhan" jdbcType="VARCHAR" />
+		<result column="FHDWMCH" property="fhdwmch" jdbcType="VARCHAR" />
+		<result column="FHDWLXDH" property="fhdwlxdh" jdbcType="VARCHAR" />
+		<result column="FHDWDZH" property="fhdwdzh" jdbcType="VARCHAR" />
+		<result column="SHHRMCH" property="shhrmch" jdbcType="VARCHAR" />
+		<result column="SHHRLXDH" property="shhrlxdh" jdbcType="VARCHAR" />
+		<result column="SHHRDZH" property="shhrdzh" jdbcType="VARCHAR" />
+		<result column="DAOZHAN" property="daozhan" jdbcType="VARCHAR" />
+		<result column="YSHHM" property="yshhm" jdbcType="VARCHAR" />
+		<result column="FHDWYB" property="fhdwyb" jdbcType="VARCHAR" />
+		<result column="SHHRYB" property="shhryb" jdbcType="VARCHAR" />
+		<result column="chuna" property="chuna" jdbcType="VARCHAR" />
+		<result column="zhipiao" property="zhipiao" jdbcType="VARCHAR" />
+		<result column="zhzhxfdj" property="zhzhxfdj" jdbcType="NUMERIC" />
+		<result column="ajyj" property="ajyj" jdbcType="NUMERIC" />
+		<result column="baolu" property="baolu" jdbcType="NUMERIC" />
+		<result column="sqshj" property="sqshj" jdbcType="TIMESTAMP" />
+		<result column="JSHHJ" property="jshhj" jdbcType="INTEGER" />
+		<result column="JIANSHU" property="jianshu" jdbcType="INTEGER" />
+		<result column="jffs" property="jffs" jdbcType="INTEGER" />
+		<result column="tbje" property="tbje" jdbcType="NUMERIC" />
+		<result column="TIJI" property="tiji" jdbcType="NUMERIC" />
+		<result column="ZHL" property="zhl" jdbcType="NUMERIC" />
+		<result column="zchl" property="zchl" jdbcType="NUMERIC" />
+		<result column="zzxl" property="zzxl" jdbcType="NUMERIC" />
+		<result column="qchl" property="qchl" jdbcType="NUMERIC" />
+		<result column="qzxl" property="qzxl" jdbcType="NUMERIC" />
+		<result column="shhd" property="shhd" jdbcType="VARCHAR" />
+		<result column="SHSHMF" property="shshmf" jdbcType="NUMERIC" />
+		<result column="SHMSHHF" property="shmshhf" jdbcType="NUMERIC" />
+		<result column="bdf" property="bdf" jdbcType="NUMERIC" />
+		<result column="fwfs" property="fwfs" jdbcType="INTEGER" />
+		<result column="fpmc" property="fpmc" jdbcType="VARCHAR" />
+		<result column="swzh" property="swzh" jdbcType="VARCHAR" />
+		<result column="yshk" property="yshk" jdbcType="NUMERIC" />
+		<result column="YSHK_B" property="yshkb" jdbcType="INTEGER" />
+		<result column="yshzhk_b" property="yshzhkb" jdbcType="INTEGER" />
+		<result column="fdnr" property="fdnr" jdbcType="VARCHAR" />
+		<result column="fdlc" property="fdlc" jdbcType="INTEGER" />
+		<result column="ysfs" property="ysfs" jdbcType="VARCHAR" />
+		<result column="dzfk" property="dzfk" jdbcType="INTEGER" />
+		<result column="fpid" property="fpid" jdbcType="VARCHAR" />
+		<result column="dsk" property="dsk" jdbcType="NUMERIC" />
+		<result column="ywlx" property="ywlx" jdbcType="VARCHAR" />
+		<result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+		<result column="fzfk" property="fzfk" jdbcType="INTEGER" />
+		<result column="dzshhd" property="dzshhd" jdbcType="VARCHAR" />
+		<result column="YouHuiJinE" property="youhuijine" jdbcType="VARCHAR" />
+		<result column="ydly" property="ydly" jdbcType="INTEGER" />
+		<result column="pinming" property="pinming" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 打印信息查询 结束 -->
+	
+	<!-- 插入财凭金额表日志 开始-->
+	<insert id="insertFkfshLog" parameterType="com.ycgwl.kylin.transport.entity.FinanceReceiveMoneyPrint">
+		insert into fkfsh_log(gkh,shijian,optype,xianlu,cwpzhbh,yshzhk,xianjin,hdfk,yhshr,yshk,chuna,type)
+			 values(#{grid},getdate(),'收钱',#{xianlu},#{cwpzhbh},#{yshzhk},#{xianjin},#{hdfk},#{yhshr},#{yshk},#{chuna},0)
+	</insert>
+	<!-- 插入财凭金额表日志结束-->
+	
+	<!-- 收钱功能财凭表数据查询 开始-->
+	<select id="checkMonthReceive" parameterType="com.ycgwl.kylin.transport.entity.FinanceReceiveMoneyCheckProcedure" statementType="CALLABLE">
+		<![CDATA[
+		   {call dbo.checkyuejie (
+		    		#{cwpzhbh,mode=IN,jdbcType=NUMERIC},
+			    	#{gs,mode=IN,jdbcType=VARCHAR},
+			    	#{nf,mode=IN,jdbcType=VARCHAR}, 
+			    	#{yejieje,mode=IN,jdbcType=NUMERIC},
+			    	#{myresult,mode=OUT,jdbcType=INTEGER},
+			    	#{mycustomercode,mode=OUT,jdbcType=VARCHAR}
+			  )}
+		]]>
+	</select>
+	
+	<select id="searchOffsetWealthInfo" parameterType="com.ycgwl.kylin.transport.entity.FinanceReceiveMoneyCheckProcedure" statementType="CALLABLE">
+		<![CDATA[
+		  {
+		  	#{cwpzhbh,mode=OUT,jdbcType=INTEGER} = call dbo.udt_get_cwpzh_v3(
+			    	#{gsbh,mode=IN,jdbcType=VARCHAR},
+			    	#{nf,mode=IN,jdbcType=VARCHAR}, 
+		    		#{cwpzhbh,mode=OUT,jdbcType=NUMERIC}
+			  )}
+		]]>
+	</select>
+	
+	<select id="offsetWealthInfo" parameterType="com.ycgwl.kylin.transport.entity.FinanceChonghongProcedure" statementType="CALLABLE">
+		<![CDATA[
+		  {
+		  	#{cwpzhbh,mode=OUT,jdbcType=INTEGER} = call dbo.udt_cwpzh_ch2_v3(
+			    	#{xianlu,mode=IN,jdbcType=VARCHAR},
+			    	#{cwpzhbh,mode=IN,jdbcType=NUMERIC}, 
+			    	#{nf,mode=IN,jdbcType=VARCHAR},
+		    		#{why,mode=IN,jdbcType=VARCHAR},
+		    		#{chuna,mode=IN,jdbcType=VARCHAR},
+		    		#{chonghongzhuangtai,mode=IN,jdbcType=NUMERIC},
+		    		#{shoujuhao,mode=IN,jdbcType=NUMERIC},
+		    		#{cwpzhbh2,mode=IN,jdbcType=NUMERIC}
+			  )}
+		]]>
+	</select>
+	
+	<!-- 收钱功能财凭表数据查询 结束-->
+	<insert id="updateFkfsh" parameterType="com.ycgwl.kylin.transport.entity.FinanceReceiveMoney">
+		UPDATE fkfsh SET yshzhk = #{yshzhk}, yshzhk_b = #{yshzhkB}, xianjin = #{xianjin}, xianjin_b = #{xianjinB}, hdfk = #{hdfk},
+		hdfk_b = #{hdfkB},yhshr = #{yhshr}, yhshr_b = #{yhshrB}, chuna = #{chuna}, bdf = #{bdf}, 
+		chcf = #{chcf}, dtf = #{dtf}, bxf = #{bxf}, yfhj = #{yfhj} , yshk=#{yshk} ,hjje = #{hjje},
+		dsk_b=#{dskB},YSHK_B = #{yshkB} WHERE cwpzhbh = #{cwpzhbh} AND type = #{type} AND xianlu = #{xianlu} AND nf = #{nf}
+	</insert>
+	<update id="updatePrintCountAndDate">
+		update FIWT set printtime = printtime + 1, fhshj = getDate() where hwy_ydbhid = #{waybillNum}
+	</update>
+</mapper>

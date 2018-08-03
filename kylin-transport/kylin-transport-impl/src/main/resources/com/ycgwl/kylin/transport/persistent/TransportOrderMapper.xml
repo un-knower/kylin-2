@@ -1,0 +1,1505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.TransportOrderMapper"> 
+
+
+
+	<!-- 2017-09-13新加入代码开始  存储过程改成java保存装载清单-->    
+	<select id="getTransportOrderByYdbhid" resultMap="transportOrder">
+       SELECT * FROM HWYD WHERE YDBHID = #{ydbhid}
+    </select>
+
+    <select id="getTransportOrderByYdbhids" resultMap="transportOrderWithDetail">
+        SELECT * FROM HWYD WHERE YDBHID IN
+        <foreach collection="ydbhids" item="ydbhid" open="(" separator="," close=")">
+            #{ydbhid}
+        </foreach>
+    </select>
+
+   <!-- 
+    <select id="getTransportOrderDetailByYdbhids"  resultMap="transportOrderWithDetail">
+          SELECT * FROM HWYDXZ WHERE YDBHID IN
+          <foreach collection="ydbhids" item="ydbhid" open="(" separator="," close=")">
+                #{ydbhid}
+          </foreach>
+    </select>
+     -->
+     
+     
+
+    <select id="getTransportOrderDetail" resultMap="detailResult">
+        SELECT  *  FROM  HWYDXZ WHERE  YDBHID = #{ydbhid}
+    </select>
+    
+    
+    
+     <resultMap type="com.ycgwl.kylin.transport.entity.TransportOrderDetail" id="detailResult">
+        <id column="YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+        <result column="YDXZH" property="ydxzh" jdbcType="SMALLINT" />
+        <result column="BZH" property="bzh" jdbcType="VARCHAR" />
+        <result column="JIANSHU" property="jianshu" jdbcType="INTEGER" />
+        <result column="PINMING" property="pinming" jdbcType="VARCHAR" />
+        <result column="TIJI" property="tiji" jdbcType="DECIMAL" />
+        <result column="ZHL" property="zhl" jdbcType="DECIMAL" />
+        <result column="YFH" property="yfh" jdbcType="BIT" />
+        <result column="CHXH" property="chxh" jdbcType="VARCHAR" />
+        <result column="BEIZHU" property="beizhu" jdbcType="VARCHAR" />
+        <result column="TBJE" property="tbje" jdbcType="DECIMAL" />
+        <result column="cangwei" property="cangwei" jdbcType="VARCHAR" />
+        <result column="xh" property="xh" jdbcType="VARCHAR" />
+        <result column="zchl" property="zchl" jdbcType="DECIMAL" />
+        <result column="zzxl" property="zzxl" jdbcType="DECIMAL" />
+        <result column="qchl" property="qchl" jdbcType="DECIMAL" />
+        <result column="qzxl" property="qzxl" jdbcType="DECIMAL" />
+        <result column="jffs" property="jffs" jdbcType="INTEGER" />
+        <result column="decprice" property="decprice" jdbcType="DECIMAL" />
+        <result column="rowguid" property="rowguid" jdbcType="VARCHAR" />
+        <result column="yunjia" property="yunjia" jdbcType="DECIMAL" />
+        <result column="is_kaiyun" property="isKaiyun" jdbcType="SMALLINT" />
+    </resultMap>
+    
+	
+	<resultMap id="transportOrderWithDetail" type="com.ycgwl.kylin.transport.entity.TransportOrder">
+		<id column="YDBHID" property="ydbhid" jdbcType="VARCHAR"/>
+		<result column="bandanfei" property="bandanfei" jdbcType="NUMERIC" />
+		<result column="baoxianfei" property="baoxianfei" jdbcType="NUMERIC" />
+		<result column="baozhuangfei" property="baozhuangfei" jdbcType="NUMERIC" />
+		<result column="begin_placename" property="beginPlacename" jdbcType="VARCHAR" />
+		<result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+		<result column="bzf" property="bzf" jdbcType="NUMERIC" />
+		<result column="bzqr" property="bzqr" jdbcType="INTEGER" />
+		<result column="bzzht" property="bzzht" jdbcType="VARCHAR" />
+		<result column="cangwei1" property="cangwei1" jdbcType="VARCHAR" />
+		<result column="cangwei2" property="cangwei2" jdbcType="VARCHAR" />
+		<result column="caozuoyaoqiu_day" property="caozuoyaoqiuDay" jdbcType="NUMERIC" />
+		<result column="caozuoyaoqiu_pcdf" property="caozuoyaoqiuPcdf" jdbcType="INTEGER" />
+		<result column="caozuoyaoqiu_xcps" property="caozuoyaoqiuXcps" jdbcType="INTEGER" />
+		<result column="caozuoyaoqiu_zdsh" property="caozuoyaoqiuZdsh" jdbcType="INTEGER" />
+		<result column="chxh" property="chxh" jdbcType="VARCHAR" />
+		<result column="CHYRJZSHX" property="chyrjzshx" jdbcType="VARCHAR" />
+		<result column="cwpzhy" property="cwpzhy" jdbcType="INTEGER" />
+		<result column="daikebaozhuang" property="daikebaozhuang" jdbcType="INTEGER" />
+		<result column="daikezhuangxie" property="daikezhuangxie" jdbcType="INTEGER" />
+		<result column="daodatianshu" property="daodatianshu" jdbcType="INTEGER" />
+		<result column="DAOZHAN" property="daozhan" jdbcType="VARCHAR" />
+		<result column="dashoukuan" property="dashoukuan" jdbcType="INTEGER" />
+		<result column="dashoukuan_yuan" property="dashoukuanYuan" jdbcType="NUMERIC" />
+		<result column="dh_addr" property="dhAddr" jdbcType="VARCHAR" />
+		<result column="dh_chengsi" property="dhChengsi" jdbcType="VARCHAR" />
+		<result column="dh_shengfen" property="dhShengfen" jdbcType="VARCHAR" />
+		<result column="dkbz_carton" property="dkbzCarton" jdbcType="INTEGER" />
+		<result column="dkbz_wooden" property="dkbzWooden" jdbcType="INTEGER" />
+		<result column="dkbz_woven" property="dkbzWoven" jdbcType="INTEGER" />
+		<result column="dzfk" property="dzfk" jdbcType="INTEGER" />
+		<result column="dzshhd" property="dzshhd" jdbcType="VARCHAR" />
+		<result column="ediflag" property="ediflag" jdbcType="INTEGER" />
+		<result column="end_placename" property="endPlacename" jdbcType="VARCHAR" />
+		<result column="FAZHAN" property="fazhan" jdbcType="VARCHAR" />
+		<result column="fdlc" property="fdlc" jdbcType="VARCHAR" />
+		<result column="fdnr" property="fdnr" jdbcType="VARCHAR" />
+		<result column="fdsl" property="fdsl" jdbcType="VARCHAR" />
+		<result column="fdts" property="fdts" jdbcType="INTEGER" />
+		<result column="fdyq" property="fdyq" jdbcType="VARCHAR" />
+		<result column="FHDWDZH" property="fhdwdzh" jdbcType="VARCHAR" />
+		<result column="FHDWLXDH" property="fhdwlxdh" jdbcType="VARCHAR" />
+		<result column="FHDWMCH" property="fhdwmch" jdbcType="VARCHAR" />
+		<result column="FHDWYB" property="fhdwyb" jdbcType="VARCHAR" />
+		<result column="fhjs" property="fhjs" jdbcType="INTEGER" />
+		<result column="FHKHHY" property="fhkhhy" jdbcType="VARCHAR" />
+		<result column="fhr" property="fhr" jdbcType="VARCHAR" />
+		<result column="FHSHJ" property="fhshj" jdbcType="TIMESTAMP" />
+		<result column="fhtiji" property="fhtiji" jdbcType="NUMERIC" />
+		<result column="fhzhl" property="fhzhl" jdbcType="NUMERIC" />
+		<result column="fkfsh" property="fkfsh" jdbcType="INTEGER" />
+		<result column="flsj" property="flsj" jdbcType="INTEGER" />
+		<result column="fpmc" property="fpmc" jdbcType="VARCHAR" />
+		<result column="fwfs" property="fwfs" jdbcType="INTEGER" />
+		<result column="fzfk" property="fzfk" jdbcType="INTEGER" />
+		<result column="FZHCHYRQ" property="fzhchyrq" jdbcType="TIMESTAMP" />
+		<result column="gsbh" property="gsbh" jdbcType="VARCHAR" />
+		<result column="gysnamebh" property="gysnamebh" jdbcType="VARCHAR" />
+		<result column="gyspcdbh" property="gyspcdbh" jdbcType="VARCHAR" />
+		<result column="hwzht" property="hwzht" jdbcType="VARCHAR" />
+		<result column="HYY" property="hyy" jdbcType="VARCHAR" />
+		<result column="idf" property="idf" jdbcType="BIT" />
+		<result column="importflag" property="importflag" jdbcType="INTEGER" />
+		<result column="is_greenchannel" property="isGreenchannel" jdbcType="INTEGER" />
+		<result column="is_kaiyun" property="isKaiyun" jdbcType="SMALLINT" />
+		<result column="isfd" property="isfd" jdbcType="INTEGER" />
+		<result column="isjj" property="isjj" jdbcType="BIT" />
+		<result column="isshsx" property="isshsx" jdbcType="INTEGER" />
+		<result column="istb" property="istb" jdbcType="INTEGER" />
+		<result column="jsgs" property="jsgs" jdbcType="VARCHAR" />
+		<result column="JSHHJ" property="jshhj" jdbcType="INTEGER" />
+		<result column="kh_kind" property="khKind" jdbcType="VARCHAR" />
+		<result column="khbm" property="khbm" jdbcType="VARCHAR" />
+		<result column="khdh" property="khdh" jdbcType="VARCHAR" />
+		<result column="ky_bdren" property="kyBdren" jdbcType="VARCHAR" />
+		<result column="ky_fendanfei" property="kyFendanfei" jdbcType="NUMERIC" />
+		<result column="ky_kind" property="kyKind" jdbcType="VARCHAR" />
+		<result column="ky_psren" property="kyPsren" jdbcType="VARCHAR" />
+		<result column="ky_shren" property="kyShren" jdbcType="VARCHAR" />
+		<result column="ky_zongjinfei" property="kyZongjinfei" jdbcType="NUMERIC" />
+		<result column="luyouzhan" property="luyouzhan" jdbcType="VARCHAR" />
+		<result column="lxtjflag" property="lxtjflag" jdbcType="INTEGER" />
+		<result column="orderno" property="orderno" jdbcType="VARCHAR" />
+		<result column="printtime" property="printtime" jdbcType="INTEGER" />
+		<result column="pszhsh" property="pszhsh" jdbcType="INTEGER" />
+		<result column="qtsx" property="qtsx" jdbcType="VARCHAR" />
+		<result column="routezhan" property="routezhan" jdbcType="VARCHAR" />
+		<result column="sent" property="sent" jdbcType="INTEGER" />
+		<result column="shhd" property="shhd" jdbcType="VARCHAR" />
+		<result column="SHHRDZH" property="shhrdzh" jdbcType="VARCHAR" />
+		<result column="SHHRLXDH" property="shhrlxdh" jdbcType="VARCHAR" />
+		<result column="SHHRMCH" property="shhrmch" jdbcType="VARCHAR" />
+		<result column="SHHRYB" property="shhryb" jdbcType="VARCHAR" />
+		<result column="SHMSHHF" property="shmshhf" jdbcType="NUMERIC" />
+		<result column="shouhuorenshuihao" property="shouhuorenshuihao" jdbcType="VARCHAR" />
+		<result column="shouhuorenyoubian" property="shouhuorenyoubian" jdbcType="VARCHAR" />
+		<result column="SHSHMF" property="shshmf" jdbcType="NUMERIC" />
+		<result column="songhuoshanglou" property="songhuoshanglou" jdbcType="INTEGER" />
+		<result column="source" property="source" jdbcType="INTEGER" />
+		<result column="swdb" property="swdb" jdbcType="VARCHAR" />
+		<result column="swzh" property="swzh" jdbcType="VARCHAR" />
+		<result column="tiebieshuoming" property="tiebieshuoming" jdbcType="VARCHAR" />
+		<result column="TIJIHJ" property="tijihj" jdbcType="NUMERIC" />
+		<result column="tuoyunrenshuihao" property="tuoyunrenshuihao" jdbcType="VARCHAR" />
+		<result column="tuoyunrenyoubian" property="tuoyunrenyoubian" jdbcType="VARCHAR" />
+		<result column="ty_fdmc" property="tyFdmc" jdbcType="VARCHAR" />
+		<result column="ty_fdqr" property="tyFdqr" jdbcType="INTEGER" />
+		<result column="ty_fdsl" property="tyFdsl" jdbcType="VARCHAR" />
+		<result column="TYRJZSHX" property="tyrjzshx" jdbcType="VARCHAR" />
+		<result column="tyrqm" property="tyrqm" jdbcType="VARCHAR" />
+		<result column="XFHTF" property="xfhtf" jdbcType="BIT" />
+		<result column="xianlu" property="xianlu" jdbcType="VARCHAR" />
+		<result column="xiaoshoucode" property="xiaoshoucode" jdbcType="VARCHAR" />
+		<result column="ydly" property="ydly" jdbcType="INTEGER" />
+		<result column="ydts" property="ydts" jdbcType="INTEGER" />
+		<result column="ysfs" property="ysfs" jdbcType="VARCHAR" />
+		<result column="YSHHM" property="yshhm" jdbcType="VARCHAR" />
+		<result column="yundantype" property="yundantype" jdbcType="INTEGER" />
+		<result column="ywlx" property="ywlx" jdbcType="SMALLINT" />
+		<result column="yxzt" property="yxzt" jdbcType="VARCHAR" />
+		<result column="zhipiao" property="zhipiao" jdbcType="VARCHAR" />
+		<result column="ZHLHJ" property="zhlhj" jdbcType="INTEGER" />
+		<result column="zhuangxiefei" property="zhuangxiefei" jdbcType="NUMERIC" />
+		<result column="zhxbz" property="zhxbz" jdbcType="VARCHAR" />
+		<result column="ZISONG" property="zisong" jdbcType="BIT" />
+		<result column="ZITI" property="ziti" jdbcType="BIT" />
+		<result column="zyfs" property="zyfs" jdbcType="INTEGER" />
+		<collection property="detailList" javaType="ArrayList" column="YDBHID" select="getTransportOrderDetail" ofType="com.ycgwl.kylin.transport.entity.TransportOrderDetail">
+            <id column="YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+            <result column="YDXZH" property="ydxzh" jdbcType="SMALLINT" />
+            <result column="BZH" property="bzh" jdbcType="VARCHAR" />
+            <result column="JIANSHU" property="jianshu" jdbcType="INTEGER" />
+            <result column="PINMING" property="pinming" jdbcType="VARCHAR" />
+            <result column="TIJI" property="tiji" jdbcType="DECIMAL" />
+            <result column="ZHL" property="zhl" jdbcType="DECIMAL" />
+            <result column="YFH" property="yfh" jdbcType="BIT" />
+            <result column="CHXH" property="chxh" jdbcType="VARCHAR" />
+            <result column="BEIZHU" property="beizhu" jdbcType="VARCHAR" />
+            <result column="TBJE" property="tbje" jdbcType="DECIMAL" />
+            <result column="cangwei" property="cangwei" jdbcType="VARCHAR" />
+            <result column="xh" property="xh" jdbcType="VARCHAR" />
+            <result column="zchl" property="zchl" jdbcType="DECIMAL" />
+            <result column="zzxl" property="zzxl" jdbcType="DECIMAL" />
+            <result column="qchl" property="qchl" jdbcType="DECIMAL" />
+            <result column="qzxl" property="qzxl" jdbcType="DECIMAL" />
+            <result column="jffs" property="jffs" jdbcType="INTEGER" />
+            <result column="decprice" property="decprice" jdbcType="DECIMAL" />
+            <result column="rowguid" property="rowguid" jdbcType="VARCHAR" />
+            <result column="yunjia" property="yunjia" jdbcType="DECIMAL" />
+            <result column="is_kaiyun" property="isKaiyun" jdbcType="SMALLINT" />
+        </collection>
+	</resultMap>
+	
+	
+	<!-- 2017-09-13新加入结束 -->
+ 	<resultMap type="com.ycgwl.kylin.transport.entity.FiwtResult" id="fiwtResult">
+        <result column="xianlu" property="xianlu" jdbcType="VARCHAR" />
+        <result column="cwpzhbh" property="cwpzhbh" jdbcType="INTEGER" />
+        <result column="nf" property="nf" jdbcType="VARCHAR" />
+    </resultMap>
+	
+	
+	<parameterMap type="com.ycgwl.kylin.transport.entity.TransportOrder"
+		id="TransportOrderQueryEntity">
+	</parameterMap>
+	
+	<parameterMap type="com.ycgwl.kylin.transport.entity.TransportOrderSearch"
+		id="transportOrderSearchQueryEntity">
+	</parameterMap>
+	
+	
+	<resultMap id="transportOrder" type="com.ycgwl.kylin.transport.entity.TransportOrder">
+		<id column="YDBHID" property="ydbhid" jdbcType="VARCHAR"/>
+		<result column="bandanfei" property="bandanfei" jdbcType="NUMERIC" />
+		<result column="baoxianfei" property="baoxianfei" jdbcType="NUMERIC" />
+		<result column="baozhuangfei" property="baozhuangfei" jdbcType="NUMERIC" />
+		<result column="begin_placename" property="beginPlacename" jdbcType="VARCHAR" />
+		<result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+		<result column="bzf" property="bzf" jdbcType="NUMERIC" />
+		<result column="bzqr" property="bzqr" jdbcType="INTEGER" />
+		<result column="bzzht" property="bzzht" jdbcType="VARCHAR" />
+		<result column="cangwei1" property="cangwei1" jdbcType="VARCHAR" />
+		<result column="cangwei2" property="cangwei2" jdbcType="VARCHAR" />
+		<result column="caozuoyaoqiu_day" property="caozuoyaoqiuDay" jdbcType="NUMERIC" />
+		<result column="caozuoyaoqiu_pcdf" property="caozuoyaoqiuPcdf" jdbcType="INTEGER" />
+		<result column="caozuoyaoqiu_xcps" property="caozuoyaoqiuXcps" jdbcType="INTEGER" />
+		<result column="caozuoyaoqiu_zdsh" property="caozuoyaoqiuZdsh" jdbcType="INTEGER" />
+		<result column="chxh" property="chxh" jdbcType="VARCHAR" />
+		<result column="CHYRJZSHX" property="chyrjzshx" jdbcType="VARCHAR" />
+		<result column="cwpzhy" property="cwpzhy" jdbcType="INTEGER" />
+		<result column="daikebaozhuang" property="daikebaozhuang" jdbcType="INTEGER" />
+		<result column="daikezhuangxie" property="daikezhuangxie" jdbcType="INTEGER" />
+		<result column="daodatianshu" property="daodatianshu" jdbcType="INTEGER" />
+		<result column="DAOZHAN" property="daozhan" jdbcType="VARCHAR" />
+		<result column="dashoukuan" property="dashoukuan" jdbcType="INTEGER" />
+		<result column="dashoukuan_yuan" property="dashoukuanYuan" jdbcType="NUMERIC" />
+		<result column="dh_addr" property="dhAddr" jdbcType="VARCHAR" />
+		<result column="dh_chengsi" property="dhChengsi" jdbcType="VARCHAR" />
+		<result column="dh_shengfen" property="dhShengfen" jdbcType="VARCHAR" />
+		<result column="dkbz_carton" property="dkbzCarton" jdbcType="INTEGER" />
+		<result column="dkbz_wooden" property="dkbzWooden" jdbcType="INTEGER" />
+		<result column="dkbz_woven" property="dkbzWoven" jdbcType="INTEGER" />
+		<result column="dzfk" property="dzfk" jdbcType="INTEGER" />
+		<result column="dzshhd" property="dzshhd" jdbcType="VARCHAR" />
+		<result column="ediflag" property="ediflag" jdbcType="INTEGER" />
+		<result column="end_placename" property="endPlacename" jdbcType="VARCHAR" />
+		<result column="FAZHAN" property="fazhan" jdbcType="VARCHAR" />
+		<result column="fdlc" property="fdlc" jdbcType="VARCHAR" />
+		<result column="fdnr" property="fdnr" jdbcType="VARCHAR" />
+		<result column="fdsl" property="fdsl" jdbcType="VARCHAR" />
+		<result column="fdts" property="fdts" jdbcType="INTEGER" />
+		<result column="fdyq" property="fdyq" jdbcType="VARCHAR" />
+		<result column="FHDWDZH" property="fhdwdzh" jdbcType="VARCHAR" />
+		<result column="FHDWLXDH" property="fhdwlxdh" jdbcType="VARCHAR" />
+		<result column="FHDWMCH" property="fhdwmch" jdbcType="VARCHAR" />
+		<result column="FHDWYB" property="fhdwyb" jdbcType="VARCHAR" />
+		<result column="fhjs" property="fhjs" jdbcType="INTEGER" />
+		<result column="FHKHHY" property="fhkhhy" jdbcType="VARCHAR" />
+		<result column="fhr" property="fhr" jdbcType="VARCHAR" />
+		<result column="FHSHJ" property="fhshj" jdbcType="TIMESTAMP" />
+		<result column="fhtiji" property="fhtiji" jdbcType="NUMERIC" />
+		<result column="fhzhl" property="fhzhl" jdbcType="NUMERIC" />
+		<result column="fkfsh" property="fkfsh" jdbcType="INTEGER" />
+		<result column="flsj" property="flsj" jdbcType="INTEGER" />
+		<result column="fpmc" property="fpmc" jdbcType="VARCHAR" />
+		<result column="fwfs" property="fwfs" jdbcType="INTEGER" />
+		<result column="fzfk" property="fzfk" jdbcType="INTEGER" />
+		<result column="FZHCHYRQ" property="fzhchyrq" jdbcType="TIMESTAMP" />
+		<result column="gsbh" property="gsbh" jdbcType="VARCHAR" />
+		<result column="gysnamebh" property="gysnamebh" jdbcType="VARCHAR" />
+		<result column="gyspcdbh" property="gyspcdbh" jdbcType="VARCHAR" />
+		<result column="hwzht" property="hwzht" jdbcType="VARCHAR" />
+		<result column="HYY" property="hyy" jdbcType="VARCHAR" />
+		<result column="idf" property="idf" jdbcType="BIT" />
+		<result column="importflag" property="importflag" jdbcType="INTEGER" />
+		<result column="is_greenchannel" property="isGreenchannel" jdbcType="INTEGER" />
+		<result column="is_kaiyun" property="isKaiyun" jdbcType="SMALLINT" />
+		<result column="isfd" property="isfd" jdbcType="INTEGER" />
+		<result column="isjj" property="isjj" jdbcType="BIT" />
+		<result column="isshsx" property="isshsx" jdbcType="INTEGER" />
+		<result column="istb" property="istb" jdbcType="INTEGER" />
+		<result column="jsgs" property="jsgs" jdbcType="VARCHAR" />
+		<result column="JSHHJ" property="jshhj" jdbcType="INTEGER" />
+		<result column="kh_kind" property="khKind" jdbcType="VARCHAR" />
+		<result column="khbm" property="khbm" jdbcType="VARCHAR" />
+		<result column="khdh" property="khdh" jdbcType="VARCHAR" />
+		<result column="ky_bdren" property="kyBdren" jdbcType="VARCHAR" />
+		<result column="ky_fendanfei" property="kyFendanfei" jdbcType="NUMERIC" />
+		<result column="ky_kind" property="kyKind" jdbcType="VARCHAR" />
+		<result column="ky_psren" property="kyPsren" jdbcType="VARCHAR" />
+		<result column="ky_shren" property="kyShren" jdbcType="VARCHAR" />
+		<result column="ky_zongjinfei" property="kyZongjinfei" jdbcType="NUMERIC" />
+		<result column="luyouzhan" property="luyouzhan" jdbcType="VARCHAR" />
+		<result column="lxtjflag" property="lxtjflag" jdbcType="INTEGER" />
+		<result column="orderno" property="orderno" jdbcType="VARCHAR" />
+		<result column="printtime" property="printtime" jdbcType="INTEGER" />
+		<result column="pszhsh" property="pszhsh" jdbcType="INTEGER" />
+		<result column="qtsx" property="qtsx" jdbcType="VARCHAR" />
+		<result column="routezhan" property="routezhan" jdbcType="VARCHAR" />
+		<result column="sent" property="sent" jdbcType="INTEGER" />
+		<result column="shhd" property="shhd" jdbcType="VARCHAR" />
+		<result column="SHHRDZH" property="shhrdzh" jdbcType="VARCHAR" />
+		<result column="SHHRLXDH" property="shhrlxdh" jdbcType="VARCHAR" />
+		<result column="SHHRMCH" property="shhrmch" jdbcType="VARCHAR" />
+		<result column="SHHRYB" property="shhryb" jdbcType="VARCHAR" />
+		<result column="SHMSHHF" property="shmshhf" jdbcType="NUMERIC" />
+		<result column="shouhuorenshuihao" property="shouhuorenshuihao" jdbcType="VARCHAR" />
+		<result column="shouhuorenyoubian" property="shouhuorenyoubian" jdbcType="VARCHAR" />
+		<result column="SHSHMF" property="shshmf" jdbcType="NUMERIC" />
+		<result column="songhuoshanglou" property="songhuoshanglou" jdbcType="INTEGER" />
+		<result column="source" property="source" jdbcType="INTEGER" />
+		<result column="swdb" property="swdb" jdbcType="VARCHAR" />
+		<result column="swzh" property="swzh" jdbcType="VARCHAR" />
+		<result column="tiebieshuoming" property="tiebieshuoming" jdbcType="VARCHAR" />
+		<result column="TIJIHJ" property="tijihj" jdbcType="NUMERIC" />
+		<result column="tuoyunrenshuihao" property="tuoyunrenshuihao" jdbcType="VARCHAR" />
+		<result column="tuoyunrenyoubian" property="tuoyunrenyoubian" jdbcType="VARCHAR" />
+		<result column="ty_fdmc" property="tyFdmc" jdbcType="VARCHAR" />
+		<result column="ty_fdqr" property="tyFdqr" jdbcType="INTEGER" />
+		<result column="ty_fdsl" property="tyFdsl" jdbcType="VARCHAR" />
+		<result column="TYRJZSHX" property="tyrjzshx" jdbcType="VARCHAR" />
+		<result column="tyrqm" property="tyrqm" jdbcType="VARCHAR" />
+		<result column="XFHTF" property="xfhtf" jdbcType="BIT" />
+		<result column="xianlu" property="xianlu" jdbcType="VARCHAR" />
+		<result column="xiaoshoucode" property="xiaoshoucode" jdbcType="VARCHAR" />
+		<result column="ydly" property="ydly" jdbcType="INTEGER" />
+		<result column="ydts" property="ydts" jdbcType="INTEGER" />
+		<result column="ysfs" property="ysfs" jdbcType="VARCHAR" />
+		<result column="YSHHM" property="yshhm" jdbcType="VARCHAR" />
+		<result column="yundantype" property="yundantype" jdbcType="INTEGER" />
+		<result column="ywlx" property="ywlx" jdbcType="SMALLINT" />
+		<result column="yxzt" property="yxzt" jdbcType="VARCHAR" />
+		<result column="zhipiao" property="zhipiao" jdbcType="VARCHAR" />
+		<result column="ZHLHJ" property="zhlhj" jdbcType="INTEGER" />
+		<result column="zhuangxiefei" property="zhuangxiefei" jdbcType="NUMERIC" />
+		<result column="zhxbz" property="zhxbz" jdbcType="VARCHAR" />
+		<result column="ZISONG" property="zisong" jdbcType="BIT" />
+		<result column="ZITI" property="ziti" jdbcType="BIT" />
+		<result column="zyfs" property="zyfs" jdbcType="INTEGER" />
+		<result column="has_receipt" property="hasReceipt" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<resultMap id="transportOrderResult" type="com.ycgwl.kylin.transport.entity.TransportOrderResult">
+		<id column="YDBHID" property="ydbhid" jdbcType="VARCHAR"/>
+		<result column="FHDWMCH" property="fhdwmch" jdbcType="VARCHAR" />
+		<result column="fhzhl" property="fhzhl" jdbcType="NUMERIC" />
+		<result column="fhtiji" property="fhtiji" jdbcType="NUMERIC" />
+		<result column="JIANSHU" property="jianshu" jdbcType="INTEGER" />
+		<result column="begin_placename" property="beginPlacename" jdbcType="VARCHAR" />
+		<result column="end_placename" property="endPlacename" jdbcType="VARCHAR" />
+		<result column="SHHRMCH" property="shhrmch" jdbcType="VARCHAR" />
+		<result column="ysfs" property="ysfs" jdbcType="VARCHAR" />
+		<result column="fwfs" property="fwfs" jdbcType="INTEGER" />
+		<result column="TIJI" property="tiji" jdbcType="NUMERIC" />
+		<result column="ZHL" property="zhl" jdbcType="NUMERIC" />
+		<result column="hjje" property="hjje" jdbcType="NUMERIC" />
+		<result column="cwpzhbh" property="cwpzhbh" jdbcType="NUMERIC"/>
+		<result column="BUNDEL" property="bundel" jdbcType="INTEGER"/>
+		<result column="FHSHJ" property="fhshj" jdbcType="INTEGER"/>
+		<result column="has_receipt" property="hasReceipt" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	<sql id="where-transportOrder">
+		<if test="ydbhid != null and ydbhid != ''"><![CDATA[ AND A.YDBHID = #{ydbhid} ]]></if>
+		<if test="beginPlacename != null and beginPlacename != ''"><![CDATA[ AND A.begin_placename = #{beginPlacename} ]]></if>
+		<if test="khbm != null and khbm != ''"><![CDATA[ AND A.khbm = #{khbm} ]]></if>
+		<if test="fhdwmch != null and fhdwmch != ''"><![CDATA[ AND A.FHDWMCH = #{fhdwmch} ]]></if>
+		<if test="yshhm != null and yshhm != ''"><![CDATA[ AND A.YSHHM = #{yshhm} ]]></if>
+		<if test="hyy != null and hyy != ''"><![CDATA[ AND A.HYY = #{hyy} ]]></if>
+		<if test="fazhan != null and fazhan != '' and fazhan != '总公司' and daozhan != null and daozhan != ''"><![CDATA[ AND A.FAZHAN = #{fazhan} AND A.DAOZHAN = #{daozhan} ]]></if>
+		<if test="fazhan != null and fazhan != '' and fazhan != '总公司' and (daozhan == null or daozhan == '')" ><![CDATA[ AND (A.FAZHAN = #{fazhan} or A.DAOZHAN = #{fazhan}) ]]></if>
+		<![CDATA[ AND A.CANCEL_STATUS = 0 ]]>
+		<!-- 托运日期 -->
+		<if test="fhshjStart != null and fhshjStart != ''"> 
+			<![CDATA[ AND A.FHSHJ >= #{fhshjStart} ]]>
+		</if>
+		<if test="fhshjEnd != null  and fhshjEnd != ''">
+  			<![CDATA[ AND A.FHSHJ <= #{fhshjEnd} ]]>
+		</if>
+		<if test="zhipiao != null and zhipiao != ''"><![CDATA[ AND A.zhipiao = #{zhipiao} ]]></if>
+		<if test="khdh != null and khdh != ''"><![CDATA[ AND A.khdh = #{khdh} ]]></if>
+		<if test="khbm != null and khbm != ''"><![CDATA[ AND A.khbm = #{khbm} ]]></if>
+		<if test="fhdwmch != null and fhdwmch != ''"><![CDATA[ AND A.fhdwmch = #{fhdwmch} ]]></if>
+		<if test="shhrmch != null and shhrmch != ''"><![CDATA[ AND A.shhrmch = #{shhrmch} ]]></if>
+		<if test="isFinanceCertify != null and isFinanceCertify != '' and isFinanceCertify != 2"><![CDATA[ AND A.cwpzhy = #{isFinanceCertify} ]]></if>
+		<if test="hasReceipt != null and hasReceipt != ''">
+			<if test="hasReceipt == 1">
+				<![CDATA[ AND A.has_receipt = #{hasReceipt} ]]>
+			</if>
+			<if test="hasReceipt == 0">
+				<![CDATA[ AND (A.has_receipt = #{hasReceipt} or A.has_receipt is null) ]]>
+			</if>
+		</if>
+	</sql>
+	<select id="get" parameterType="java.lang.String" resultMap="transportOrder">
+		SELECT * FROM HWYD WHERE YDBHID = #{ydbhid}
+	</select>
+	
+	<select id="countTransportCode" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT count(*) FROM HWYD WHERE YDBHID = #{ydbhid}
+	</select>
+	
+	<insert id="insert" parameterMap="TransportOrderQueryEntity">
+	INSERT INTO HWYD
+		(YDBHID,
+		bandanfei,
+		baoxianfei,
+		baozhuangfei,
+		begin_placename,
+		beizhu,
+		bzf,
+		bzqr,
+		bzzht,
+		cangwei1,
+		cangwei2,
+		caozuoyaoqiu_day,
+		caozuoyaoqiu_pcdf,
+		caozuoyaoqiu_xcps,
+		caozuoyaoqiu_zdsh,
+		chxh,
+		CHYRJZSHX,
+		cwpzhy,
+		daikebaozhuang,
+		daikezhuangxie,
+		daodatianshu,
+		DAOZHAN,
+		dashoukuan,
+		dashoukuan_yuan,
+		dh_addr,
+		dh_chengsi,
+		dh_shengfen,
+		dkbz_carton,
+		dkbz_wooden,
+		dkbz_woven,
+		dzfk,
+		dzshhd,
+		ediflag,
+		end_placename,
+		FAZHAN,
+		fdlc,
+		fdnr,
+		fdsl,
+		fdts,
+		fdyq,
+		FHDWDZH,
+		FHDWLXDH,
+		FHDWMCH,
+		FHDWYB,
+		fhjs,
+		FHKHHY,
+		fhr,
+		FHSHJ,
+		fhtiji,
+		fhzhl,
+		fkfsh,
+		flsj,
+		fpmc,
+		fwfs,
+		fzfk,
+		FZHCHYRQ,
+		gsbh,
+		gysnamebh,
+		gyspcdbh,
+		hwzht,
+		HYY,
+		idf,
+		importflag,
+		is_greenchannel,
+		is_kaiyun,
+		isfd,
+		isjj,
+		isshsx,
+		istb,
+		jsgs,
+		JSHHJ,
+		kh_kind,
+		khbm,
+		khdh,
+		ky_bdren,
+		ky_fendanfei,
+		ky_kind,
+		ky_psren,
+		ky_shren,
+		ky_zongjinfei,
+		luyouzhan,
+		lxtjflag,
+		orderno,
+		printtime,
+		pszhsh,
+		qtsx,
+		routezhan,
+		sent,
+		shhd,
+		SHHRDZH,
+		SHHRLXDH,
+		SHHRMCH,
+		SHHRYB,
+		SHMSHHF,
+		shouhuorenshuihao,
+		shouhuorenyoubian,
+		SHSHMF,
+		songhuoshanglou,
+		source,
+		swdb,
+		swzh,
+		tiebieshuoming,
+		TIJIHJ,
+		tuoyunrenshuihao,
+		tuoyunrenyoubian,
+		ty_fdmc,
+		ty_fdqr,
+		ty_fdsl,
+		TYRJZSHX,
+		tyrqm,
+		XFHTF,
+		xianlu,
+		xiaoshoucode,
+		ydly,
+		ydts,
+		ysfs,
+		YSHHM,
+		yundantype,
+		ywlx,
+		yxzt,
+		zhipiao,
+		ZHLHJ,
+		zhuangxiefei,
+		zhxbz,
+		ZISONG,
+		ZITI,
+		zyfs,
+		sys_name
+		)
+		VALUES
+		(
+		#{ydbhid},
+		#{bandanfei},
+		#{baoxianfei},
+		#{baozhuangfei},
+		#{beginPlacename},
+		#{beizhu},
+		#{bzf},
+		#{bzqr},
+		#{bzzht},
+		#{cangwei1},
+		#{cangwei2},
+		#{caozuoyaoqiuDay},
+		#{caozuoyaoqiuPcdf},
+		#{caozuoyaoqiuXcps},
+		#{caozuoyaoqiuZdsh},
+		#{chxh},
+		#{chyrjzshx},
+		#{cwpzhy},
+		#{daikebaozhuang},
+		#{daikezhuangxie},
+		#{daodatianshu},
+		#{daozhan},
+		#{dashoukuan},
+		#{dashoukuanYuan},
+		#{dhAddr},
+		#{dhChengsi},
+		#{dhShengfen},
+		#{dkbzCarton},
+		#{dkbzWooden},
+		#{dkbzWoven},
+		#{dzfk},
+		#{dzshhd},
+		#{ediflag},
+		#{endPlacename},
+		#{fazhan},
+		#{fdlc},
+		#{fdnr},
+		#{fdsl},
+		#{fdts},
+		#{fdyq},
+		#{fhdwdzh},
+		#{fhdwlxdh},
+		#{fhdwmch},
+		#{fhdwyb},
+		#{fhjs},
+		#{fhkhhy},
+		#{fhr},
+		#{fhshj},
+		#{fhtiji},
+		#{fhzhl},
+		#{fkfsh},
+		#{flsj},
+		#{fpmc},
+		#{fwfs},
+		#{fzfk},
+		#{fzhchyrq},
+		#{gsbh},
+		#{gysnamebh},
+		#{gyspcdbh},
+		#{hwzht},
+		#{hyy},
+		#{idf},
+		#{importflag},
+		#{isGreenchannel},
+		#{isKaiyun},
+		#{isfd},
+		#{isjj},
+		#{isshsx},
+		#{istb},
+		#{jsgs},
+		#{jshhj},
+		#{khKind},
+		#{khbm},
+		#{khdh},
+		#{kyBdren},
+		#{kyFendanfei},
+		#{kyKind},
+		#{kyPsren},
+		#{kyShren},
+		#{kyZongjinfei},
+		#{luyouzhan},
+		#{lxtjflag},
+		#{orderno},
+		#{printtime},
+		#{pszhsh},
+		#{qtsx},
+		#{routezhan},
+		#{sent},
+		#{shhd},
+		#{shhrdzh},
+		#{shhrlxdh},
+		#{shhrmch},
+		#{shhryb},
+		#{shmshhf},
+		#{shouhuorenshuihao},
+		#{shouhuorenyoubian},
+		#{shshmf},
+		#{songhuoshanglou},
+		#{source},
+		#{swdb},
+		#{swzh},
+		#{tiebieshuoming},
+		#{tijihj},
+		#{tuoyunrenshuihao},
+		#{tuoyunrenyoubian},
+		#{tyFdmc},
+		#{tyFdqr},
+		#{tyFdsl},
+		#{tyrjzshx},
+		#{tyrqm},
+		#{xfhtf},
+		#{xianlu},
+		#{xiaoshoucode},
+		#{ydly},
+		#{ydts},
+		#{ysfs},
+		#{yshhm},
+		#{yundantype},
+		#{ywlx},
+		#{yxzt},
+		#{zhipiao},
+		#{zhlhj},
+		#{zhuangxiefei},
+		#{zhxbz},
+		#{zisong},
+		#{ziti},
+		#{zyfs},
+		#{sysName}
+		)
+	</insert>
+	
+	<select id="queryTransportOrderPage" resultMap="transportOrderResult" parameterMap="transportOrderSearchQueryEntity">
+		<![CDATA[		
+		SELECT * FROM (
+			SELECT HW.*, Y.FAZHAN,Y.FHDWMCH, Y.fhzhl, Y.fhtiji, Y.begin_placename, Y.end_placename, Y.ysfs, Y.fwfs, Y.FHSHJ, Y.SHHRMCH, Y.hjje , Y.cwpzhbh,
+				CASE WHEN HS.YDBHID IS NULL THEN 0 ELSE 1 END AS BUNDEL
+			FROM (
+				SELECT S.* 
+				FROM (
+						SELECT YDBHID, SUM(jianshu) AS jianshu, SUM(TIJI) AS TIJI, SUM(ZHL) AS ZHL FROM HWYDXZ WHERE YDBHID IN (SELECT YDBHID FROM HWYD A WHERE 1 = 1 ]]> 
+						<include refid="where-transportOrder" /><![CDATA[) GROUP BY YDBHID
+				) S
+			) HW 
+			INNER JOIN (
+				SELECT Y.YDBHID,Y.FAZHAN,Y.FHDWMCH, Y.fhzhl, Y.fhtiji, Y.begin_placename, Y.end_placename, Y.ysfs, Y.fwfs, Y.FHSHJ, Y.SHHRMCH, C.hjje,	C.cwpzhbh
+				FROM HWYD Y 
+				LEFT JOIN (SELECT C.HWY_YDBHID, D.hjje,	C.cwpzhbh FROM FIWT C INNER JOIN fkfsh D ON C.xianlu = D.xianlu AND C.cwpzhbh = D.cwpzhbh AND C.nf = D.nf AND C.type = D.type) C 
+				ON Y.YDBHID = C.HWY_YDBHID 
+				WHERE 1 = 1
+		]]>
+		<if test="fazhan != null and fazhan != '' and fazhan != '总公司'" ><![CDATA[ AND Y.FAZHAN = #{fazhan} ]]></if>		
+		<![CDATA[
+			) Y ON HW.YDBHID = Y.YDBHID
+			LEFT JOIN (SELECT DISTINCT YDBHID FROM HCZZQD_source) HS ON hw.YDBHID = HS.YDBHID 
+		) N
+		WHERE 1 = 1	
+		]]>
+		
+		<!-- 查询已装载信息 -->
+		<if test="status == 1"><![CDATA[ AND N.BUNDEL = 1 ]]></if>
+	
+		<!-- 查询未装载信息 -->
+		<if test="status == 2"><![CDATA[ AND N.BUNDEL = 0 ]]></if>
+		
+	</select>
+	
+	<select id="queryTransportOrderByYdbhids" resultMap="transportOrder" parameterType="java.util.List">
+		SELECT * FROM HWYD A WHERE 1 = 1 AND A.YDBHID IN
+		<foreach collection="list" index="index" item="ydbhid" open="(" separator="," close=")">
+			#{ydbhid}
+		</foreach>
+	</select>
+
+	<select id="queryTransportOrderNotBundle" resultMap="transportOrder" parameterType="com.ycgwl.kylin.transport.entity.TransportOrder">
+		SELECT HW.YDBHID,HW.FAZHAN,HW.DAOZHAN,HW.ysfs,HW.fwfs,HW.FHDWMCH,HW.beizhu,HW.fhr,HW.SHHRMCH, Y.ZHLHJ, Y.TIJIHJ ,Y.JSHHJ,HW.zhipiao,HW.begin_placename,HW.end_placename
+		FROM HWYD HW INNER JOIN 
+		(
+			SELECT HX.YDBHID , SUM(HX.ZHL) AS ZHLHJ, SUM(HX.TIJI) AS TIJIHJ, SUM(HX.JIANSHU) AS JSHHJ FROM HWYDXZ HX 
+			WHERE HX.YDBHID IN (
+				SELECT YDBHID FROM HWYD 
+				WHERE 
+					FHSHJ >=#{fhshj}
+					<if test="ydbhid != null and ydbhid != ''">
+						<![CDATA[ AND YDBHID LIKE '%'+ #{ydbhid} +'%']]>
+					</if>
+					<if test="fazhan != null and fazhan != ''">
+						<![CDATA[ AND FAZHAN = #{fazhan} ]]>
+					</if>
+					<if test="daozhan != null and daozhan != ''">
+						<![CDATA[ AND DAOZHAN LIKE '%'+ #{daozhan} +'%']]>
+					</if>
+					<if test="beginPlacename != null and beginPlacename != ''">
+						<![CDATA[ AND begin_placename LIKE '%'+ #{beginPlacename} +'%']]>
+					</if>
+					<if test="fhdwmch != null and fhdwmch != ''">
+						<![CDATA[ AND fhdwmch LIKE '%'+ #{fhdwmch} +'%']]>
+					</if>
+					<if test="shhrmch != null and shhrmch != ''">
+						<![CDATA[ AND shhrmch LIKE '%'+ #{shhrmch} +'%']]>
+					</if>
+			) 
+			GROUP BY HX.YDBHID
+		)Y ON HW.YDBHID=Y.YDBHID 
+		WHERE 
+			HW.FHSHJ >=#{fhshj}
+			<if test="ydbhid != null and ydbhid != ''">
+				<![CDATA[ AND HW.YDBHID LIKE '%'+ #{ydbhid} +'%']]>
+			</if>
+			<if test="fazhan != null and fazhan != ''">
+				<![CDATA[ AND HW.FAZHAN = #{fazhan} ]]>
+			</if>
+			<if test="daozhan != null and daozhan != ''">
+				<![CDATA[ AND HW.DAOZHAN LIKE '%'+ #{daozhan} +'%']]>
+			</if>
+			<if test="beginPlacename != null and beginPlacename != ''">
+				<![CDATA[ AND HW.begin_placename LIKE '%'+ #{beginPlacename} +'%']]>
+			</if>
+			<if test="fhdwmch != null and fhdwmch != ''">
+				<![CDATA[ AND HW.fhdwmch LIKE '%'+ #{fhdwmch} +'%']]>
+			</if>
+			<if test="shhrmch != null and shhrmch != ''">
+				<![CDATA[ AND HW.shhrmch LIKE '%'+ #{shhrmch} +'%']]>
+			</if>
+		AND Y.YDBHID  NOT IN (SELECT HS.YDBHID FROM HCZZQD_source HS);
+	</select>
+	
+	<select id="queryTransportOrderPages" resultMap="transportOrderResult" parameterMap="transportOrderSearchQueryEntity">
+		<![CDATA[
+		SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY FHSHJ DESC) PAGE_ROW_NUMBER, * FROM (	
+		]]>	
+		<![CDATA[
+			SELECT * FROM (
+				SELECT HW.*, Y.FAZHAN,Y.FHDWMCH, Y.fhzhl, Y.fhtiji, Y.begin_placename, Y.end_placename, Y.ysfs, Y.fwfs, Y.FHSHJ, Y.SHHRMCH, Y.hjje ,Y.cwpzhbh
+				FROM (
+					SELECT S.* 
+					FROM (
+							SELECT YDBHID, SUM(jianshu) AS jianshu, SUM(TIJI) AS TIJI, SUM(ZHL) AS ZHL FROM HWYDXZ WHERE YDBHID IN (SELECT YDBHID FROM HWYD A WHERE 1 = 1 ]]> <include refid="where-transportOrder" /><![CDATA[) GROUP BY YDBHID
+					) S
+				) HW 
+				INNER JOIN (
+					SELECT Y.YDBHID,Y.FAZHAN,Y.FHDWMCH, Y.fhzhl, Y.fhtiji, Y.begin_placename, Y.end_placename, Y.ysfs, Y.fwfs, Y.FHSHJ, Y.SHHRMCH, C.hjje ,C.cwpzhbh
+					FROM HWYD Y 
+					LEFT JOIN (SELECT C.HWY_YDBHID,C.cwpzhbh, D.hjje FROM FIWT C INNER JOIN fkfsh D ON C.xianlu = D.xianlu AND C.cwpzhbh = D.cwpzhbh AND C.nf = D.nf AND C.type = D.type AND D.type = 0) C 
+					ON Y.YDBHID = C.HWY_YDBHID 
+					WHERE 1 = 1
+		]]>
+			<if test="fazhan != null and fazhan != '' and fazhan != '总公司'" ><![CDATA[ AND Y.FAZHAN = #{fazhan} ]]></if>		
+			<![CDATA[
+				) Y ON HW.YDBHID = Y.YDBHID
+			) N
+			WHERE 1 = 1	
+			]]>
+			
+			<!-- 查询已装载信息 -->
+			<!-- <if test="status == 1"><![CDATA[ AND N.BUNDEL = 1 ]]></if> -->
+		
+			<!-- 查询未装载信息 -->
+			<!-- <if test="status == 2"><![CDATA[ AND N.BUNDEL = 0 ]]></if> -->
+		
+		 <![CDATA[
+		) AS PAGE_TABLE_ALIAS) AS PAGE_TABLE_ALIAS WHERE PAGE_ROW_NUMBER BETWEEN #{rowNumberStart} AND #{rowNumberEnd}  ORDER BY PAGE_ROW_NUMBER
+		]]> 
+	</select>
+	
+	<select id="queryTransportOrderPagesCount" resultType="long" parameterMap="transportOrderSearchQueryEntity">
+		<![CDATA[
+			SELECT COUNT(*) FROM HWYD A 
+			where 1 = 1 
+			]]> 
+		<include refid="where-transportOrder" />
+		
+		<!-- 查询已装载信息 -->
+		<!-- <if test="status == 1"><![CDATA[ AND N.BUNDEL = 1 ]]></if> -->
+		<!-- 查询未装载信息 -->
+		<!-- <if test="status == 2"><![CDATA[ AND N.BUNDEL = 0 ]]></if> -->
+	</select>
+	<update id="updateYsfs">
+		update hwyd set ysfs = #{ysfs} where ydbhid = #{ydbhid}
+	</update>
+	
+	<!-- 查询冲红-->	
+	<select id="selectFinanceReceiveMoneyByYdbhid" resultMap="fiwtResult" parameterType="java.lang.String">
+		select xianlu,cwpzhbh,nf from fiwt where hwy_ydbhid = #{ydbhid} and type != 0
+	</select>
+	
+	<update id="updateTransportOrderByYdbhid" parameterMap="TransportOrderQueryEntity">
+    	UPDATE HWYD
+    	 <trim prefix="set" suffixOverrides=","> 
+			<if test="bandanfei != null">
+				<![CDATA[ bandanfei = #{bandanfei}, ]]>
+			</if>
+			<if test="baoxianfei != null">
+				<![CDATA[ baoxianfei = #{baoxianfei}, ]]>
+			</if>
+			<if test="baozhuangfei != null">
+				<![CDATA[ baozhuangfei = #{baozhuangfei}, ]]>
+			</if>
+			<if test="beginPlacename != null">
+				<![CDATA[ begin_placename = #{beginPlacename}, ]]>
+			</if>
+			<if test="beizhu != null">
+				<![CDATA[ beizhu = #{beizhu}, ]]>
+			</if>
+			<if test="bzf != null">
+				<![CDATA[ bzf = #{bzf}, ]]>
+			</if>
+			<if test="bzqr != null">
+				<![CDATA[ bzqr = #{bzqr}, ]]>
+			</if>
+			<if test="bzzht != null">
+				<![CDATA[ bzzht = #{bzzht}, ]]>
+			</if>
+			<if test="cangwei1 != null">
+				<![CDATA[ cangwei1 = #{cangwei1}, ]]>
+			</if>
+			<if test="cangwei2 != null">
+				<![CDATA[ cangwei2 = #{cangwei2}, ]]>
+			</if>
+			<if test="caozuoyaoqiuDay != null">
+				<![CDATA[ caozuoyaoqiu_day = #{caozuoyaoqiuDay}, ]]>
+			</if>
+			<if test="caozuoyaoqiuPcdf != null">
+				<![CDATA[ caozuoyaoqiu_pcdf = #{caozuoyaoqiuPcdf}, ]]>
+			</if>
+			<if test="caozuoyaoqiuXcps != null">
+				<![CDATA[ caozuoyaoqiu_xcps = #{caozuoyaoqiuXcps}, ]]>
+			</if>
+			<if test="caozuoyaoqiuZdsh != null">
+				<![CDATA[ caozuoyaoqiu_zdsh = #{caozuoyaoqiuZdsh}, ]]>
+			</if>
+			<if test="chxh != null">
+				<![CDATA[ chxh = #{chxh}, ]]>
+			</if>
+			<if test="chyrjzshx != null">
+				<![CDATA[ CHYRJZSHX = #{chyrjzshx}, ]]>
+			</if>
+			<if test="cwpzhy != null">
+				<![CDATA[ cwpzhy = #{cwpzhy}, ]]>
+			</if>
+			<!-- <if test="daikebaozhuang != null">
+				
+			</if> -->
+			<![CDATA[ daikebaozhuang = #{daikebaozhuang}, ]]>
+			<![CDATA[ daikezhuangxie = #{daikezhuangxie}, ]]>
+			<![CDATA[ dkbz_carton = #{dkbzCarton}, ]]>
+			<![CDATA[ dkbz_wooden = #{dkbzWooden}, ]]>
+			<![CDATA[ songhuoshanglou = #{songhuoshanglou}, ]]>
+			<!-- <if test="daikezhuangxie != null">
+				
+			</if> -->
+			<if test="daodatianshu != null">
+				<![CDATA[ daodatianshu = #{daodatianshu}, ]]>
+			</if>
+			<if test="daozhan != null">
+				<![CDATA[ DAOZHAN = #{daozhan}, ]]>
+			</if>
+			<if test="dashoukuan != null">
+				<![CDATA[ dashoukuan = #{dashoukuan}, ]]>
+			</if>
+			<if test="dashoukuanYuan != null">
+				<![CDATA[ dashoukuan_yuan = #{dashoukuanYuan}, ]]>
+			</if>
+				<if test="dhAddr != null">
+				<![CDATA[ dh_addr = #{dhAddr}, ]]>
+			</if>
+			<if test="dhChengsi != null">
+				<![CDATA[ dh_chengsi = #{dhChengsi}, ]]>
+			</if>
+			<if test="dhShengfen != null">
+				<![CDATA[ dh_shengfen = #{dhShengfen}, ]]>
+			</if>
+<!-- 			<if test="dkbzCarton != null">
+				
+			</if> -->
+			<!-- <if test="dkbzWooden != null">
+				
+			</if> -->
+			<if test="dkbzWoven != null">
+				<![CDATA[ dkbz_woven = #{dkbzWoven}, ]]>
+			</if>
+			<if test="dzfk != null">
+				<![CDATA[ dzfk = #{dzfk}, ]]>
+			</if>
+			<if test="dzshhd != null">
+				<![CDATA[ dzshhd = #{dzshhd}, ]]>
+			</if>
+			<if test="ediflag != null">
+				<![CDATA[ ediflag = #{ediflag}, ]]>
+			</if>
+			<if test="endPlacename != null">
+				<![CDATA[ end_placename = #{endPlacename}, ]]>
+			</if>
+			<if test="fazhan != null">
+				<![CDATA[ FAZHAN = #{fazhan}, ]]>
+			</if>
+			<if test="fdlc != null">
+				<![CDATA[ fdlc = #{fdlc}, ]]>
+			</if>
+			<if test="fdnr != null">
+				<![CDATA[ fdnr = #{fdnr}, ]]>
+			</if>
+			<if test="fdsl != null">
+				<![CDATA[ fdsl = #{fdsl}, ]]>
+			</if>
+			<if test="fdts != null">
+				<![CDATA[ fdts = #{fdts}, ]]>
+			</if>
+			<if test="fdyq != null">
+				<![CDATA[ fdyq = #{fdyq}, ]]>
+			</if>
+			<if test="fhdwdzh != null">
+				<![CDATA[ FHDWDZH = #{fhdwdzh}, ]]>
+			</if>
+			<if test="fhdwlxdh != null">
+				<![CDATA[ FHDWLXDH = #{fhdwlxdh}, ]]>
+			</if>
+			<if test="fhdwmch != null">
+				<![CDATA[ FHDWMCH = #{fhdwmch}, ]]>
+			</if>
+			<if test="fhdwyb != null">
+				<![CDATA[ FHDWYB = #{fhdwyb}, ]]>
+			</if>
+			<if test="fhjs != null">
+				<![CDATA[ fhjs = #{fhjs}, ]]>
+			</if>
+			<if test="fhkhhy != null">
+				<![CDATA[ FHKHHY = #{fhkhhy}, ]]>
+			</if>
+			<if test="fhr != null">
+				<![CDATA[ fhr = #{fhr}, ]]>
+			</if>
+			<if test="fhshj != null">
+				<![CDATA[ FHSHJ = #{fhshj}, ]]>
+			</if>
+			<if test="fhtiji != null">
+				<![CDATA[ fhtiji = #{fhtiji}, ]]>
+			</if>
+			<if test="fhzhl != null">
+				<![CDATA[ fhzhl = #{fhzhl}, ]]>
+			</if>
+			<if test="fkfsh != null">
+				<![CDATA[ fkfsh = #{fkfsh}, ]]>
+			</if>
+			<if test="flsj != null">
+				<![CDATA[ flsj = #{flsj}, ]]>
+			</if>
+			<if test="fpmc != null">
+				<![CDATA[ fpmc = #{fpmc}, ]]>
+			</if>
+			<if test="fwfs != null">
+				<![CDATA[ fwfs = #{fwfs}, ]]>
+			</if>
+			<if test="fzfk != null">
+				<![CDATA[ fzfk = #{fzfk}, ]]>
+			</if>
+			<if test="fzhchyrq != null">
+				<![CDATA[ FZHCHYRQ = #{fzhchyrq}, ]]>
+			</if>
+			<if test="gsbh != null">
+				<![CDATA[ gsbh = #{gsbh}, ]]>
+			</if>
+			<if test="gysnamebh != null">
+				<![CDATA[ gysnamebh = #{gysnamebh}, ]]>
+			</if>
+			<if test="gyspcdbh != null">
+				<![CDATA[ gyspcdbh = #{gyspcdbh}, ]]>
+			</if>
+			<if test="hwzht != null">
+				<![CDATA[ hwzht = #{hwzht}, ]]>
+			</if>
+			<if test="hyy != null">
+				<![CDATA[ HYY = #{hyy}, ]]>
+			</if>
+			<if test="idf != null">
+				<![CDATA[ idf = #{idf}, ]]>
+			</if>
+			<if test="importflag != null">
+				<![CDATA[ importflag = #{importflag}, ]]>
+			</if>
+			<if test="isGreenchannel != null">
+				<![CDATA[ is_greenchannel = #{isGreenchannel}, ]]>
+			</if>
+			<if test="isKaiyun != null">
+				<![CDATA[ is_kaiyun = #{isKaiyun}, ]]>
+			</if>
+			<if test="isfd != null">
+				<![CDATA[ isfd = #{isfd}, ]]>
+			</if>
+			<if test="isjj != null">
+				<![CDATA[ isjj = #{isjj}, ]]>
+			</if>
+			<if test="isshsx != null">
+				<![CDATA[ isshsx = #{isshsx}, ]]>
+			</if>
+			<if test="istb != null">
+				<![CDATA[ istb = #{istb}, ]]>
+			</if>
+			<if test="jsgs != null">
+				<![CDATA[ jsgs = #{jsgs}, ]]>
+			</if>
+			<if test="jshhj != null">
+				<![CDATA[ JSHHJ = #{jshhj}, ]]>
+			</if>
+			<if test="khKind != null">
+				<![CDATA[ kh_kind = #{khKind}, ]]>
+			</if>
+			<if test="khbm != null">
+				<![CDATA[ khbm = #{khbm}, ]]>
+			</if>
+			<if test="khdh != null">
+				<![CDATA[ khdh = #{khdh}, ]]>
+			</if>
+			<if test="kyBdren != null">
+				<![CDATA[ ky_bdren = #{kyBdren}, ]]>
+			</if>
+			<if test="kyFendanfei != null">
+				<![CDATA[ ky_fendanfei = #{kyFendanfei}, ]]>
+			</if>
+			<if test="kyKind != null">
+				<![CDATA[ ky_kind = #{kyKind}, ]]>
+			</if>
+			<if test="kyPsren != null">
+				<![CDATA[ ky_psren = #{kyPsren}, ]]>
+			</if>
+			<if test="kyShren != null">
+				<![CDATA[ ky_shren = #{kyShren}, ]]>
+			</if>
+			<if test="kyZongjinfei != null">
+				<![CDATA[ ky_zongjinfei = #{kyZongjinfei}, ]]>
+			</if>
+			<if test="luyouzhan != null">
+				<![CDATA[ luyouzhan = #{luyouzhan}, ]]>
+			</if>
+			<if test="lxtjflag != null">
+				<![CDATA[ lxtjflag = #{lxtjflag}, ]]>
+			</if>
+			<if test="orderno != null">
+				<![CDATA[ orderno = #{orderno}, ]]>
+			</if>
+			<if test="printtime != null">
+				<![CDATA[ printtime = #{printtime}, ]]>
+			</if>
+			<if test="pszhsh != null">
+				<![CDATA[ pszhsh = #{pszhsh}, ]]>
+			</if>
+			<if test="qtsx != null">
+				<![CDATA[ qtsx = #{qtsx}, ]]>
+			</if>
+			<if test="routezhan != null">
+				<![CDATA[ routezhan = #{routezhan}, ]]>
+			</if>
+			<if test="sent != null">
+				<![CDATA[ sent = #{sent}, ]]>
+			</if>
+			<if test="shhd != null">
+				<![CDATA[ shhd = #{shhd}, ]]>
+			</if>
+			<if test="shhrdzh != null">
+				<![CDATA[ SHHRDZH = #{shhrdzh}, ]]>
+			</if>
+			<if test="shhrlxdh != null">
+				<![CDATA[ SHHRLXDH = #{shhrlxdh}, ]]>
+			</if>
+			<if test="shhrmch != null">
+				<![CDATA[ SHHRMCH = #{shhrmch}, ]]>
+			</if>
+			<if test="shhryb != null">
+				<![CDATA[ SHHRYB = #{shhryb}, ]]>
+			</if>
+			<if test="shmshhf != null">
+				<![CDATA[ SHMSHHF = #{shmshhf}, ]]>
+			</if>
+			<if test="shouhuorenshuihao != null">
+				<![CDATA[ shouhuorenshuihao = #{shouhuorenshuihao}, ]]>
+			</if>
+			<if test="shouhuorenyoubian != null">
+				<![CDATA[ shouhuorenyoubian = #{shouhuorenyoubian}, ]]>
+			</if>
+			<if test="shshmf != null">
+				<![CDATA[ SHSHMF = #{shshmf}, ]]>
+			</if>
+			<!-- <if test="songhuoshanglou != null">
+				
+			</if> -->
+			<if test="source != null">
+				<![CDATA[ source = #{source}, ]]>
+			</if>
+			<if test="swdb != null">
+				<![CDATA[ swdb = #{swdb}, ]]>
+			</if>
+			<if test="swzh != null">
+				<![CDATA[ swzh = #{swzh}, ]]>
+			</if>
+			<if test="tiebieshuoming != null">
+				<![CDATA[ tiebieshuoming = #{tiebieshuoming}, ]]>
+			</if>
+			<if test="tijihj != null">
+				<![CDATA[ TIJIHJ = #{tijihj}, ]]>
+			</if>
+			<if test="tuoyunrenshuihao != null">
+				<![CDATA[ tuoyunrenshuihao = #{tuoyunrenshuihao}, ]]>
+			</if>
+			<if test="tuoyunrenyoubian != null">
+				<![CDATA[ tuoyunrenyoubian = #{tuoyunrenyoubian}, ]]>
+			</if>
+			<if test="tyFdmc != null">
+				<![CDATA[ ty_fdmc = #{tyFdmc}, ]]>
+			</if>
+			<if test="tyFdqr != null">
+				<![CDATA[ ty_fdqr = #{tyFdqr}, ]]>
+			</if>
+			<if test="tyFdsl != null">
+				<![CDATA[ ty_fdsl = #{tyFdsl}, ]]>
+			</if>
+			<if test="tyrjzshx != null">
+				<![CDATA[ TYRJZSHX = #{tyrjzshx}, ]]>
+			</if>
+			<if test="tyrqm != null">
+				<![CDATA[ tyrqm = #{tyrqm}, ]]>
+			</if>
+			<if test="xfhtf != null">
+				<![CDATA[ XFHTF = #{xfhtf}, ]]>
+			</if>
+			<if test="xianlu != null">
+				<![CDATA[ xianlu = #{xianlu}, ]]>
+			</if>
+			<if test="xiaoshoucode != null">
+				<![CDATA[ xiaoshoucode = #{xiaoshoucode}, ]]>
+			</if>
+			<if test="ydly != null">
+				<![CDATA[ ydly = #{ydly}, ]]>
+			</if>
+			<if test="ydts != null">
+				<![CDATA[ ydts = #{ydts}, ]]>
+			</if>
+			<if test="ysfs != null">
+				<![CDATA[ ysfs = #{ysfs}, ]]>
+			</if>
+			<if test="yshhm != null">
+				<![CDATA[ YSHHM = #{yshhm}, ]]>
+			</if>
+			<if test="yundantype != null">
+				<![CDATA[ yundantype = #{yundantype}, ]]>
+			</if>
+			<if test="ywlx != null">
+				<![CDATA[ ywlx = #{ywlx}, ]]>
+			</if>
+			<if test="yxzt != null">
+				<![CDATA[ yxzt = #{yxzt}, ]]>
+			</if>
+			<if test="zhipiao != null">
+				<![CDATA[ zhipiao = #{zhipiao}, ]]>
+			</if>
+			<if test="zhlhj != null">
+				<![CDATA[ ZHLHJ = #{zhlhj}, ]]>
+			</if>
+			<if test="zhuangxiefei != null">
+				<![CDATA[ zhuangxiefei = #{zhuangxiefei}, ]]>
+			</if>
+				<if test="zhxbz != null">
+				<![CDATA[ zhxbz = #{zhxbz}, ]]>
+			</if>
+			<if test="zisong != null">
+				<![CDATA[ ZISONG = #{zisong}, ]]>
+			</if>
+			<if test="ziti != null">
+				<![CDATA[ ZITI = #{ziti}, ]]>
+			</if>
+			<if test="zyfs != null">
+				<![CDATA[ zyfs = #{zyfs}, ]]>
+			</if>
+		 </trim>  
+		WHERE YDBHID = #{ydbhid}
+    </update>
+    
+    <select id="listTransportOrderPages" resultMap="transportOrderResult" parameterMap="transportOrderSearchQueryEntity">
+		<![CDATA[
+		SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY FHSHJ DESC) PAGE_ROW_NUMBER, * FROM (	
+		]]>	
+		<![CDATA[
+			SELECT A.YDBHID,A.FHDWMCH,A.SHHRMCH,A.ysfs,A.fwfs,A.FHSHJ,A.has_receipt FROM HWYD A WHERE 1 = 1
+		]]>
+			<include refid="where-transportOrder" />
+		 <![CDATA[
+		) AS PAGE_TABLE_ALIAS) AS PAGE_TABLE_ALIAS WHERE PAGE_ROW_NUMBER BETWEEN #{rowNumberStart} AND #{rowNumberEnd}  ORDER BY PAGE_ROW_NUMBER
+		]]> 
+	</select>
+	
+	<!-- 先查看运单的发站和到站（签收里需要判断该运单登录公司发站或到站才能签收 2018-3-7） -->
+	<select id="selectTransportWaybill" resultType="java.lang.String">
+		select ydbhid from hwyd where ydbhid in
+		(
+		<foreach collection="ydbhids" item="ydbhid" separator="," >
+		 	#{ydbhid} 
+		</foreach>
+		) and (daozhan = #{company} or fazhan = #{company})
+	</select>
+	
+	<select id="exportTransportOrderList" resultType="java.util.HashMap" parameterMap="transportOrderSearchQueryEntity">
+		<![CDATA[
+	    SELECT N.*,
+			 HWYDXZ.pinming,
+	         HWYDXZ.jianshu,
+	         HWYDXZ.zhl,
+	         HWYDXZ.tiji,
+	         HWYDXZ.xh,
+			 HWYDXZ.tbje,
+			 HWYDXZ.jffs,
+			 hwyd_zuofei.zuofei
+		FROM(
+			 SELECT  A.fhshj,
+					 A.fazhan,
+					 A.begin_placename,
+					 A.end_placename,
+					 A.FHDWMCH,  
+					 A.fhdwlxdh,
+					 A.shhrmch,
+					 A.shhrlxdh,
+					 A.yshhm,
+					 A.daozhan,
+					 A.khbm,
+					 A.zhipiao,
+					 (select top 1 1  from fiwt where hwy_ydbhid = A.ydbhid and type=0) as cwpzhy, 
+					 A.ydbhid,
+					 A.xianlu,
+					 A.shhd,
+					 A.hyy,
+					 A.zhxbz,
+					 A.tyrqm,
+					 A.shhrdzh,
+					 A.ysfs,
+					 A.ywlx,
+					 A.yxzt,
+					 A.pszhsh,
+					 A.ydts,
+					 A.shhryb,
+					 A.is_kaiyun,
+					 A.khdh,
+					 A.dzshhd,
+					 A.fwfs,
+					 ( case  when isnull(fzfk,0)=1  and  isnull(dzfk,0)=0  then 'f'
+									 when isnull(fzfk,0)=0  and  isnull(dzfk,0)=1  then 'd'
+									 when isnull(fzfk,0)=1  and  isnull(dzfk,0)=1  then 's'
+									 else '0' end ) as fkfs,
+					 isnull(A.dashoukuan_yuan,0) as dashoukuan_yuan,
+					 A.is_greenchannel,
+					 A.ky_kind,
+					 isnull( ( select isnull(tzfhzt,0)  from hwyd_ddfh where ydbhid=A.ydbhid ),0) as tzfhzt,
+					 A.jsgs,
+					 A.FHKHHY,
+					 A.xiaoshoucode
+				FROM HWYD A
+				WHERE 1 = 1
+				]]>
+				<include refid="where-transportOrder" />
+		<![CDATA[		
+		) N
+			LEFT OUTER JOIN HWYDXZ ON N.ydbhid = HWYDXZ.ydbhid LEFT OUTER JOIN hwyd_zuofei ON N.ydbhid = hwyd_zuofei.ydbhid
+		]]> 
+	</select> 
+	
+	<!-- 查询等托运人发货指令 历史记录 -->
+	<select id="queryHistoryRecords" resultType="java.util.Map">
+		 SELECT hwyd.ydbhid,
+				hwyd.fazhan,
+				hwyd.shhd,
+				hwyd.daozhan,
+				hwyd.dzshhd,
+				Convert(varchar(100),hwyd.fhshj,20) as fhshj,
+				Convert(varchar(100),hwyd_ddfh.ddfhczshijian,20) as ddfhczshijian,
+				Convert(varchar(100),hwyd_ddfh.tzfhczshijian,20) as tzfhczshijian,
+				hwyd.cancel_status as zuofei,
+				hwyd_ddfh.tzfhzt,
+				hwyd_ddfh.ddfhzt
+		   FROM hwyd 
+	 RIGHT JOIN hwyd_ddfh
+			 ON hwyd.ydbhid = hwyd_ddfh.ydbhid
+		  where 1 = 1
+		<!-- 订单号 -->
+		<if test="waybillNum != '' and waybillNum != null ">
+		    AND hwyd.ydbhid = #{waybillNum}
+		</if>
+		<!-- 等待放货 -->
+		<if test="type == 1 ">
+		    AND HWYD_DDFH.ddfhzt=1
+		    <!-- AND HWYD_DDFH.tzfhzt=1 -->
+		</if>
+		<!-- 公司名称 -->
+		<if test="companyName != null and companyName != '' ">
+			AND HWYD_DDFH.fazhan= #{companyName}
+		</if>
+		<!-- 时间范围 -->
+		<if test="waybillNum == '' or waybillNum == null ">
+			<if test="timeFrame != null and timeFrame != '' ">
+				AND convert(varchar(10),HWYD_DDFH.ddfhczshijian,20) >= convert(varchar(10),getdate() - #{timeFrame},20)
+			</if>
+		</if>
+		order by hwyd_ddfh.ddfhczshijian desc
+	</select>
+	
+	<!-- 查询作废状态 -->
+	<select id="findInvalidatedState" resultType="java.lang.Integer">
+		select zuofei 
+		  from HWYD_ZUOFEI
+		 where ydbhid = #{waybillNum}
+	</select>
+	<!-- 查询运单数量 -->
+	<select id="findWayBillCount" resultType="java.lang.Integer">
+		select count(*) 
+	      from HWYD
+	     where ydbhid = #{waybillNum} 
+	     <if test="companyName != null and companyName != ''">
+	     	and fazhan = #{companyName}
+	     </if>
+	</select>
+	<!-- 查询提货签收单表此运单的数量 -->
+	<select id="findDeliveryCount" resultType="java.lang.Integer">
+		select count(*)
+		  from thqsd
+	     where YDBHID = #{waybillNum} 
+	</select>
+	<!-- 查询 送货派车单表 的此运单数量 -->
+	<select id="findSendCarCount" resultType="java.lang.Integer">
+		select count(*)
+		  from t_car_out
+		 where YDBHID = #{waybillNum}
+	</select>
+	<!--  -->
+	<select id="findWaitingForDelivery" resultType="com.ycgwl.kylin.transport.entity.adjunct.ReleaseWaiting">
+		SELECT ydbhid,fazhan,ddfhzt,ddfhbeizhu,ddfhczygh,ddfhczshijian,tzfhzt,xgrgonghao,xgrjiqi
+		  FROM HWYD_DDFH
+		 WHERE ydbhid = #{waybillNum}
+		 <if test="companyName != null and companyName != ''">
+	     	and fazhan = #{companyName}
+	     </if>
+	</select>
+	<!--  -->
+	<select id="findStation" resultType="java.lang.String">
+		select fazhan
+		  from hwyd
+	     where ydbhid = #{waybillNum}
+	</select>
+	<!--  -->
+	<update id="updateDeliveryStatus">
+		update hwyd_ddfh set xgrgonghao = #{currentAcount}, <!-- ddfhbeizhu = #{remark},  -->
+							 ddfhczygh = #{currentAcount}, xgrjiqi = #{ipAddr},
+		<if test="waitType == 1">
+			ddfhczshijian = getdate(), ddfhzt = 1, tzfhzt = 1
+		</if>
+		<if test="waitType == 2">
+			tzfhczshijian = getdate(), tzfhzt = 2, tzfhczygh = #{currentAcount}
+		</if>
+		<if test="waitType == 3">
+			ddfhzt = 0, tzfhzt = 0, ddfhczshijian = null
+		</if>
+		<if test="waitType == 4">
+		    tzfhzt = 1, tzfhczshijian = null
+		</if>
+		WHERE ydbhid = #{waybillNum} 
+	</update>
+	<!--  -->
+	<insert id="saveDdfhLog">
+		insert into hwyd_ddfh_log values (#{waybillNum},#{companyName},#{waitType},#{remark},#{currentAcount},getdate())
+	</insert>
+	<select id="findEditDelivery" resultType="java.lang.Integer">
+		select count(*) 
+		from HWYD_DDFH
+		where YDBHID = #{waybillNum}
+	</select>
+	<select id="findNoticeDelivery" resultType="com.ycgwl.kylin.transport.entity.adjunct.ReleaseWaiting">
+		SELECT ydbhid,fazhan,ddfhzt,tzfhzt,tzfhbeizhu,tzfhczygh,tzfhczshijian,xgrgonghao,xgrjiqi
+		FROM HWYD_DDFH
+		WHERE ydbhid = #{waybillNum}
+		<if test="companyName != null and companyName != ''">
+	     	and fazhan = #{companyName}
+	    </if>
+	</select>
+	<!--  -->
+	<select id="findCancelState" resultType="java.lang.Integer">
+		select cancel_status as cancelStatus from hwyd where hwyd.ydbhid = #{waybillNum}
+	</select>
+	
+	<!--  -->
+	<select id="selectTrackInfo" resultType="com.ycgwl.kylin.transport.entity.OnTheWay">
+		 SELECT HWYD_ROUTE.id,
+				HWYD_ROUTE.ydbhid,
+				HWYD_ROUTE.shijian,
+				HWYD_ROUTE.cztype,
+				HWYD_ROUTE.gs,
+				HWYD_ROUTE.grid,
+				HWYD_ROUTE.beizhu
+		   FROM HWYD_ROUTE
+		  WHERE HWYD_ROUTE.ydbhid = #{wayBillNum}
+	   ORDER BY HWYD_ROUTE.id ASC
+	</select>
+	<insert id="saveWaitingForDelivery">
+		INSERT INTO HWYD_DDFH (
+			ydbhid,
+			fazhan,
+			ddfhzt,
+			ddfhbeizhu,
+			ddfhczygh,
+			ddfhczshijian,
+			tzfhzt
+		) VALUES (
+			#{ydbhid},
+			#{fazhan},
+			1,
+			#{ddfhbeizhu},
+			#{ddfhczygh},
+			getdate(),
+			0
+		)
+	</insert>
+	<select id="findDdfhCount" resultType="java.lang.Integer">
+		select count(1) from hwyd_ddfh where ydbhid = #{ydbhid}
+	</select>
+	<update id="updateWaitingForDelivery">
+		update HWYD_DDFH set ddfhzt = 1,tzfhzt = 0, ddfhczygh = #{ddfhczygh}, ddfhbeizhu = #{ddfhbeizhu}, ddfhczshijian = getDate()
+		 where ydbhid = #{ydbhid}
+	</update>
+	<select id="selectIsfdByYdbhid" resultType="java.lang.String">
+		SELECT isfd FROM hwyd Where ydbhid = #{waybillNum}
+	</select>
+	<select id="findSendCount" resultType="java.lang.Integer">
+		select count(1) from t_car_out where ydbhid = #{waybillNum}
+	</select>
+	<select id="selectXianLuByStation" resultType="java.lang.String">
+		select shx from gongsi where name = #{station}
+	</select>
+	<insert id="saveReturnImageInfo">
+		INSERT INTO receipt (img_address, img_name, ydbhid,create_by,last_update_by,create_time,last_update_time) 
+		VALUES
+		<foreach collection="photoinfo" item="item" index="index" separator=",">  
+            ( #{item.filePath},#{item.photoName},#{item.ydbhid}, #{account} ,#{account},getDate(),getDate())
+        </foreach>
+	</insert>
+	<update id="updateReceiptStatus">
+		update hwyd set has_receipt = 1 WHERE ydbhid in 
+        <foreach collection="ss" item="item" open="(" separator="," close=")">
+            #{item.ydbhid}
+        </foreach>
+	</update>
+	
+	<select id="selectReceipt" resultType="com.ycgwl.kylin.transport.vo.PhotoUrlAndNameVo">
+		select img_address as imgAddress, img_name as imgName from receipt where ydbhid = #{ydbhid}
+	</select>
+</mapper>

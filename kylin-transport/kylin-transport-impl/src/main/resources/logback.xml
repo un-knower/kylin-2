@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="false">
+	<contextName>kylin_transport</contextName>
+	<property name="LOG_PATH" value="${catalina.home:-.}/logs" />
+	<property name="LOG_NAME" value="kylin_transport" />
+
+	<!-- Console -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender" target="System.out">
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder" charset="UTF-8">
+			<layout class="com.ycgwl.kylin.util.logback.FrameworkPatternLayout">
+				<pattern>%cn %host %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %lo{50} - %msg%n</pattern>
+			</layout>
+		</encoder>
+		<target>System.out</target>
+	</appender>
+
+	<appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${LOG_NAME}_error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/${LOG_NAME}_error-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder" charset="UTF-8">
+			<layout class="com.ycgwl.kylin.util.logback.FrameworkPatternLayout">
+				<pattern>%cn %host %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %lo[%line] - %msg%n</pattern>
+			</layout>
+		</encoder>
+		<!-- 追加方式记录日志 -->
+		<append>true</append>
+		<!-- 临界值过滤器, 过滤掉所有低于ERROR级别的日志 -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+	</appender>
+
+	<appender name="FILE_WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${LOG_NAME}_warn.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/${LOG_NAME}_warn-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder" charset="UTF-8">
+			<layout class="com.ycgwl.kylin.util.logback.FrameworkPatternLayout">
+				<pattern>%cn %host %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %lo[%line] - %msg%n</pattern>
+			</layout>
+		</encoder>
+		<!-- 追加方式记录日志 -->
+		<append>true</append>
+		<!-- 临界值过滤器, 过滤掉所有低于WARN级别的日志 -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>WARN</level>
+		</filter>
+	</appender>
+
+	<appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${LOG_NAME}_info.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/${LOG_NAME}_info-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder" charset="UTF-8">
+			<layout class="com.ycgwl.kylin.util.logback.FrameworkPatternLayout">
+				<pattern>%cn %host %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %lo{50} - %msg%n</pattern>
+			</layout>
+		</encoder>
+		<!-- 追加方式记录日志 -->
+		<append>true</append>
+		<!-- 临界值过滤器, 过滤掉所有低于INFO级别的日志 -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
+
+	<appender name="FILE_DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${LOG_NAME}_debug.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/${LOG_NAME}_debug-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder" charset="UTF-8">
+			<layout class="com.ycgwl.kylin.util.logback.FrameworkPatternLayout">
+				<pattern>%cn %host %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %lo{50} - %msg%n</pattern>
+			</layout>
+		</encoder>
+		<!-- 追加方式记录日志 -->
+		<append>true</append>
+		<!-- 临界值过滤器, 过滤掉所有低于DEBUG级别的日志 -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE_ERROR" />
+		<appender-ref ref="FILE_WARN" />
+		<appender-ref ref="FILE_INFO" />
+		<appender-ref ref="FILE_DEBUG" />
+	</root>
+
+	<logger name="java.sql" level="WARN" />
+	<logger name="org.springframework" level="WARN" />
+	<logger name="org.mybatis" level="WARN" />
+	<logger name="org.hibernate" level="WARN" />
+	<logger name="org.apache" level="DEBUG" />
+	<logger name="org.apache.zookeeper" level="WARN" />
+	<logger name="com.ycgwl.kylin" level="DEBUG" />
+</configuration>

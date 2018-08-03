@@ -1,0 +1,93 @@
+@CHARSET "UTF-8";
+@CHARSET "UTF-8";
+@page :pseudo-class {
+  size: A4 landscape;
+  margin:1cm 2cm 1cm 1cm;
+}
+@page { @footnotes { border-top: 0.6pt solid black; padding-top: 8pt; } }
+.printDiv{display:none;width:780px; margin: 0 auto;}
+@media print {
+.printDiv{display:block;font-size: 12px}
+.lookDiv{display:none}
+.bold{ font-weight:bold}
+}
+
+.printTab{width:100%;}
+.printTab tr th,.printTab tr td{border:1px solid #999;}
+table, figure { page-break-inside: avoid; }
+body{font-family: '宋体';}
+.bold{ font-weight:bold}
+table tr th{font-weight: normal; text-align:center;}
+table tr th,table tr td{padding:5px}
+.inpTab tr th{font-weight:bold}
+ .inpTab tr th,.inpTab tr td{border:1px solid #e2e2e2} 
+.inpTab input{width: 99%;height: 30px;}
+.box_con{
+    width: 1100px;
+    padding:0 20px;
+    margin: 0 auto;
+  
+}
+.s_selectInput{ padding-right:5px !important}
+.layui-form-radio{font-size:unset}
+.tabFooter,.looktabFooter{width:100%;padding:5px 0 0 20px;}
+.tabFooter span{display:inline-block; width:20%}
+.looktabFooter span{display:inline-block; width:25%}
+.footerDiv{width:100%;text-align:center;font-size: 12px}
+label{font-weight: normal}
+.company{font-size:22px;letter-spacing:10px;}
+.title{font-size:24px;letter-spacing:10px;}
+.tips{margin-top:35px}
+.inpTab{border:1px solid #e2e2e2;}
+.marT10{margin-top:10px}
+.marT20{margin-top:20px}
+.padL5{padding-left:5px}
+.pad10{padding:10px}
+.padT10{padding-top:10px}
+.padT20{padding-top:20px}
+ .gery{background:#F7F7F7}   
+ .red{color:red;}   
+ .searchForm{margin-left:1%}
+.money{ text-align:right;padding-right: 5px;}  
+.blue{ color:#2AA4FF}  
+.getMoney input{ text-align:right}
+/*  .layui-form select{display: block;width:95%}  */
+ .borderLine{border: 1px solid #D2D2D2;}
+.layui-body{overflow-y: scroll;}
+.breadcrumb{margin: 15px;display: block;visibility: visible}
+.layui-form-label{line-height: 38px;padding: 0}
+.input-div{width: 300px;}
+.layui-table-view{width:100% !important}
+.layui-btn-normal{ margin:0 5% 1% 0 !important}
+/* .layui-btn{
+	height: 25px;
+	line-height: 25px;
+	margin: 0;
+	display: inline-block;
+} */
+.searchBtn{height: 35px !important;
+	line-height: 35px !important;}
+	
+	.selectUl,.s_selectUl {
+	margin-top:5px;
+    display: none;
+    z-index: 1;
+    background-color: #fff;
+    border: 1px solid #eee;
+    display: none;
+    width: 100%;
+    clear: both;
+    overflow: auto;
+    position: absolute;
+    max-height: 250px;
+    width:120px;
+}
+.s_selectUl{
+	 width:95%;
+}
+.pos_rel{position:relative}
+.selectUl li ,.s_selectUl li{
+    padding:8px 0 8px 8px;
+    cursor: pointer;
+}
+.selectUl li:hover,.s_selectUl li:hover{background:#EBEBEB;}

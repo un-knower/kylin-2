@@ -1,0 +1,112 @@
+@CHARSET "UTF-8";
+html{height: auto;}
+.layui-form-label{width: auto;text-align: center;display:inline-block;}
+.layui-input-block {
+	display:inline-block;
+	margin-left: 0px !important;
+}
+.layui-input, .layui-select, .layui-textarea{
+    border: 1px solid lightslategrey !important;
+}
+.textarea-content{height: 100%;}
+.layui-table td, .layui-table th{text-align: center; border: 1px solid darkgrey;}
+.layui-table thead tr, .layui-table-fixed-l tr, .layui-table-header, .layui-table-mend, .layui-table-patch, .layui-table-tool {
+    background-color: #DDECFF;
+}
+.laydate-time-list{padding-bottom:0 !important;overflow:hidden !important;}
+.laydate-time-list>li{width:50% !important;}
+.check-form{
+	text-align:center; 
+	display: inline-block;
+	width: 100%;
+}
+.check-waybill{display: inline-block;margin-bottom: 0px;}
+.check-form .layui-inline, .check-form label{
+	margin-bottom: 0px;
+}
+.breadcrumb {
+    margin: 15px;
+    display: block;
+}
+.select-condition{
+	text-align: center;
+}
+.btn-operation{
+	text-align: left;
+	display: inline-block;
+	margin-left: 2%;
+}
+.toSave{margin-top: 2%;}
+.beizhu{width: auto;float: left;}
+.textarea-div{margin-left: 72px !important;height: 179px;}
+/* .layui-textarea{min-height: 200px;height: 449px;} */
+.layui-elem-field legend {
+    font-size: 16px;
+    font-weight: 900;
+}
+.isVIP{display: none;text-align: center;}
+#fhdwmch{
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.must-item{
+	display: inline-block;
+	background: url(../../common/images/must.png) no-repeat;
+	width: 10px;
+    height: 10px;
+}
+
+.toTips{
+    margin-left: 30%;
+    clear: right;
+    height: 100%;
+    padding-top: 21px;
+    margin-right: 10%;
+}
+.table-div{
+	width: 96%;
+    margin-left: 2%;
+}
+
+.short-div{
+    margin-right: 5% !important;
+    margin-top: 22px;
+}
+
+#sign-state{display: none;}
+.major-content{
+	position: absolute;
+	width: 100%;
+	min-width: 730px;
+}
+.check-information{width: 100px;}
+.waybills-info{width: 30%;float: left;min-width: 300px;}
+.layui-form-select{display: inline-block;}
+.layui-btn-disabled, .layui-btn-disabled:active, .layui-btn-disabled:hover{
+	border: 1px solid lightslategrey !important;
+    color: lightslategrey;
+    background-color: #ddd;
+}
+@media screen and (min-width: 1400px){
+	.select-condition{
+		width: 90%;
+	    margin-left: 5%;
+	}
+}
+@media screen and (max-width: 1400px){
+	.layui-field-title{
+		margin: 0 !important;
+	}
+	.short-label{
+	    width: 90px !important;
+	}
+	.short-input{
+	    margin-left: 90px !important;
+	} 
+	.layui-textarea{min-height: 100px !important;}
+	.toTips {margin-right: 4%;}
+}
+@media screen and (max-width: 1000px){
+	.toTips {margin-left: 300px;}
+}

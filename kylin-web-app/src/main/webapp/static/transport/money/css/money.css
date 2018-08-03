@@ -1,0 +1,25 @@
+@CHARSET "UTF-8";
+.layui-form-label{width: 80px;}
+.check-form{margin: 2% 0;}
+.breadcrumb {
+    margin: 15px;
+    display: block;
+}
+.select-condition{
+	 text-align: left;
+    margin: 3% auto;
+    display: table;
+    /*border: 1px solid #FF5722;
+    padding: 40px;
+    border-radius: 10px; */
+}
+.check-form .input-div,.toCheck{margin-bottom: 10px;}
+.toCheck{margin-left:10px}
+.btn-operation{text-align: center;}
+.toReturn{margin-left: 4% !important;}
+.label-div{margin-bottom: 0px;}
+.check-btn{}
+.layui-form-item{display: table-cell;}
+.check-item{text-align: left;width: 60%;margin-left: 20%;display: block !important;}
+.layui-input-block {margin-left: 80px !important;}
+.layui-form-label {padding: 9px 0px !important;}

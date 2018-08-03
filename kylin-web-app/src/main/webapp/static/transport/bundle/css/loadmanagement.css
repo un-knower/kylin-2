@@ -1,0 +1,69 @@
+#moo{
+	margin-left:0px;
+	margin-top: 10px;
+}
+.search-4 {
+    width: 80px;
+    height: 24px;
+    background: #F29D08;
+    color: #FFFFFF;
+    display: inline-block;
+    text-align: center;
+    line-height: 24px;
+    font-size: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+    float: left;
+    margin-left:20px;
+}
+.td-a{
+	width: 100%;
+	height: 26px;
+	border-bottom: 1px solid #CCCCCC;
+	text-align: center;
+	line-height: 26px;
+}
+.btn{
+	text-align: center;
+	margin-top: 20px;
+}
+.hed11,.hed22,.hed33,.hed44,.hed55,.hed66,.hed77,.hed88,.hed99,.hed100{
+	color: #333333;
+	font-size: 15px;
+	float:left;
+	text-align:center;
+}
+.hed11{
+	width:9%;
+}
+.hed22{
+	width:9%;
+}
+.hed33{
+	width:9%;
+}
+.hed44{
+	width:9%;
+}
+.hed55{
+	width:9%;
+}
+.hed66{
+	width:9%;
+}
+.hed77{
+	width:9%;
+}
+.hed88{
+	width:9%;
+}
+.hed99{
+	width:9%;
+}
+.hed100{
+	width:9%;
+}
+.kuai{
+	float: left;
+	margin-left: 20px;
+}

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.ExceptionLogMapper"> 
+	<resultMap type="com.ycgwl.kylin.transport.entity.ExceptionLog" id="exceptionLog">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
+        <result column="operator_account" property="operatorAccount" jdbcType="VARCHAR" />
+        <result column="operator_company" property="operatorCompany" jdbcType="VARCHAR" />
+        <result column="ip_address" property="ipAddress" jdbcType="VARCHAR" />
+        <result column="ydbhid" property="ydbhid" jdbcType="VARCHAR" />
+        <result column="cwpzhbh" property="cwpzhbh" jdbcType="NUMERIC" />
+        <result column="operating_menu" property="operatingMenu" jdbcType="VARCHAR" />
+        <result column="operating_content" property="operatingContent" jdbcType="VARCHAR" />
+        <result column="operating_time" property="operatingTime" jdbcType="TIMESTAMP" />
+        <result column="create_name" property="createName" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_name" property="updateName" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <parameterMap type="com.ycgwl.kylin.transport.entity.ExceptionLog"
+		id="exceptionLogQueryEntity">
+	</parameterMap>
+	
+	<parameterMap type="com.ycgwl.kylin.transport.entity.ExceptionLogSearch"
+		id="exceptionLogSearchQueryEntity">
+	</parameterMap>
+	
+	<sql id="columns_exception_log">
+		operator_name, operator_account, operator_company, ip_address, ydbhid, cwpzhbh, operating_menu,
+		operating_content,operating_time, create_name,create_time,update_name,update_time
+	</sql>
+	
+	<sql id="where-exceptionLog">
+		<if test="ydbhid != null and ydbhid != ''"><![CDATA[ AND A.ydbhid LIKE '%'+#{ydbhid}+'%' ]]></if>
+		<if test="cwpzhbh != null and cwpzhbh != 0"><![CDATA[ AND A.cwpzhbh = #{cwpzhbh} ]]></if>
+		<if test="operatingMenu != null and operatingMenu != '' and operatingMenu != '全部'"><![CDATA[ AND A.operating_menu LIKE '%'+#{operatingMenu}+'%' ]]></if>
+		<if test="operatingTimeBegin != null and operatingTimeBegin != ''"> 
+			<![CDATA[ AND A.operating_time >= #{operatingTimeBegin} ]]>
+		</if>
+		<if test="operatingTimeEnd != null  and operatingTimeEnd != ''">
+  			<![CDATA[ AND A.operating_time <= #{operatingTimeEnd} ]]>
+		</if>
+		<if test="operatorCompany != null and operatorCompany != '' and operatorCompany != '总公司'"><![CDATA[ AND A.operator_company = #{operatorCompany} ]]></if>
+	</sql>
+	
+	<!-- 新增异常日志信息 -->
+	 <insert id="insertExceptionLog" parameterMap="exceptionLogQueryEntity">
+    	INSERT INTO exception_log
+    	(
+  			<include refid="columns_exception_log"/>
+    	) 
+    	VALUES 
+    	(
+    	#{operatorName},
+    	#{operatorAccount},
+    	#{operatorCompany},
+    	#{ipAddress},
+    	#{ydbhid},
+    	#{cwpzhbh},
+    	#{operatingMenu}, 
+    	#{operatingContent},
+    	#{operatingTime}, 
+    	#{createName},
+    	#{createTime}, 
+    	#{updateName},
+    	#{updateTime}
+    	)
+    </insert>
+    
+    <!-- 分页查询异常日志信息 -->
+    <select id="queryExceptionLogPages" resultMap="exceptionLog" parameterMap="exceptionLogSearchQueryEntity">
+    	<![CDATA[
+		SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY operating_time DESC) PAGE_ROW_NUMBER, * FROM (	
+		]]>	
+			<![CDATA[
+			SELECT * FROM exception_log A WHERE 1 = 1	
+			]]>	
+		 	<include refid="where-exceptionLog" />
+		<![CDATA[
+		) AS PAGE_TABLE_ALIAS) AS PAGE_TABLE_ALIAS WHERE PAGE_ROW_NUMBER > #{rowNumberStart} AND PAGE_ROW_NUMBER <= #{rowNumberEnd} ORDER BY PAGE_ROW_NUMBER
+		]]>  	
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="queryExceptionLogPagesCount" resultType="java.lang.Long" parameterMap="exceptionLogSearchQueryEntity">
+		<![CDATA[
+		SELECT COUNT(*) FROM exception_log A WHERE 1 = 1	
+		]]>
+		<include refid="where-exceptionLog" />
+	</select>
+</mapper>

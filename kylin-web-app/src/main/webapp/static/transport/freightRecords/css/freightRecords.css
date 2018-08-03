@@ -1,0 +1,51 @@
+/*
+created by yl in 2018/04/19
+*/
+@CHARSET "UTF-8";
+body{color:#000;}
+.breadcrumb {margin: 15px; display: block;visibility: visible !important;}
+.layui-form-label{padding: 9px 0px;width:110px;}
+.input-label-box .layui-form-label{width:80px;}
+.layui-form-radio {font-size: unset;}
+.layui-form-item .freight-radio-box{margin-right:0;height:36px;}
+.layui-form-item .layui-input-inline{width:270px;margin-left:30px;}
+.layui-form-item .layui-inline{margin-right:5px;}
+.layui-input{width:190px;}
+.layui-form-item .freight-radio{width:80px;margin-left:15px;margin-right:0;}
+.layui-form-radio{margin:0;}
+.layui-input-block {margin-left: 5px;float: left;}
+.date-copy{line-height: 38px;padding: 0px 4px 0 9px;}
+.date-select {float: left;margin-left: 0px;}
+.layui-btn{margin:10px 0 10px 30px;}
+.layui-form-select .layui-input{width:90px;}
+.input-label-box2  input.layui-input{width:150px;}
+/* table表格 */
+[v-cloak] {display: none;}
+.layui-table{width:98%;margin:10px auto;}
+.layui-table th{padding:9px 2px;text-align:center;}
+.layui-table td{word-break:break-all;border-color:#777;padding:9px 2px;text-align:center;}
+.freight-table{margin:0 auto;}
+.check-table input{background-color:#fff;}
+.head-title{position: relative;padding: 20px 0;text-align: center;font-size:  30px;font-weight: 900;}
+.head-title img{position:absolute;left:30px;width:210px;}
+caption{border: 1px solid #000;text-align: center;height: 60px;line-height: 60px;padding: 10px 0;font-size: 30px;font-weight: 900;color: #333;}
+.freight-table th{padding:9px 0;border-color:#000;}
+.freight-table td{border-color:#000;padding:0;text-align:center;}
+.freight-caption, .freight-table-th tr td, .freight-table .label-brand{background-color:#00ccff;}
+.freight-table .label-brand{padding:9px 0;}
+.freight-table .not-fill{background-color:#ccc;padding:9px 0;}
+.freight-table .fixed-height{height:37px;}
+.freight-table input{width:100%;height:100%;padding:9px 0;text-align:center;border:0;}
+.operator button{width: 50px;padding: 0;height: 25px;line-height: 25px;margin: 0 0 5px 0;}
+.operator .audit-btn{margin:0;}
+#rrapp input[disabled], #rrapp button[disabled]{cursor:not-allowed;background-color:rgb(235, 235, 228);}
+#rrapp button[disabled]{background-color:#ccc;}
+#rrapp button[disabled]:hover{background-color:#ccc;}
+.print-wrap .layui-table{width:96%;}
+.contWrap tr td, .contWrap tr th{padding:9px 0;}
+.freight-table .check-fill{padding:9px 0;}
+.layui-form-save{margin-top:30px;text-align:center;}
+.saveBtn{height: 38px;line-height: 38px;margin: 0;display: inline-block;}
+.saveBtn, .layui-btn-normal{position: relative;top: -2px;}
+.label-required::before{content:"*";color:red;}
+.freight-table thead th:hover, .freight-table tbody tr:hover{background-color:#fff !important;}

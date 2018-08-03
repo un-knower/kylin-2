@@ -1,0 +1,8 @@
+/*
+created by lhz in 2017/1/31
+提货签收单查询
+*/
+th .layui-form-checkbox{display: none;}
+.layui-table-view .layui-table td{
+   cursor: pointer !important;
+}

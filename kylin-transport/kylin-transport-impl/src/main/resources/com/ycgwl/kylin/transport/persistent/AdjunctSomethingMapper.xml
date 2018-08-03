@@ -1,0 +1,1321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.AdjunctSomethingMapper">
+
+	<!-- 2017-09-13新加入代码开始 存储过程改成java保存装载清单 -->
+	<select id="isReceived" resultType="java.lang.Integer">
+		SELECT count(1) FROM t_QS WHERE qszt>1 and ydbhid IN
+		<foreach collection="ydbhids" index="index" open="("
+			separator="," close=")" item="ydbhid">
+			#{ydbhid}
+		</foreach>
+
+	</select>
+
+	<select id="getInsNo" resultType="java.lang.String">
+		select INS_NO from
+		T_INCOME_COST_H where
+		cxh = #{chxh}
+		and ZHCHRQ=#{zhchrq}
+		and
+		FAZHAN=#{fazhan}
+	</select>
+
+	<select id="genincomecostno" statementType="CALLABLE">
+		<![CDATA[  
+				  {
+				call dbo.usp_genincomecostno(
+				#{insNo,mode=OUT,jdbcType=VARCHAR}
+				)
+              }
+		]]>
+
+	</select>
+
+	<insert id="insertIncomeCost">
+		INSERT INTO T_INCOME_COST_H
+		(
+		INS_NO ,CXH, ZHCHRQ ,
+		WX_GSNAME , T_COST , CREATE_GS , CREATE_USER,
+		CREATE_USERNAME , FAZHAN
+		, YSFS , DAOZHAN , YSHM , wx_type , wx_id ,
+		T_COST_SALE , T_COST_ELSE ,
+		i_type
+		)
+		VALUES
+		(
+		#{insNo} , #{bundleReceipt.chxh},
+		#{bundleReceipt.zhchrq},#{bundleReceipt.wxName},#{bundleReceipt.qdCost}
+		+ #{bundleReceipt.elseCost},
+		#{bundleReceipt.fazhan}
+		,#{bundleReceipt.grid},#{bundleReceipt.hyy},#{bundleReceipt.fazhan}
+		,#{bundleReceipt.ysfs},#{bundleReceipt.daozhan},#{yshhm},#{bundleReceipt.clOwner},#{bundleReceipt.wxId},#{bundleReceipt.qdCost},
+		#{bundleReceipt.elseCost},#{bundleReceipt.iType}
+		)
+	</insert>
+
+
+	<select id="queryInsXh" resultType="java.lang.Integer">
+		SELECT MAX(INS_XH) FROM
+		T_INCOME_COST_D WHERE INS_NO = #{insNo}
+	</select>
+
+	<insert id="insertTIncomeCostD" parameterType="java.util.List">
+		INSERT INTO T_INCOME_COST_D
+		(INS_NO , INS_XH , YDBHID , YDXZH ,
+		PINGMING , JIANSHU ,ZHL ,
+		TIJI , YSFS , FAZHAN , DAOZHAN , ZHCHRQ ,
+		YSHM , xuhao
+		)
+		values
+		<foreach collection="incomeEntities" item="income" separator=",">
+			(
+			#{income.insNo}, #{income.insXh}, #{income.ydbhid},
+			#{income.ydxzh},#{income.pingming} ,#{income.jianshu}, #{income.zhl},
+			#{income.tiji} , #{income.ysfs} , #{income.fazhan}, #{income.daozhan}
+			,#{income.zhchrq} ,#{income.yshm} , #{income.xuhao}
+			)
+		</foreach>
+	</insert>
+
+	<select id="getvIncomeCost" resultMap="incomeentity">
+
+		SELECT ydxzh,pinming,jianshu,zhl,tiji,xuhao FROM v_income_cost_temp
+		WHERE
+		(#{fazhan} = '' OR fazhan = #{fazhan})
+		AND chxh = #{chxh}
+		<![CDATA[
+		AND zhchrq >= CONVERT (
+			datetime,
+			CONVERT (VARCHAR(10) ,#{zhchrq}, 120)
+		)
+		AND zhchrq <= #{zhchrq}
+			]]>
+		AND ( #{daozhan} = '' OR DAOZHAN = #{daozhan})
+		AND ydbhid IN
+		<foreach collection="ydbhids" index="index" open="("
+			separator="," close=")" item="ydbhid">
+			#{ydbhid}
+		</foreach>
+
+	</select>
+
+	<resultMap id="incomeentity" type="com.ycgwl.kylin.transport.entity.IncomeEntity">
+		<result column="YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+		<result column="ydxzh" property="ydxzh" jdbcType="VARCHAR" />
+		<result column="PINMING" property="pingming" jdbcType="VARCHAR" />
+		<result column="JIANSHU" property="jianshu" jdbcType="VARCHAR" />
+		<result column="ZHL" property="zhl" jdbcType="VARCHAR" />
+		<result column="TIJI" property="tiji" jdbcType="VARCHAR" />
+		<result column="ysfs" property="ysfs" jdbcType="VARCHAR" />
+		<result column="FAZHAN" property="fazhan" jdbcType="VARCHAR" />
+		<result column="DAOZHAN" property="daozhan" jdbcType="VARCHAR" />
+		<result column="ZHCHRQ" property="zhchrq" jdbcType="VARCHAR" />
+		<result column="YSHM" property="yshm" jdbcType="VARCHAR" />
+		<result column="xuhao" property="xuhao" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+
+	<!-- 2017-09-13新加入结束 -->
+
+
+
+
+	<resultMap id="Company"
+		type="com.ycgwl.kylin.transport.entity.adjunct.Company">
+		<id column="id" property="companyKey" jdbcType="INTEGER" />
+		<result column="name" property="companyName" jdbcType="VARCHAR" />
+		<result column="shx" property="companyShort" jdbcType="VARCHAR" />
+		<result column="bh" property="companyCode" jdbcType="VARCHAR" />
+		<result column="letterFirst" property="companyShortCode"
+			jdbcType="VARCHAR" />
+		<result column="choose" property="choose" jdbcType="INTEGER" />
+		<result column="wx" property="wx" jdbcType="INTEGER" />
+		<result column="dkh" property="dkh" jdbcType="VARCHAR" />
+		<result column="isDaoZhan" property="station" jdbcType="INTEGER" />
+		<result column="qy" property="bigArea" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="Customer"
+		type="com.ycgwl.kylin.transport.entity.adjunct.Customer">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="gs" property="company" jdbcType="VARCHAR" />
+		<result column="KHMC" property="customerName" jdbcType="VARCHAR" />
+		<result column="KHBM" property="customerKey" jdbcType="VARCHAR" />
+		<result column="khtxdz" property="address" jdbcType="VARCHAR" />
+		<result column="KHLXR" property="contactPerson" jdbcType="VARCHAR" />
+		<result column="KHDH" property="phone" jdbcType="VARCHAR" />
+		<result column="hwmch" property="product" jdbcType="VARCHAR" />
+		<result column="fpmc" property="invoiceName" jdbcType="VARCHAR" />
+		<result column="swzh" property="taxNumber" jdbcType="VARCHAR" />
+		<result column="swdb" property="salesDeputy" jdbcType="VARCHAR" />
+		<result column="khzt" property="status" jdbcType="VARCHAR" />
+		<result column="khchsh" property="area" jdbcType="VARCHAR" />
+		<result column="ysfs" property="industry" jdbcType="VARCHAR" />
+		<result column="YesNoGreenChannel" property="greenChannel" jdbcType="INTEGER" />
+		<result column="khsj" property="mobile" jdbcType="VARCHAR" />
+		<result column="guesttype" property="guestType" jdbcType="VARCHAR" />
+		<result column="xiaoshoucode" property="sellCode" jdbcType="VARCHAR" />
+		<!--2018-05-14新增字段 -->
+		<result column="lxrzw"  property="contractPostion" jdbcType="VARCHAR" />
+		<result column="pinming"  property="goodsName" jdbcType="VARCHAR" />
+		<result column="clearingcode"  property="clearingcode" jdbcType="VARCHAR" />
+		<result column="quantity"  property="quantity" jdbcType="INTEGER" />
+		<result column="ywht"  property="isContract" jdbcType="INTEGER" />
+		<result column="hetonghao"  property="contractNo" jdbcType="VARCHAR" />
+		<result column="fdyq"  property="returnListStandrd" jdbcType="VARCHAR" />
+		<result column="basicaccount"  property="bankAddress" jdbcType="VARCHAR" />
+		<result column="bankaccountno"  property="bankAccountNo" jdbcType="VARCHAR" />
+		<result column="businessregistrationno"  property="businessRegistrationNo" jdbcType="VARCHAR" />
+		<result column="switchboardno"  property="switchBoardNo" jdbcType="VARCHAR" />
+		<result column="companyurl"  property="companyUrl" jdbcType="VARCHAR" />
+		<result column="shipper"  property="shipper" jdbcType="VARCHAR" />
+		<result column="checker"  property="checker" jdbcType="VARCHAR" />
+		<result column="shippertel"  property="shipperTel" jdbcType="VARCHAR" />
+		<result column="checkertel"  property="checkerTel" jdbcType="VARCHAR" />
+		<result column="shipperemail"  property="shipperEmail" jdbcType="VARCHAR" />
+		<result column="checkeremail"  property="checkerEmail" jdbcType="VARCHAR" />
+		<result column="isneedreturneddocument"  property="isneedReturnedDocument" jdbcType="INTEGER" />
+		<result column="contractstartdate"  property="contractStartDate" jdbcType="TIMESTAMP" />
+		<result column="contractenddate"  property="contractEndDate" jdbcType="TIMESTAMP" />
+		<result column="firststatementDate"  property="firststatementDate" jdbcType="TIMESTAMP" />	  
+		<result column="lastStatementdate"  property="lastStatementDate" jdbcType="TIMESTAMP" />
+		<result column="frdb"  property="corporateRepresentative" jdbcType="VARCHAR" />
+		<result column="khlxbh"  property="consterType" jdbcType="VARCHAR" />
+		<result column="zyzm"  property="zyzm" jdbcType="VARCHAR" />	
+ 		<result column="fzr"  property="fzr" jdbcType="VARCHAR" />	
+ 		<result column="fzrzw"  property="fzrzw" jdbcType="VARCHAR" />	
+ 		<result column="fzrdh"  property="fzrdh" jdbcType="VARCHAR" />	
+ 		<result column="fzrsr"  property="fzrsr" jdbcType="VARCHAR" />	
+ 		<result column="hwliux"  property="hwliux" jdbcType="VARCHAR" />	
+ 		<result column="khjj"  property="khjj" jdbcType="LONGVARCHAR" />	
+ 		<result column="djrq"  property="djrq" jdbcType="TIMESTAMP" />	
+ 		<result column="ksrq"  property="ksrq" jdbcType="TIMESTAMP" />	
+ 		<result column="zx_time"  property="zxTime" jdbcType="TIMESTAMP" />	
+ 		<result column="ywjdid"  property="ywjdId" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="Employee"
+		type="com.ycgwl.kylin.transport.entity.adjunct.Employee">
+		<id column="grid" property="employeeKey" jdbcType="VARCHAR" />
+		<result column="bm" property="department" jdbcType="VARCHAR" />
+		<result column="xm" property="emplyeeName" jdbcType="VARCHAR" />
+		<result column="zw" property="office" jdbcType="VARCHAR" />
+		<result column="gs" property="companyName" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="lxdh" property="phone" jdbcType="VARCHAR" />
+		<result column="zzsj" property="officialTime" jdbcType="TIMESTAMP" />
+		<result column="rzsj" property="entryTime" jdbcType="TIMESTAMP" />
+		<result column="sfzdz" property="idCardAddress" jdbcType="VARCHAR" />
+		<result column="sfzhm" property="idCardNumber" jdbcType="VARCHAR" />
+		<result column="jg" property="nativePlace" jdbcType="VARCHAR" />
+		<result column="mz" property="famousFamily" jdbcType="VARCHAR" />
+		<result column="sg" property="bodyHeight" jdbcType="INTEGER" />
+		<result column="tz" property="bodyWeight" jdbcType="FLOAT" />
+		<result column="xb" property="sex" jdbcType="VARCHAR" />
+		<result column="xl" property="education" jdbcType="VARCHAR" />
+		<result column="rzdd" property="entryAddress" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="Industry"
+		type="com.ycgwl.kylin.transport.entity.adjunct.Industry">
+		<id column="id" property="industryKey" jdbcType="VARCHAR" />
+		<result column="Custname" property="industryName" jdbcType="VARCHAR" />
+		<result column="remark" property="industryRemark" jdbcType="VARCHAR" />
+		<result column="custJM" property="industryShortCode" jdbcType="VARCHAR" />
+		<result column="Custsort" property="industrySort" jdbcType="VARCHAR" />
+		<result column="Custstate" property="industryState" jdbcType="VARCHAR" />
+		<result column="oldname" property="industryOldName" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ConveyWay"
+		type="com.ycgwl.kylin.transport.entity.adjunct.ConveyWay">
+		<id column="id" property="wayKey" jdbcType="INTEGER" />
+		<result column="ysfs" property="wayName" jdbcType="VARCHAR" />
+		<result column="isky" property="isky" jdbcType="INTEGER" />
+		<result column="isxc" property="isxc" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ReleaseWaiting"
+		type="com.ycgwl.kylin.transport.entity.adjunct.ReleaseWaiting">
+		<result column="ydbhid" property="ydbhid" jdbcType="VARCHAR" />
+		<result column="ddfhbeizhu" property="ddfhbeizhu" jdbcType="VARCHAR" />
+		<result column="ddfhczshijian" property="ddfhczshijian"
+			jdbcType="TIMESTAMP" />
+		<result column="ddfhczygh" property="ddfhczygh" jdbcType="VARCHAR" />
+		<result column="ddfhzt" property="ddfhzt" jdbcType="INTEGER" />
+		<result column="fazhan" property="fazhan" jdbcType="VARCHAR" />
+		<result column="tzfhbeizhu" property="tzfhbeizhu" jdbcType="VARCHAR" />
+		<result column="tzfhczshijian" property="tzfhczshijian"
+			jdbcType="TIMESTAMP" />
+		<result column="tzfhczygh" property="tzfhczygh" jdbcType="VARCHAR" />
+		<result column="tzfhzt" property="tzfhzt" jdbcType="INTEGER" />
+		<result column="xgrgonghao" property="xgrgonghao" jdbcType="VARCHAR" />
+		<result column="xgrjiqi" property="xgrjiqi" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ForeignRoute"
+		type="com.ycgwl.kylin.transport.entity.adjunct.ForeignRoute">
+		<result column="gys_dhsj" property="gysDhsj" jdbcType="INTEGER" />
+		<result column="gys_dz" property="gysDz" jdbcType="VARCHAR" />
+		<result column="gys_gs" property="gysGs" jdbcType="VARCHAR" />
+		<result column="gys_lxr" property="gysLxr" jdbcType="VARCHAR" />
+		<result column="wno" property="wno" jdbcType="INTEGER" />
+		<result column="xzh" property="xzh" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="VehicleInfo"
+		type="com.ycgwl.kylin.transport.entity.adjunct.VehicleInfo">
+		<result column="base_cphm" property="baseCphm" jdbcType="VARCHAR" />
+		<result column="person_sj1tel" property="personSj1tel"
+			jdbcType="VARCHAR" />
+		<result column="person_sj1xm" property="personSj1xm" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="chargingProjects" type="com.ycgwl.kylin.transport.entity.ChargingProjects">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="shfxm" property="shfxm" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<select id="queryStationCompanys" resultMap="Company">
+		SELECT
+		id, name, shx,
+		bh, letterFirst, choose, wx, dkh, isDaoZhan, qy,
+		type
+		FROM
+		gongsi
+		<!-- TMS中没用到的判断 WHERE isDaoZhan = 1 AND type = 1 -->
+	</select>
+	<select id="getCompanyByName" resultMap="Company" parameterType="java.lang.String">
+		SELECT
+		id, name, shx, bh, letterFirst, choose, wx, dkh, isDaoZhan, qy,
+		type
+		FROM
+		gongsi
+		WHERE
+		name = #{companyName}
+	</select>
+	<select id="getEmployeeByNumber" resultMap="Employee"
+		parameterType="java.lang.String">
+		SELECT
+		grid, bm, xm, zw, gs, mobile, lxdh, zzsj, rzsj,
+		sfzdz, sfzhm, jg, mz, sg,
+		tz, xb, xl, rzdd
+		FROM
+		ygzl
+		WHERE
+		grid=#{employeeKey}
+	</select>
+	<select id="queryCustomerByCompanyName" resultMap="Customer">
+		SELECT
+		gs,
+		KHMC, KHBM, khtxdz, khtxdz, KHLXR, KHDH, hwmch, fpmc, swzh, swdb,
+		khzt, khchsh, ysfs, YesNoGreenChannel, khsj, guesttype, xiaoshoucode
+		FROM
+		customer
+		WHERE
+		gs = #{companyName} AND (KHMC LIKE
+		'%'+#{something}+'%' OR KHBM LIKE
+		'%'+#{something}+'%')
+	</select>
+
+	<select id="queryCustomerByKhmcAndKhbm" resultMap="Customer">
+		SELECT
+		gs,
+		KHMC, KHBM, khtxdz, khtxdz, KHLXR, KHDH, hwmch, fpmc, swzh, swdb,
+		khzt, khchsh, ysfs, YesNoGreenChannel, khsj, guesttype, xiaoshoucode
+		FROM
+		customer
+		WHERE
+		gs = #{companyName} AND KHMC = #{khmc} AND KHBM =
+		#{khbm}
+	</select>
+
+	<select id="queryCustomerByKhmc" resultMap="Customer">
+		SELECT
+		gs, KHMC, KHBM,
+		khtxdz, khtxdz, KHLXR, KHDH, hwmch, fpmc, swzh, swdb,
+		khzt, khchsh,
+		ysfs, YesNoGreenChannel, khsj, guesttype, xiaoshoucode
+		FROM
+		customer
+		WHERE
+		gs = #{companyName} AND KHMC = #{khmc}
+	</select>
+
+	<select id="getCustomerByKeyCompanyName" resultMap="Customer"
+		parameterType="java.lang.String">
+		SELECT
+		gs, KHMC, KHBM, khtxdz, khtxdz, KHLXR, KHDH,
+		hwmch, fpmc, swzh, swdb,
+		khzt, khchsh, ysfs, YesNoGreenChannel, khsj,
+		guesttype, xiaoshoucode
+		FROM
+		customer
+		WHERE
+		gs = #{companyName} AND KHBM =
+		#{customerKey}
+	</select>
+	<select id="queryIndustrys" resultMap="Industry">
+		SELECT
+		id, Custname,
+		remark, custJM, Custsort, Custstate, oldname
+		FROM
+		T_Customer_categories
+	</select>
+	<select id="queryConveyWays" resultMap="ConveyWay">
+		SELECT
+		id, ysfs, isky,
+		isxc
+		FROM
+		T_BASE_YSFS
+	</select>
+	<select id="queryForeignRouteByName" resultMap="ForeignRoute">
+		<![CDATA[ 
+		SELECT
+			top 6 *
+		FROM 
+			t_waichexinxi_gysjbzl
+		WHERE 
+			gys_gs LIKE '%'+#{foreignName}+'%'
+		 ]]>
+	</select>
+	<select id="getForeignRouteByName" resultMap="ForeignRoute"
+		parameterType="java.lang.String">
+		SELECT
+		*
+		FROM
+		t_waichexinxi_gysjbzl
+		WHERE
+		gys_gs =
+		#{foreignName}
+	</select>
+	<select id="queryVehicleInfoByNumber" resultMap="VehicleInfo"
+		parameterType="java.lang.String">
+		<![CDATA[ 
+		SELECT
+			top 6 *
+		FROM 
+			t_waichexinxi_head
+		WHERE 
+			tag= 1 AND base_cphm LIKE '%'+#{number}+'%'
+		 ]]>
+	</select>
+	<select id="getVehicleInfoByNumber" resultMap="VehicleInfo"
+		parameterType="java.lang.String">
+		SELECT TOP 1 * FROM t_waichexinxi_head WHERE base_cphm =
+		#{number} ORDER BY id DESC
+	</select>
+	<insert id="insertReleaseWaiting"
+		parameterType="com.ycgwl.kylin.transport.entity.adjunct.ReleaseWaiting">
+		INSERT INTO hwyd_ddfh (ydbhid, fazhan, ddfhzt,ddfhczygh,
+		ddfhczshijian, tzfhzt) VALUES (#{ydbhid}, #{fazhan},
+		#{ddfhzt},#{ddfhczygh}, #{ddfhczshijian}, #{tzfhzt})
+	</insert>
+
+
+	<select id="getYsfsFromHwydByYdbhid">
+		select ysfs from hwyd where ydbhid = #{ydbhid}
+	</select>
+
+	<select id="getReleaseWaitingByYdbhid" parameterType="java.lang.String"
+		resultMap="ReleaseWaiting">
+		select * from hwyd_ddfh where ydbhid = #{ydbhid} and tzfhzt
+		= 1
+	</select>
+	<select id="buildVehicle" resultType="java.lang.String">
+		Proc_GetChxh 'chxh'
+	</select>
+
+	<select id="listDaoZhanByCompany" resultType="java.lang.String">
+		SELECT DISTINCT
+		top 6 XIANLU.DAOZHAN
+		FROM XIANLU
+		WHERE
+		XIANLU.GS = #{gs} and
+		XIANLU.daozhan like '%'+#{daozhan}+'%'
+	</select>
+	<!-- 查询该运单是否已经签收 -->
+	<select id="isReceivedByYdbhid" resultType="java.lang.Integer">
+		select qszt from t_QS
+		where ydbhid = #{ydbhid}
+	</select>
+	<select id="getLatticePoint" resultType="java.lang.String">
+		SELECT DISTINCT
+		mdd
+		FROM
+		sys_shlc_parm_pcdjf2
+		WHERE
+		gs = #{daozhan}
+	</select>
+	<select id="getElseCost" resultType="java.math.BigDecimal">
+	<![CDATA[ 
+		select TOP 1 T_COST_ELSE from
+			T_INCOME_COST_H
+		where
+			cxh =#{chxh}
+		and
+			zhchrq =#{zhchrq}
+		 ]]>
+	</select>
+
+	<update id="updateKucun">
+		Update kucun
+		Set jianshu = 0 ,
+		tiji = 0 ,
+		zhl = 0
+		Where
+		ydbhid in
+		<foreach collection="ydbhids" index="index" open="("
+			separator="," close=")" item="ydbhid">
+			#{ydbhid}
+		</foreach>
+	</update>
+
+	<select id="createYdbhid" statementType="CALLABLE">
+		<![CDATA[
+				  {
+				call dbo.GetYunDanHaoMN(
+				#{gsbh,mode=IN,jdbcType=VARCHAR},
+				#{grid,mode=IN,jdbcType=VARCHAR},
+				#{o_YunDanHao,mode=OUT,jdbcType=VARCHAR}
+				)
+              }
+		]]>
+	</select>
+	<resultMap type="com.ycgwl.kylin.transport.entity.adjunct.StoreHouse"
+		id="storeHouse">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="gs" property="gs" jdbcType="VARCHAR" />
+		<result column="yyb" property="yyb" jdbcType="VARCHAR" />
+		<result column="ckmc" property="ckmc" jdbcType="VARCHAR" />
+		<result column="ckbh" property="ckbh" jdbcType="VARCHAR" />
+		<result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getStoreHouseBycompany" resultMap="storeHouse">
+		SELECT * from
+		t_ckbh where gs = #{company}
+	</select>
+	<select id="getStoreHouse" resultMap="storeHouse">
+		SELECT * from
+		t_ckbh where gs = #{company}
+		and ckmc = #{storeHouse}
+	</select>
+	
+	
+	<select id="queryFenliKucun" resultType="java.lang.Integer">
+		SELECT count(*) FROM
+		T_fenlikucun where YDBHID=
+		#{ydbhid} AND gs = #{gs} AND ydxzh =
+		#{ydxzh}
+	</select>
+	<select id="countFenlikucunByXuhao" resultType="java.lang.Integer">
+		SELECT count(*) FROM
+		T_fenlikucun where xuhao = #{xuhao}
+	</select>
+	<update id="updateFenLiKuCun">
+		UPDATE t_fenlikucun
+		SET
+		jianshu = jianshu + #{bundleReceipt.jianshu} ,
+		tiji = tiji + #{bundleReceipt.tiji} ,
+		zhl = zhl+ #{bundleReceipt.zhl} ,
+		dhsj = #{dhsj},
+		chxh = #{bundleReceipt.chxh},
+		ZHCHRQ = #{bundleReceipt.zhchrq},
+		ziti = #{bundleReceipt.ziti},
+		itype = #{iType},
+		auto_arrive =#{autoArrive}
+		WHERE
+		ydbhid = #{bundleReceipt.ydbhid}
+		AND gs=#{gs}
+		AND ydxzh=#{bundleReceipt.ydxzh}
+	</update>
+	<update id="updateFenLiKuCunByXuhao">
+		UPDATE t_fenlikucun
+		SET
+		jianshu = jianshu + #{bundleReceipt.jianshu} ,
+		tiji = tiji + #{bundleReceipt.tiji} ,
+		zhl = zhl+ #{bundleReceipt.zhl} ,
+		dhsj = #{dhsj},
+		chxh = #{bundleReceipt.chxh},
+		ZHCHRQ = #{bundleReceipt.zhchrq},
+		ziti = #{bundleReceipt.ziti},
+		itype = #{iType},
+		auto_arrive =#{autoArrive} 
+		WHERE
+		xuhao = #{bundleReceipt.xuhao}
+	</update>
+	<insert id="insertTFenLiKuCun">
+		INSERT INTO t_fenlikucun (
+		ydbhid,
+		ydxzh,
+		jianshu,
+		pinming,
+		tiji,
+		zhl,
+		beizhu,
+		xh,
+		shhrmch,
+		shhrlxdh,
+		fazhan,
+		daozhan,
+		gs,
+		ckbh,
+		dhsj,
+		chxh,
+		ZHCHRQ,
+		MuDiZhan,
+		auto_arrive,
+		itype,
+		xuhao
+		)
+		VALUES
+		(
+		#{bundleReceipt.ydbhid},#{bundleReceipt.ydxzh},#{bundleReceipt.jianshu},
+		#{bundleReceipt.pinming}
+		,#{bundleReceipt.tiji} ,#{bundleReceipt.zhl} ,#{bundleReceipt.beizhu},
+		#{bundleReceipt.xh},#{order.shhrmch},#{order.shhrlxdh},
+		#{order.fazhan},#{order.daozhan},#{gs},#{ckbh},
+		#{dhsj},#{bundleReceipt.chxh}
+		,#{bundleReceipt.zhchrq},
+		#{order.daozhan},
+		#{autoArrive},
+		#{iType},
+		#{bundleReceipt.xuhao}
+		)
+	</insert>
+	
+	<update id="updateTQSOK">
+		update T_QS set daozhan_ok = '1' where ydbhid =
+		#{ydbhid}
+	</update>
+
+	<select id="getArriveNetWorkEdit" resultType="java.lang.String">
+		SELECT DISTINCT
+		shhd
+		FROM
+		T_GONGSI_SHHD
+		WHERE
+		gsbh = #{daozhan}
+		AND shhd like '%'+ #{arriveNetWork} +'%'
+	</select>
+
+	<select id="checkuserdelrec" statementType="CALLABLE">
+		<![CDATA[
+				  {
+				call dbo.usp_checkuserdelrec(
+				#{ydbhid,mode=IN,jdbcType=VARCHAR},
+				#{result,mode=OUT,jdbcType=VARCHAR}
+				)
+              }
+		]]>
+	</select>
+
+	<delete id="deleteFenLiKucunByYdbhid" parameterType="java.lang.String">
+		delete from T_fenlikucun where ydbhid = #{ydbhid}
+	</delete>
+	
+	<resultMap type="com.ycgwl.kylin.transport.entity.KucunEntity"	id="kucun">
+		<result column="YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+		<result column="ydxzh" property="ydxzh" jdbcType="VARCHAR" />
+		<result column="PINMING" property="pinming" jdbcType="VARCHAR" />
+		<result column="JIANSHU" property="jianshu" jdbcType="VARCHAR" />
+		<result column="ZHL" property="zhl" jdbcType="VARCHAR" />
+		<result column="TIJI" property="tiji" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap type="com.ycgwl.kylin.transport.entity.FenliKucunEntity" id="fenlikucun">
+		<result column="YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+		<result column="ydxzh" property="ydxzh" jdbcType="VARCHAR" />
+		<result column="PINMING" property="pinming" jdbcType="VARCHAR" />
+		<result column="JIANSHU" property="jianshu" jdbcType="VARCHAR" />
+		<result column="ZHL" property="zhl" jdbcType="VARCHAR" />
+		<result column="TIJI" property="tiji" jdbcType="VARCHAR" />
+		<result column="GS" property="gs" jdbcType="VARCHAR" />
+		<result column="xuhao" property="xuhao" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="queryKucun" resultMap="kucun">
+		select * from kucun where ydbhid = #{ydbhid} and ydxzh = #{ydxzh}
+	</select>
+	<select id="queryFenliKucunEntity" resultMap="fenlikucun">
+		select * from t_fenlikucun where ydbhid = #{ydbhid} and ydxzh = #{ydxzh} and gs=#{gs} order by dhsj desc
+	</select>
+	<select id="countFenliKucunEntity" resultType="java.lang.Integer">
+		select count(*) from t_fenlikucun where ydbhid = #{ydbhid} and ydxzh = #{ydxzh} and gs=#{gs}
+	</select>
+	<select id="queryStationCompany" resultMap="Company">
+		SELECT name,bh FROM gongsi
+	</select>
+	<update id="updateKucunData">
+		UPDATE kucun SET JIANSHU = #{jianshu} , TIJI = #{tiji}  , ZHL= #{zhl} WHERE YDBHID = #{ydbhid} AND YDXZH = #{ydxzh}
+	</update>
+	<update id="updateFenLiKucunData">
+		UPDATE t_fenlikucun SET JIANSHU = #{jianshu} , TIJI = #{tiji}  , ZHL= #{zhl} WHERE YDBHID = #{ydbhid} AND YDXZH = #{ydxzh} and gs = #{company}
+	</update>
+	<insert id="insertIncome_HCostv2">
+	INSERT INTO T_INCOME_COST_H
+		(
+		INS_NO ,CXH, ZHCHRQ ,
+		WX_GSNAME , T_COST , CREATE_GS , CREATE_USER,
+		CREATE_USERNAME , FAZHAN
+		, YSFS , DAOZHAN , YSHM , wx_type , wx_id ,
+		T_COST_SALE , T_COST_ELSE ,
+		i_type
+		)
+		VALUES
+		(
+		#{insNo},#{chxh},#{zhchrq},#{wxName}, #{tCost}, #{company},#{account},
+		#{hyy},#{fazhan},#{ysfs},#{daozhan},#{yshm},#{clOwner},#{wxItem},#{qdCost},#{elseCost},#{iType}
+		)
+	</insert>
+	<insert id="insertIncome_DCostv2">
+		INSERT INTO T_INCOME_COST_D
+		(INS_NO , INS_XH , YDBHID , YDXZH ,
+		PINGMING , JIANSHU ,ZHL ,
+		TIJI , YSFS , FAZHAN , DAOZHAN , ZHCHRQ ,
+		YSHM , xuhao) values(#{insNo},#{insXh},#{receipt.ydbhid},#{receipt.ydxzh},#{receipt.pinming},#{receipt.jianshu},#{receipt.zhl}
+		,#{receipt.tiji},#{ysfs},#{fazhan},#{daozhan},#{zhchrq},#{yshm},#{receipt.xuhao}
+		)
+	</insert>
+	<select id="queryKucunByYdbhid" resultMap="kucun">
+		select * from kucun where ydbhid = #{ydbhid} order BY YDXZH ASC
+	</select>
+	<select id="queryFenliKucunByYdbhid" resultMap="fenlikucun">
+		select * from t_fenlikucun where ydbhid = #{ydbhid}  and gs=#{company} order BY YDXZH ASC
+	</select>
+	
+	<update id="recoverGoodArriveFenLiKucun">
+		update t_fenlikucun SET jianshu = jianshu - #{receipt.jianshu} ,zhl = zhl-#{receipt.zhl} ,tiji = tiji-#{receipt.tiji}
+		 where gs =#{receipt.daozhan} and ydbhid = #{receipt.ydbhid} and ydxzh = #{receipt.ydxzh}
+	</update>
+	
+	 <update id="batchRepealGoodArriveList" parameterType="java.util.List">
+    begin  
+        <foreach collection="list" item="item" index="index" separator=";" > 
+            update t_fenlikucun 
+            <set>
+            jianshu = jianshu - #{item.jianshu},
+            zhl = zhl-#{item.zhl} ,tiji = tiji-#{item.tiji}
+            </set>
+            where gs =#{item.daozhan}
+            and ydbhid = #{item.ydbhid} and ydxzh = #{item.ydxzh}
+            </foreach>
+        ;end;
+    </update>
+	
+	<select id="getFinaceCertifyNoByYdbhid"	resultType="java.lang.String">
+		SELECT cwpzhbh FROM FIWT  WHERE hwy_ydbhid = #{ydbhid} and type=0
+	</select>
+	<update id="plusKucun">
+		UPDATE kucun SET JIANSHU = jianshu+#{receipt.jianshu} , TIJI = tiji+#{receipt.tiji}  , ZHL= zhl+#{receipt.zhl} 
+		WHERE YDBHID = #{receipt.ydbhid} AND YDXZH = #{receipt.ydxzh}
+	</update>
+	
+	<update id="plusFenliKucun">
+		UPDATE t_fenlikucun SET JIANSHU = jianshu+#{receipt.jianshu} , TIJI = tiji+#{receipt.tiji}  , ZHL= zhl+#{receipt.zhl} 
+		WHERE YDBHID = #{receipt.ydbhid} AND YDXZH = #{receipt.ydxzh} AND  gs = #{receipt.fazhan}
+	</update>
+	<update id="plusFenliKucunByXuhao">
+		UPDATE t_fenlikucun SET JIANSHU = jianshu+#{receipt.jianshu} , TIJI = tiji+#{receipt.tiji}  , ZHL= zhl+#{receipt.zhl} 
+		WHERE xuhao = #{xuhao}
+	</update>
+	
+	<select id="getArriveNetWorkList" resultType="java.lang.String">
+		SELECT DISTINCT
+		shhd
+		FROM
+		T_GONGSI_SHHD
+		WHERE
+		gsbh = #{daozhan}
+	</select>
+	
+	<update id="updateIncome_HByInsNo">
+		update T_INCOME_COST_H 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="qdCost!= null and qdCost.length()>0 ">T_COST_SALE = #{qdCost},</if>
+			<if test="elseCost!= null and elseCost.length()>0 ">T_COST_ELSE = #{elseCost} ,</if>
+			<if test="tCost!= null">T_COST = #{tCost} ,</if>
+			<if test="wxName!=null and wxName.length()>0"> wx_gsname = #{wxName},</if>
+			<if test="wxItem!=null and wxItem.length()>0"> wx_id = #{wxItem} ,</if>
+		</trim>
+		where ins_no = #{insNo}
+	</update>
+	
+	<select id="getArriveNetWork" resultType="java.lang.String">
+		SELECT DISTINCT
+		shhd
+		FROM
+		T_GONGSI_SHHD
+		WHERE
+		gsbh = #{daozhan}
+	</select>
+	
+	<select id="selectChargingProjects" resultMap="chargingProjects">
+		SELECT id,shfxm FROM T_CWSJ_SHFXM_TYPE
+	</select>
+	
+	<select id="selectCustomerByGs" resultMap="Customer" parameterType="java.lang.String">
+		SELECT KHMC ,
+           	   KHBM ,
+               swzh ,
+               gs,  
+               yesnogreenchannel,
+               khsj,
+               jsgs,
+               xiaoshoucode,
+               guesttype  
+        FROM CUSTOMER      
+        WHERE gs = #{gs} AND rec_flag = 1
+	</select>
+	
+	<delete id="recoverGoodArriveFenLiKucuns">
+		delete from t_fenlikucun where ydbhid = #{receipt.ydbhid} and ydxzh = #{receipt.ydxzh}
+	</delete>
+	
+	<delete id="recoverGoodArriveFenLiKucunsByXuhao">
+		delete from t_fenlikucun where xuhao = #{xuhao}
+	</delete>
+	
+	
+	<select id="findCustomerLabel" resultType="com.ycgwl.kylin.transport.vo.CustomerLabelVo">
+		select a.pinming, a.jianshu, a.xh, b.begin_placename beginPlacename, b.end_placename endPlacename, b.fazhan, b.daozhan as dzshhd, b.ydbhid, b.shhrdzh as fhdwdzh
+		  from hwydxz a
+     left join hwyd b 
+            on a.ydbhid = b.ydbhid
+         where 1 = 1 
+        <if test="wayBillNum != '' and wayBillNum != null">
+        	and b.ydbhid = #{wayBillNum}
+        </if>
+	</select>
+	<select id="findFreightRecord" resultType="com.ycgwl.kylin.transport.vo.FreightRecordVo">
+		 select 
+		 		b.id,
+				a.ydbhid,
+				b.gs,
+				b.chc,
+				b.fazhan,
+				b.daozhan,
+				CONVERT(varchar(20), b.arrivalTime,120) as arrivalTime,
+				c.fhdwmch as fhr,
+				c.shhrmch,
+				b.wx_name as wxName,
+				b.abnormalType,
+				CONVERT(varchar(20), b.happenedTime,120) as happenedTime,
+				a.ds,
+				a.bjps,
+				a.ssh,
+				a.wr,
+				a.ychzht,
+				a.estimatedLoss,
+				b.responsibility,
+				b.isHandle,
+				CONVERT(varchar(100), b.shijian,23) as shijian,
+				b.notice_company as noticeCompany
+			 from T_HYJL_DETAIL a 
+			 left join T_HYJL_MASTER b 
+			 on a.masterid = b.id
+			 left join hwyd c 
+			 on c.YDBHID = a.ydbhid
+			 <!-- 于tms区分开，只显示到达时间不为空的数据 -->
+			 where arrivalTime  IS NOT NULL
+<!-- 		 <if test="company != null and company != ''">
+		 	and c.notice_company = #{company}
+		 </if> -->
+		 <if test="examine == 0">
+		 	and b.fazhan = #{company}
+		 </if>
+		 <if test="examine == 1">
+		 	and b.daozhan = #{company}
+		 </if>
+		 <if test="examine == 2">
+		 	and b.notice_company = #{company}
+		 </if>
+		 <if test="wayBillNum != null and wayBillNum != ''">
+		 	and a.ydbhid = #{wayBillNum}
+		 </if>
+		 <if test="train != null and train != ''">
+		 	and b.chc = #{train}
+		 </if>		 
+		 <if test="arriveStation != null and arriveStation != ''">
+		 	and b.fazhan = #{arriveStation}
+		 </if>	
+		 <if test="station != null and station != ''">
+		 	and b.daozhan = #{station} 
+		 </if>
+		 <if test="startTime != null and startTime != ''">
+		 	and b.shijian >= #{startTime}
+		 </if>
+		 <if test="endTime != null and endTime != ''">
+		 	<![CDATA[ and b.shijian <= #{endTime}  ]]>
+		 </if>
+		 <if test="isHandle == 0">
+		 	and b.isHandle = 0
+		 </if>
+		 <if test="isHandle == 1">
+		 	and b.isHandle = 1
+		 </if>
+	</select>
+	<insert id="saveFreightRecord" parameterType="com.ycgwl.kylin.transport.dto.FreightRecordInputDto"  useGeneratedKeys="true" keyProperty="id" >
+		insert into T_HYJL_MASTER (
+			shijian,abnormalType,happenedAdress,arrivalTime,happenedTime,
+			isHandle,estimatedLoss,chc
+			,lrr,gs,fazhan,daozhan,fchrq,wx_name
+		) values (
+			getDate(),#{abnormalType},#{happenedAdress},#{arrivalTime},#{happenedTime},
+			0,#{estimatedLoss},#{train},
+			#{currUserName},#{company},#{fazhan},#{daozhan},#{fchrq},#{wxName}
+		)
+		
+	</insert>
+	<insert id="saveFreightRecordDetail" >
+		insert into T_HYJL_DETAIL (
+			masterid,xzh,ydbhid,pinming,jianshu,
+			<if test="ds != null and ds != ''">
+				ds,
+			</if>
+			<if test="bjps != null and bjps != ''">
+				bjps,
+			</if>
+			<if test="ss != null and ss != ''">
+				ssh,
+			</if>
+			<if test="ws != null and ws != ''">
+				wr,
+			</if>			
+			estimatedLoss,ychzht
+		) values
+ 		(
+			#{id},#{xzh},#{wayBillNum},#{goodsName},#{ticketsNumber},
+			<if test="ds != null and ds != ''">
+				#{ds},
+			</if>
+			<if test="bjps != null and bjps != ''">
+				#{bjps},
+			</if>
+			<if test="ss != null and ss != ''">
+				#{ss},
+			</if>
+			<if test="ws != null and ws != ''">
+				#{ws},
+			</if>
+			#{estimatedLoss},#{remark}
+		)	
+		
+	</insert>
+	
+	<update id="updateFreightRecord">
+		update T_HYJL_MASTER 
+		<if test="type == 1">
+			set dzhyj = #{remark}, dzlrr = #{currentAccount}, dzlrsj = getDate(), dzlrck = 1
+		</if>
+		<if test="type == 2">
+			set dzyzyj = #{remark}, dzyzlrr = #{currentAccount}, dzyzlrsj = getDate(), dzyzlrck = 1
+		</if>
+		<if test="type == 3">
+			set dzdwyj = #{remark}, dzdwlrr = #{currentAccount}, dzdwlrsj = getDate(), dzdwlrck = 1
+		</if>
+		<if test="type == 4">
+			set fzhyj = #{remark}, fzlrr = #{currentAccount}, fzlrsj = getDate(), fzlrck = 1
+		</if>
+		<if test="type == 5">
+			set fzyzyj = #{remark}, fzyzlrr = #{currentAccount}, fzyzlrsj = getDate(), fzyzlrck = 1
+		</if>
+		<if test="type == 6">
+			set fzdwyj = #{remark}, fzdwlrr = #{currentAccount}, fzdwlrsj = getDate(), fzdwlrck = 1
+		</if>
+		<if test="type == 7">
+			set yyzxyj = #{remark}, yylrr = #{currentAccount}, yylrsj = getDate(), yylrck = 1 
+		</if>
+		where id = #{id}
+	</update>
+	<select id="findFiwtResultByYdid" resultType="com.ycgwl.kylin.transport.entity.FiwtResult">
+		SELECT FIWT.xianlu, FIWT.cwpzhbh,FIWT.nf 
+		  FROM FIWT 
+		 WHERE FIWT.type = 0 
+		   AND HWY_YDBHID = #{wayBillNum}
+	</select>
+	<select id="FiwtResult" resultType="java.lang.String">
+		SELECT fkfsh.bxf
+		  FROM fkfsh
+		 WHERE fkfsh.xianlu = #{xianlu}
+		   AND fkfsh.cwpzhbh =#{cwpzhbh}
+		   AND fkfsh.nf = #{nf} ;
+	</select>
+	<insert id="saveHyjlLog">
+		insert into T_HYJL_log(gkh, shijian, optype, hyjl_id)
+		values(#{account}, getDate(), "修改", #{id});
+	</insert>
+	<insert id="saveOrdertrace">
+		INSERT T_WL_ORDERTRACE (updateuser,updatedate,recstatus,YDBHID,ot_dtime,status,remark)
+		VALUES (#{account}, getdate(), '0', #{waybillNum}, getdate(), '4', '已确认返单');
+	</insert>
+	<select id="selectDdfhByYdbhid" resultType="com.ycgwl.kylin.transport.entity.adjunct.ReleaseWaiting">
+		select * from hwyd_ddfh where ydbhid = #{waybillNum} 
+	</select>
+	<select id="saveFreightRecordselect" resultType="com.ycgwl.kylin.transport.vo.LoadingListVo">
+		select 
+				fazhan,
+				daozhan,
+				wx_name as wxName,
+				CONVERT(varchar(20), zhchrq, 120) as zhchrq,
+				chxh,
+				i_type as itype
+		  from  hczzqd_source  
+		 where  i_type = #{exceptionType}
+		 <if test="waybillNum != null and waybillNum != ''">
+		 	and ydbhid = #{waybillNum} 
+		 </if>
+	</select>
+	
+	<select id="selectBundReceiptByCxhnAndYdh" resultType="com.ycgwl.kylin.transport.entity.BundleReceipt">
+		select * from hczzqd_source where YDBHID = #{waybillNum} and chxh = #{train}  and fchrq between #{startFchrq} and #{endFchrq}
+	</select>
+	
+	<select id="selectFreightRecordById" resultType="com.ycgwl.kylin.transport.entity.FreightRecord">
+		select CONVERT (VARCHAR(20) ,fzlrsj, 120) as fzlrsj, CONVERT (VARCHAR(20) ,dzdwlrsj, 120) as dzdwlrsj, CONVERT (VARCHAR(20) ,arrivalTime, 120) as arrivalTime, CONVERT (VARCHAR(20) ,happenedTime, 120) as happenedTime,CONVERT (VARCHAR(20) ,fchrq, 120) as fchrq,wx_name as wxName, notice_company as noticeCompany,notice_company_opinion as noticeCompanyOpinion, * from t_hyjl_master where id = #{id}
+	</select>
+	<select id="selectFreightRecordDetailById" resultType="com.ycgwl.kylin.transport.entity.FreightRecordDetail">
+		select * from t_hyjl_detail where 1 = 1
+		<if test="id != '' and id != null">
+			and masterid = #{id}
+		</if>
+	</select>
+	<select id="selectFreightRecordDetailByWaybillNum" resultType="com.ycgwl.kylin.transport.entity.FreightRecordDetail">
+		select * from t_hyjl_detail where 1 = 1
+		<if test="waybillNum != '' and waybillNum != null">
+			and ydbhid = #{waybillNum}
+		</if>
+	</select>
+	<select id="selectFreightRecordByChxh" resultType="com.ycgwl.kylin.transport.entity.FreightRecord">
+		select * from t_hyjl_master where 1 = 1
+		<if test="train != null and train != ''">
+			and chc = #{train}
+		</if>
+	</select>
+	<delete id="deleteFreightRecord">
+		delete from t_hyjl_master where id = #{id}
+	</delete>
+	<delete id="deleteFreightRecordDetail">
+		delete from t_hyjl_detail where masterid = #{id}
+	</delete>
+	<update id="addComments">
+		update t_hyjl_master 
+		<trim prefix="set" suffixOverrides=",">
+		<if test="dzdwName != null and dzdwName !=''">
+			dzdwlrr=#{dzdwName},
+		</if>
+		<if test="isHandle != null and isHandle !=''">
+			isHandle=#{isHandle},
+		</if>		
+		<if test="responsibility != null and responsibility !=''">
+			responsibility=#{responsibility},
+		</if>
+		<if test="fzdwName != null and fzdwName !=''">
+			fzdwlrr=#{fzdwName},
+		</if>
+		<if test="fzdwOpinion != null and fzdwOpinion !=''">
+			fzhyj=#{fzdwOpinion},
+		</if>
+		<if test="dzdwOpinion != null and dzdwOpinion !=''">
+			dzhyj=#{dzdwOpinion},
+		</if>
+		<if test="noticeCompany != null and noticeCompany !=''">
+			notice_company=#{noticeCompany},
+		</if>
+		<if test="noticeCompanyOpinion != null and noticeCompanyOpinion !=''">
+			notice_company_opinion=#{noticeCompanyOpinion},
+		</if>
+		<if test="dzdwTime != null and dzdwTime !=''">
+			dzdwlrsj=#{dzdwTime},
+		</if>
+		<if test="fzdwTime != null and fzdwTime !=''">
+			fzlrsj=#{fzdwTime},
+		</if>
+		</trim>
+		where id = #{id}
+	</update>
+	
+	   <!--2018-05-04根据公司,业务接单号查询客户基本信息 -->
+	   <select id="customerInfoByYwdhIdandGs" resultType="com.ycgwl.kylin.transport.entity.CustomerResult">
+	    SELECT
+	       ty.khmc,
+	       tp.detailid ywjdId,
+           ty.khlxr,
+	       ty.hwmch,
+	       ty.khbm,
+	       ty.khtxdz,
+	       ty.isfd,
+	       ty.khdh,
+	       ty.zxshj_b zxshj,
+	       ty.fkfs,
+	       ty.khlx hylb,
+	       ty.fdyq,
+	       ty.hwysfs,
+	       ty.khzw,
+	       ty.khxz khlx
+           FROM t_bul_pt_ywjdbwl ty,T_BUL_PT_MASTER tp
+           WHERE
+	       ty.masterid = tp.id
+             AND tp.i_type = 13
+             AND tp.detailid =#{ywjdhId}
+             AND tp.gs =#{company}
+	   </select>
+	 
+	  <!--查询公司下的业务接单号唯一  -->
+	 	   <select id="queryYwjdhByGS" resultType="com.ycgwl.kylin.transport.entity.CustomerResult">
+	    SELECT
+	       ty.khmc,
+	       tp.detailid ywjdId,
+           ty.khlxr,
+	       ty.hwmch,
+	       ty.khbm,
+	       ty.khtxdz,
+	       ty.isfd,
+	       ty.khdh,
+	       ty.zxshj_b zxshj,
+	       ty.fkfs,
+	       ty.khlx hylb,
+	       ty.fdyq,
+	       ty.hwysfs,
+	       ty.khzw,
+	       ty.khxz khlx
+           FROM t_bul_pt_ywjdbwl ty,T_BUL_PT_MASTER tp
+           WHERE
+	       ty.masterid = tp.id
+             AND tp.i_type = 13
+             AND tp.gs =#{company}
+	   </select>
+	   
+	   <!--查询公司权限  -->
+	   <select id="RigthNum" resultType="java.lang.Integer">
+	        SELECT limit FROM T_USERRIGHT WHERE  GKH=#{Account}  AND MENU_ID='QL_CUS_BASE'
+	   </select>
+	   
+	 
+	   <!-- 保存客户基本信息 -->
+	   <insert id="insertCustomerInfo">
+	     insert into customer
+	     (
+	     id,
+	     gs,
+	     KHMC,
+	     KHBM,
+	     khtxdz,
+	     KHLXR,KHDH,
+	     hwmch,fpmc,
+	     swzh,swdb,
+	     khzt,khchsh,
+         yw_ky,
+         yw_xb,
+         yw_wd,
+         yw_xy,
+         yw_hk,
+         yw_jzx,
+         yw_cj,
+         yw_sy,
+         yw_fl,
+         yw_gjys,
+         yw_zz,
+         yw_cc,
+         yw_wx,
+	     YesNoGreenChannel,
+         khsj,guesttype,
+         xiaoshoucode,
+         lxrzw,pinming,
+         clearingcode,
+         quantity,
+         ywht,hetonghao,
+         fdyq,
+         basicaccount,
+         bankaccountno,
+         businessregistrationno,
+         switchboardno,companyurl,
+         shipper,checker,
+         shippertel,checkertel,
+         shipperemail,checkeremail,
+         isneedreturneddocument,
+         contractstartdate,
+         contractenddate,
+         firststatementdate,
+         lastStatementdate,
+         frdb,
+         khlxbh,
+         zyzm,
+         fzr,
+         fzrzw,
+         fzrdh,
+         fzrsr,
+         cgydh,
+         hwliux,
+         khjj,djrq,
+         ksrq,zx_time,
+         ywjdid,
+         gkh
+	     )
+	    values
+	    (
+	     #{id},
+	     #{company},
+		 #{customerName},
+	     #{customerKey},
+		 #{address},
+		 #{contactPerson},
+		 #{phone},
+		 #{product},
+		 #{invoiceName},
+		 #{taxNumber},
+		 #{salesDeputy},
+		 #{status},
+		 #{area},
+		 
+		 #{ywky}, 
+	     #{ywxb},
+	     #{ywwd},
+	     #{ywxy},#{ywhk}, 
+	     #{ywjzx},#{ywcj},
+	     #{ywsy},#{ywfl},
+	     #{ywgjys},#{ywzz},
+	     #{ywcc},#{ywwx},
+	 	 
+		 
+		 
+		 #{greenChannel},
+		 #{mobile},
+		 #{guestType},
+		 #{sellCode},#{contractPostion},
+		 #{goodsName},
+		 #{clearingcode},
+		 #{quantity},
+		 #{isContract},
+		 #{contractNo},
+		 #{returnListStandrd},
+		 #{bankAddress},
+		 #{bankAccountNo},
+		 #{businessRegistrationNo},
+		 #{switchBoardNo},
+		 #{companyUrl},
+		 #{shipper},
+		 #{checker},
+		 #{shipperTel}, 
+		 #{checkerTel},
+		 #{shipperEmail},
+		 #{checkerEmail},
+		 #{isneedReturnedDocument},
+		 #{contractStartDate},
+		 #{contractEndDate},
+		 #{firststatementDate},
+		 #{lastStatementDate},
+		 #{corporateRepresentative},
+		 #{consterType},
+		 #{zyzm},
+		 #{fzr},
+		 #{fzrzw},
+		 #{fzrdh},
+		 #{fzrsr},
+		 #{cgydh},
+		 #{hwliux},	 
+		 #{khjj},
+		 #{djrq},
+		 #{ksrq},
+		 #{zxTime},
+		 #{ywjdId},
+		 #{GKH}
+	    )
+	   </insert>
+	   
+	 <!-- 查询本公司下录入时,是否出已录入的客户名称,客户编码 -->
+	 <select id="queryCustomerByGs" parameterType="com.ycgwl.kylin.transport.dto.CustomerInfoDto"	resultType="com.ycgwl.kylin.transport.entity.adjunct.Customer">
+         SELECT  KHMC customerName,KHBM customerKey from CUSTOMER where gs=#{company} and khbm=#{customerKey}	
+     </select>
+	
+	 <!--根据公司和客户编码,查询客户基本信息  -->
+	  <select id="queryCustomerByGsandKhbm"  resultType="com.ycgwl.kylin.transport.entity.CustomerResult">
+	     select  
+	           khmc,
+               khchsh,
+               khtxdz,
+               khlxr,
+               lxrzw,
+	           khdh,
+	           pinming,
+	           khbm,
+	           swzh,
+	           yw_ky kuaijian,
+	           yw_qy qiyun,
+	           yw_xb xinbao,
+	           yw_wd wuding,
+	           yw_xy xinyou,
+	           yw_hk hangkong,
+	           yw_jzx jizhuangxian,
+	           yw_cj  citysend,
+	           yw_qt  other,
+	           fk_xf fkxf,fk_df fkdf,fk_fd fkfd,fk_zq fkzq,fk_qt fkqt,ywht,
+	           fd_fax fdfax,fd_khyj fdkhyj,fd_qsd fdqsd,fdnr,fdlc,
+	           jf_zhl jfzhl,jf_tiji jftiji,jf_qt jfqt,dsk,
+	           khxz,yxq,czbb,czsm,    
+	           khlxbh,lskh          
+         from CUSTOMER where gs=#{Gs} and khbm=#{Khbm}  
+	  </select>
+	  
+	 <!--根据公司和客户名称,查询客户基本信息  -->
+	  <select id="queryCustomerByGsandKhMC"  resultType="com.ycgwl.kylin.transport.entity.CustomerResult">
+	     select  
+	           khmc,
+               khchsh,
+               khtxdz,
+               khlxr,
+               lxrzw,
+	           khdh,
+	           pinming,
+	           khbm,
+	           swzh,
+	           khlxbh  
+         from CUSTOMER where gs=#{Gs} and khmc=#{khmc}  
+	  </select>
+	  
+	  
+	  <select id="getMaxId" resultType="java.lang.Integer">
+	      Select IsNull(Max(convert(Int,id)),0) maxid From customer Where gs =#{company}
+	  </select>
+	  
+    
+	   <!--录入客户价格,更新操作要求  -->
+	  <update id="updateCustomerInfo">
+	     update CUSTOMER set 
+	       fk_xf =#{fkxf},
+	       fk_df =#{fkdf},
+	       fk_fd =#{fkfd},
+	       fk_zq =#{fkzq},
+	       fk_qt =#{fkqt},     
+           ywht=#{ywht},
+           fdyq=#{fdyq},
+           fd_fax=#{fdfax},
+           fd_khyj=#{fdkhyj},
+           fd_qsd=#{fdqsd},
+           jf_zhl=#{jfzhl},
+           jf_tiji=#{jftiji},
+           jf_qt=#{jfqt},
+           dsk=#{dsk},
+           khxz=#{khxz},
+           yxq=#{yxq},
+           czbb=#{czbb},
+           czsm=#{czsm},
+           fdnr=#{fdnr},
+           fdlc=#{fdlc},
+           lskh=#{lskh} 
+           where gs=#{company} and khbm=#{khbm}  
+	  </update>
+	  
+	  <delete id="deleteFreightRecordByYdbhid">
+	    delete from hwyd_route where ydbhid =#{ydbhid} and czType!=#{czType}
+	  </delete>
+	  
+	  <update id="updateKucunByYdbhid">
+	    update kucun 
+	     set kucun.JIANSHU = HWYDXZ.JIANSHU , kucun.TIJI = HWYDXZ.TIJI  ,kucun.ZHL = HWYDXZ.ZHL  from HWYDXZ where kucun.ydbhid=HWYDXZ.ydbhid 
+          and kucun.YDXZH=HWYDXZ.YDXZH and kucun.ydbhid= #{ydbhid}
+	  </update>
+      
+      <delete id="deleteIncomeCost">
+         delete  from t_income_cost_d  where ydbhid=#{ydbhid}   
+      </delete>
+</mapper>
+
+
+
+

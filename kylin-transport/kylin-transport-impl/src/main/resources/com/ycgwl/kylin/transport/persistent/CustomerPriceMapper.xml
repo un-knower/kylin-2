@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.CustomerPriceMapper">
+    <resultMap id="CustomerPrice"
+		type="com.ycgwl.kylin.transport.entity.adjunct.CustomerPrice">
+		<result column="daozhan" property="daozhan" jdbcType="VARCHAR" />
+		<result column="qizhan" property="qizhan" jdbcType="VARCHAR" />
+		<result column="qhyj" property="qhyj" jdbcType="NUMERIC" />
+		<result column="zhhyj" property="zhhyj" jdbcType="NUMERIC" />
+		<result column="ajyj" property="ajyj" jdbcType="NUMERIC" />
+		<result column="qhzhxfdj" property="qhzhxfdj" jdbcType="NUMERIC" />
+		<result column="zhzhxfdj" property="zhzhxfdj" jdbcType="NUMERIC" />
+		<result column="zhjxzyf" property="zhjxzyf" jdbcType="NUMERIC" />
+		<result column="baolu" property="baolu" jdbcType="NUMERIC" />
+		<result column="bdf" property="bdf" jdbcType="VARCHAR" />
+		<result column="fwfs" property="fwfs" jdbcType="VARCHAR" />
+		<result column="zhfs" property="zhfs" jdbcType="VARCHAR" />
+		<result column="yewujiedanhao" property="yewujiedanhao" jdbcType="VARCHAR" />
+		<result column="zhixingkaishiriqi" property="zhixingkaishiriqi" jdbcType="TIMESTAMP" />
+		<result column="zhixingjieshuriqi" property="zhixingjieshuriqi" jdbcType="TIMESTAMP" />
+		<result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+		<result column="khbm" property="khbm" jdbcType="VARCHAR" />
+		<result column="djsj" property="djsj" jdbcType="TIMESTAMP" />
+	</resultMap>
+	 
+	 <!--根据公司和客户编码查询客户价格信息  -->
+	 <select id="queryCustomerPriceByGsandKhbm" resultType="com.ycgwl.kylin.transport.entity.adjunct.CustomerPrice">
+	    select 
+         daozhan,
+         qizhan,
+         LTRIM(STR(qhyj,18,0)) qhyj, 
+         LTRIM(STR(zhhyj,18,0)) zhhyj,
+	     LTRIM(STR(ajyj,18,2)) ajyj,
+	     LTRIM(STR(qhzhxfdj,18,0)) qhzhxfdj,
+	     LTRIM(STR(zhzhxfdj,18,0)) zhzhxfdj,
+	     LTRIM(STR(zhjxzyf,18,0)) zhjxzyf,
+	     baolu,
+	     bdf,
+	     fwfs,
+	     zhfs,
+	     yewujiedanhao,
+	     CONVERT(VARCHAR(10),zhixingkaishiriqi, 120) zhixingkaishiriqi,
+	     CONVERT(VARCHAR(10),zhixingjieshuriqi, 120) zhixingjieshuriqi,
+	     beizhu,
+	     CONVERT(VARCHAR,djsj, 120) djsj
+      from CUSTOMERCHECKINPRICE where qizhan=#{Gs} and khbm=#{Khbm}
+	 </select> 
+	  
+      
+      <insert id="insertCustomerPriceInfo" parameterType="com.ycgwl.kylin.transport.dto.CustomerPriceDto">
+        insert into CUSTOMERCHECKINPRICE
+        (
+         khbm,
+         daozhan,
+         qizhan,
+	     qhyj,
+	     zhhyj,
+	     ajyj,
+	     qhzhxfdj,
+	     zhzhxfdj,
+	     zhjxzyf,
+	     baolu,
+	     bdf,
+	     fwfs,
+	     zhfs,
+	     yewujiedanhao,
+	     zhixingkaishiriqi,
+	     zhixingjieshuriqi,
+	     beizhu,
+	     djsj
+        )
+        values
+        (
+         #{khbm}, 
+         #{daozhan}, 
+         #{qizhan},
+         #{qhyj}, 
+         #{zhhyj},
+         #{ajyj}, 
+         #{qhzhxfdj} ,
+         #{zhzhxfdj}, 
+         #{zhjxzyf},	 
+         #{baolu},
+         #{bdf},	 
+         #{fwfs}, 
+         #{zhfs}, 
+         #{yewujiedanhao},
+         #{zhixingkaishiriqi}, 
+         #{zhixingjieshuriqi},	 
+         #{beizhu},
+         #{djsj} 
+        )
+      </insert>
+      
+      <insert id="batchCustomerPriceInfo" parameterType="java.util.List">
+        insert into CUSTOMERCHECKINPRICE
+        (
+         khbm,
+         daozhan,
+         qizhan,
+	     qhyj,
+	     zhhyj,
+	     ajyj,
+	     qhzhxfdj,
+	     zhzhxfdj,
+	     zhjxzyf,
+	     baolu,
+	     bdf,
+	     fwfs,
+	     zhfs,
+	     yewujiedanhao,
+	     zhixingkaishiriqi,
+	     zhixingjieshuriqi,
+	     beizhu,
+	     djsj
+        )
+        values
+        <foreach collection="list" separator="," item="priceinfo">
+		 (
+         #{priceinfo.khbm}, 
+         #{priceinfo.daozhan}, 
+         #{priceinfo.qizhan}, 
+         #{priceinfo.qhyj},  
+         #{priceinfo.zhhyj},
+         #{priceinfo.ajyj}, 
+         #{priceinfo.qhzhxfdj} , 
+         #{priceinfo.zhzhxfdj},      
+         #{priceinfo.zhjxzyf},
+         #{priceinfo.baolu},  
+         #{priceinfo.bdf},     
+         #{priceinfo.fwfs},       
+         #{priceinfo.zhfs},       
+         #{priceinfo.yewujiedanhao},      
+         <if test="priceinfo.zhixingkaishiriqi == '' "> 
+         	 null,   
+    	 </if> 
+    	  <if test="priceinfo.zhixingkaishiriqi != '' "> 
+         	 #{priceinfo.zhixingkaishiriqi},   
+    	 </if> 
+    	 <if test="priceinfo.zhixingjieshuriqi == '' "> 
+         	 null,   
+    	 </if> 
+    	  <if test="priceinfo.zhixingjieshuriqi != '' "> 
+         	 #{priceinfo.zhixingjieshuriqi}, 
+    	 </if> 
+         #{priceinfo.beizhu},       
+         #{priceinfo.djsj} 
+        )
+		</foreach>
+      </insert>
+      
+      <!--查询账号录入权限 -->
+      <select id="RigthNum" resultType="java.lang.Integer">
+	        SELECT limit FROM T_USERRIGHT WHERE  GKH=#{Account}  AND MENU_ID='QL_CUS_BASE'
+	  </select>
+      
+      <!-- 根据公司查询到站 -->
+      <select id="daozhanByCompany" parameterType="com.ycgwl.kylin.transport.dto.CustomerPriceDto" resultType="java.lang.String">
+        SELECT  DISTINCT XIANLU.daozhan FROM XIANLU WHERE gs=#{qizhan}
+      </select>
+      
+      <!-- 删除收费标准 -->
+      <delete id="deleteCustomerPriceInfo">
+         delete from CUSTOMERCHECKINPRICE where daozhan=#{daozhan} and khbm=#{khbm}
+      </delete>
+      
+      <!-- 批量更新 -->
+       <update id="updateCustomerPriceInfo" parameterType="java.util.List">
+        begin  
+        <foreach collection="list" item="item" index="index" separator=";" > 
+         update CUSTOMERCHECKINPRICE 
+         <set>  
+	     qhyj= #{item.qhyj},
+	     zhhyj= #{item.zhhyj},
+	     ajyj= #{item.ajyj},
+	     qhzhxfdj= #{item.qhzhxfdj},
+	     zhzhxfdj= #{item.zhzhxfdj},
+	     zhjxzyf= #{item.zhjxzyf},
+	     baolu= #{item.baolu},
+	     bdf= #{item.bdf},
+	     fwfs= #{item.fwfs},
+	     zhfs= #{item.zhfs},
+	     yewujiedanhao= #{item.yewujiedanhao},
+	     zhixingkaishiriqi=#{item.zhixingkaishiriqi},
+	     zhixingjieshuriqi =#{item.zhixingjieshuriqi},
+	     beizhu = #{item.beizhu},
+	     djsj = #{item.djsj}
+         </set>
+    
+        where qizhan=#{item.qizhan} and khbm=#{item.khbm}
+        </foreach>
+         ;end;
+       </update>
+       
+       
+        <!-- 根据起站,客户编码删除收费标准 -->
+      <delete id="removePriceInfo">
+         delete from CUSTOMERCHECKINPRICE where qizhan=#{Company} and khbm =#{khbm}
+           
+      </delete>
+	  
+</mapper>
+
+
+
+

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ycgwl.kylin.security.persistent.KylinGongSiMapper">
+
+	<select id="queryByName" resultType="com.ycgwl.kylin.security.entity.KylinGongSiEntity">
+		SELECT bh from gongsi where name=#{companyName}
+	</select>
+</mapper>

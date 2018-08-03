@@ -1,0 +1,1141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.TransportSignRecordMapper">
+	<resultMap type="com.ycgwl.kylin.transport.entity.FkfshResult" id="FkfshResult">
+		<result column="xianjin_b" property="xianjin_b" jdbcType="BIT"/> 
+		<result column="yhshr_b" property="yhshr_b" jdbcType="SMALLINT"/>
+		<result column="hdfk_b" property="hdfk_b" jdbcType="SMALLINT"/>
+		<result column="yshzhk_b" property="yshzhk_b" jdbcType="BIT"/> 
+		<result column="yshk_b" property="yshk_b" jdbcType="SMALLINT"/> 
+	</resultMap>
+
+	<resultMap type="com.ycgwl.kylin.transport.entity.TransportSignRecord" id="transportSignRecord">
+        <id column="ydbhid" property="ydbhid" jdbcType="VARCHAR" />
+        <result column="qszt" property="qszt" jdbcType="INTEGER" />
+        <result column="qsr" property="qsr" jdbcType="VARCHAR" />
+        <result column="qstime" property="qsTime" jdbcType="TIMESTAMP" />
+        <result column="lrr" property="lrr" jdbcType="VARCHAR" />
+        <result column="khyqystime" property="khyqysTime" jdbcType="TIMESTAMP" />
+        <result column="lrtime" property="lrTime" jdbcType="TIMESTAMP" />
+        <result column="comm" property="comm" jdbcType="VARCHAR" />
+        <result column="lrrgrid" property="lrrGrid" jdbcType="VARCHAR" />
+        <result column="gs" property="gs" jdbcType="VARCHAR" />
+        <result column="yxfhsj" property="yxfhsj" jdbcType="TIMESTAMP" />
+        <result column="jianshu" property="jianshu" jdbcType="NUMERIC" />
+        <result column="qrr" property="qrr" jdbcType="VARCHAR" />
+        <result column="qrrgrid" property="qrrGrid" jdbcType="VARCHAR" />
+        <result column="qrtime" property="qrTime" jdbcType="TIMESTAMP" />
+        <result column="fdqstime" property="fdqsTime" jdbcType="TIMESTAMP" />
+        <result column="fdzt" property="fdzt" jdbcType="INTEGER" />
+        <result column="str1" property="str1" jdbcType="VARCHAR" />
+        <result column="str2" property="str2" jdbcType="VARCHAR" />
+        <result column="str3" property="str3" jdbcType="VARCHAR" />
+        <result column="fdfsrgrid" property="fdfsrGrid" jdbcType="VARCHAR" />
+        <result column="fdfsr" property="fdfsr" jdbcType="VARCHAR" />
+        <result column="fdjctime" property="fdjcTime" jdbcType="TIMESTAMP" />
+        <result column="fdlrtime" property="fdlrTime" jdbcType="TIMESTAMP" />
+        <result column="fdfscomm" property="fdfsComm" jdbcType="VARCHAR" />
+        <result column="fdfs" property="fdfs" jdbcType="INTEGER" />
+        <result column="shlc" property="shlc" jdbcType="INTEGER" />
+        <result column="fdjscomm" property="fdjsComm" jdbcType="VARCHAR" />
+        <result column="rowguid" property="rowGuid" jdbcType="VARCHAR" />
+        <result column="fdYouJiHao" property="fdYouJiHao" jdbcType="VARCHAR" />
+        <result column="fdJinZhiLuRu" property="fdJinZhiLuRu" jdbcType="INTEGER" />
+        <result column="psjianshu" property="psjianshu" jdbcType="NUMERIC" />
+        <result column="dsjianshu" property="dsjianshu" jdbcType="NUMERIC" />
+        <result column="sfxgbs" property="sfxgbs" jdbcType="INTEGER" />
+        <result column="old_qstime" property="oldQsTime" jdbcType="TIMESTAMP" />
+        <result column="send_flag" property="sendFlag" jdbcType="INTEGER" />
+        <result column="Min" property="min" jdbcType="INTEGER" />
+        <result column="Max" property="max" jdbcType="INTEGER" />
+        <result column="daozhan_ok" property="daoZhanOk" jdbcType="VARCHAR" />
+        <result column="cx_flag" property="cxFlag" jdbcType="VARCHAR" />
+        <result column="qsrphone" property="qsrphone" jdbcType="VARCHAR" />
+        <result column="record_qstime" property="recordQsTime" jdbcType="TIMESTAMP" />
+        <result column="cx_number" property="cxNumber" jdbcType="INTEGER" />
+        <result column="sign_type" property="signType" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <resultMap id="transportOrder" type="com.ycgwl.kylin.transport.entity.TransportOrder">
+		<id column="YDBHID" property="ydbhid" jdbcType="VARCHAR"/>
+		<result column="bandanfei" property="bandanfei" jdbcType="NUMERIC" />
+		<result column="baoxianfei" property="baoxianfei" jdbcType="NUMERIC" />
+		<result column="baozhuangfei" property="baozhuangfei" jdbcType="NUMERIC" />
+		<result column="begin_placename" property="beginPlacename" jdbcType="VARCHAR" />
+		<result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+		<result column="bzf" property="bzf" jdbcType="NUMERIC" />
+		<result column="bzqr" property="bzqr" jdbcType="INTEGER" />
+		<result column="bzzht" property="bzzht" jdbcType="VARCHAR" />
+		<result column="cangwei1" property="cangwei1" jdbcType="VARCHAR" />
+		<result column="cangwei2" property="cangwei2" jdbcType="VARCHAR" />
+		<result column="caozuoyaoqiu_day" property="caozuoyaoqiuDay" jdbcType="NUMERIC" />
+		<result column="caozuoyaoqiu_pcdf" property="caozuoyaoqiuPcdf" jdbcType="INTEGER" />
+		<result column="caozuoyaoqiu_xcps" property="caozuoyaoqiuXcps" jdbcType="INTEGER" />
+		<result column="caozuoyaoqiu_zdsh" property="caozuoyaoqiuZdsh" jdbcType="INTEGER" />
+		<result column="chxh" property="chxh" jdbcType="VARCHAR" />
+		<result column="CHYRJZSHX" property="chyrjzshx" jdbcType="VARCHAR" />
+		<result column="cwpzhy" property="cwpzhy" jdbcType="INTEGER" />
+		<result column="daikebaozhuang" property="daikebaozhuang" jdbcType="INTEGER" />
+		<result column="daikezhuangxie" property="daikezhuangxie" jdbcType="INTEGER" />
+		<result column="daodatianshu" property="daodatianshu" jdbcType="INTEGER" />
+		<result column="DAOZHAN" property="daozhan" jdbcType="VARCHAR" />
+		<result column="dashoukuan" property="dashoukuan" jdbcType="INTEGER" />
+		<result column="dashoukuan_yuan" property="dashoukuanYuan" jdbcType="NUMERIC" />
+		<result column="dh_addr" property="dhAddr" jdbcType="VARCHAR" />
+		<result column="dh_chengsi" property="dhChengsi" jdbcType="VARCHAR" />
+		<result column="dh_shengfen" property="dhShengfen" jdbcType="VARCHAR" />
+		<result column="dkbz_carton" property="dkbzCarton" jdbcType="INTEGER" />
+		<result column="dkbz_wooden" property="dkbzWooden" jdbcType="INTEGER" />
+		<result column="dkbz_woven" property="dkbzWoven" jdbcType="INTEGER" />
+		<result column="dzfk" property="dzfk" jdbcType="INTEGER" />
+		<result column="dzshhd" property="dzshhd" jdbcType="VARCHAR" />
+		<result column="ediflag" property="ediflag" jdbcType="INTEGER" />
+		<result column="end_placename" property="endPlacename" jdbcType="VARCHAR" />
+		<result column="FAZHAN" property="fazhan" jdbcType="VARCHAR" />
+		<result column="fdlc" property="fdlc" jdbcType="VARCHAR" />
+		<result column="fdnr" property="fdnr" jdbcType="VARCHAR" />
+		<result column="fdsl" property="fdsl" jdbcType="VARCHAR" />
+		<result column="fdts" property="fdts" jdbcType="INTEGER" />
+		<result column="fdyq" property="fdyq" jdbcType="VARCHAR" />
+		<result column="FHDWDZH" property="fhdwdzh" jdbcType="VARCHAR" />
+		<result column="FHDWLXDH" property="fhdwlxdh" jdbcType="VARCHAR" />
+		<result column="FHDWMCH" property="fhdwmch" jdbcType="VARCHAR" />
+		<result column="FHDWYB" property="fhdwyb" jdbcType="VARCHAR" />
+		<result column="fhjs" property="fhjs" jdbcType="INTEGER" />
+		<result column="FHKHHY" property="fhkhhy" jdbcType="VARCHAR" />
+		<result column="fhr" property="fhr" jdbcType="VARCHAR" />
+		<result column="FHSHJ" property="fhshj" jdbcType="TIMESTAMP" />
+		<result column="fhtiji" property="fhtiji" jdbcType="NUMERIC" />
+		<result column="fhzhl" property="fhzhl" jdbcType="NUMERIC" />
+		<result column="fkfsh" property="fkfsh" jdbcType="INTEGER" />
+		<result column="flsj" property="flsj" jdbcType="INTEGER" />
+		<result column="fpmc" property="fpmc" jdbcType="VARCHAR" />
+		<result column="fwfs" property="fwfs" jdbcType="INTEGER" />
+		<result column="fzfk" property="fzfk" jdbcType="INTEGER" />
+		<result column="FZHCHYRQ" property="fzhchyrq" jdbcType="TIMESTAMP" />
+		<result column="gsbh" property="gsbh" jdbcType="VARCHAR" />
+		<result column="gysnamebh" property="gysnamebh" jdbcType="VARCHAR" />
+		<result column="gyspcdbh" property="gyspcdbh" jdbcType="VARCHAR" />
+		<result column="hwzht" property="hwzht" jdbcType="VARCHAR" />
+		<result column="HYY" property="hyy" jdbcType="VARCHAR" />
+		<result column="idf" property="idf" jdbcType="BIT" />
+		<result column="importflag" property="importflag" jdbcType="INTEGER" />
+		<result column="is_greenchannel" property="isGreenchannel" jdbcType="INTEGER" />
+		<result column="is_kaiyun" property="isKaiyun" jdbcType="SMALLINT" />
+		<result column="isfd" property="isfd" jdbcType="INTEGER" />
+		<result column="isjj" property="isjj" jdbcType="BIT" />
+		<result column="isshsx" property="isshsx" jdbcType="INTEGER" />
+		<result column="istb" property="istb" jdbcType="INTEGER" />
+		<result column="jsgs" property="jsgs" jdbcType="VARCHAR" />
+		<result column="JSHHJ" property="jshhj" jdbcType="INTEGER" />
+		<result column="kh_kind" property="khKind" jdbcType="VARCHAR" />
+		<result column="khbm" property="khbm" jdbcType="VARCHAR" />
+		<result column="khdh" property="khdh" jdbcType="VARCHAR" />
+		<result column="ky_bdren" property="kyBdren" jdbcType="VARCHAR" />
+		<result column="ky_fendanfei" property="kyFendanfei" jdbcType="NUMERIC" />
+		<result column="ky_kind" property="kyKind" jdbcType="VARCHAR" />
+		<result column="ky_psren" property="kyPsren" jdbcType="VARCHAR" />
+		<result column="ky_shren" property="kyShren" jdbcType="VARCHAR" />
+		<result column="ky_zongjinfei" property="kyZongjinfei" jdbcType="NUMERIC" />
+		<result column="luyouzhan" property="luyouzhan" jdbcType="VARCHAR" />
+		<result column="lxtjflag" property="lxtjflag" jdbcType="INTEGER" />
+		<result column="orderno" property="orderno" jdbcType="VARCHAR" />
+		<result column="printtime" property="printtime" jdbcType="INTEGER" />
+		<result column="pszhsh" property="pszhsh" jdbcType="INTEGER" />
+		<result column="qtsx" property="qtsx" jdbcType="VARCHAR" />
+		<result column="routezhan" property="routezhan" jdbcType="VARCHAR" />
+		<result column="sent" property="sent" jdbcType="INTEGER" />
+		<result column="shhd" property="shhd" jdbcType="VARCHAR" />
+		<result column="SHHRDZH" property="shhrdzh" jdbcType="VARCHAR" />
+		<result column="SHHRLXDH" property="shhrlxdh" jdbcType="VARCHAR" />
+		<result column="SHHRMCH" property="shhrmch" jdbcType="VARCHAR" />
+		<result column="SHHRYB" property="shhryb" jdbcType="VARCHAR" />
+		<result column="SHMSHHF" property="shmshhf" jdbcType="NUMERIC" />
+		<result column="shouhuorenshuihao" property="shouhuorenshuihao" jdbcType="VARCHAR" />
+		<result column="shouhuorenyoubian" property="shouhuorenyoubian" jdbcType="VARCHAR" />
+		<result column="SHSHMF" property="shshmf" jdbcType="NUMERIC" />
+		<result column="songhuoshanglou" property="songhuoshanglou" jdbcType="INTEGER" />
+		<result column="source" property="source" jdbcType="INTEGER" />
+		<result column="swdb" property="swdb" jdbcType="VARCHAR" />
+		<result column="swzh" property="swzh" jdbcType="VARCHAR" />
+		<result column="tiebieshuoming" property="tiebieshuoming" jdbcType="VARCHAR" />
+		<result column="TIJIHJ" property="tijihj" jdbcType="NUMERIC" />
+		<result column="tuoyunrenshuihao" property="tuoyunrenshuihao" jdbcType="VARCHAR" />
+		<result column="tuoyunrenyoubian" property="tuoyunrenyoubian" jdbcType="VARCHAR" />
+		<result column="ty_fdmc" property="tyFdmc" jdbcType="VARCHAR" />
+		<result column="ty_fdqr" property="tyFdqr" jdbcType="INTEGER" />
+		<result column="ty_fdsl" property="tyFdsl" jdbcType="VARCHAR" />
+		<result column="TYRJZSHX" property="tyrjzshx" jdbcType="VARCHAR" />
+		<result column="tyrqm" property="tyrqm" jdbcType="VARCHAR" />
+		<result column="XFHTF" property="xfhtf" jdbcType="BIT" />
+		<result column="xianlu" property="xianlu" jdbcType="VARCHAR" />
+		<result column="xiaoshoucode" property="xiaoshoucode" jdbcType="VARCHAR" />
+		<result column="ydly" property="ydly" jdbcType="INTEGER" />
+		<result column="ydts" property="ydts" jdbcType="INTEGER" />
+		<result column="ysfs" property="ysfs" jdbcType="VARCHAR" />
+		<result column="YSHHM" property="yshhm" jdbcType="VARCHAR" />
+		<result column="yundantype" property="yundantype" jdbcType="INTEGER" />
+		<result column="ywlx" property="ywlx" jdbcType="SMALLINT" />
+		<result column="yxzt" property="yxzt" jdbcType="VARCHAR" />
+		<result column="zhipiao" property="zhipiao" jdbcType="VARCHAR" />
+		<result column="ZHLHJ" property="zhlhj" jdbcType="INTEGER" />
+		<result column="zhuangxiefei" property="zhuangxiefei" jdbcType="NUMERIC" />
+		<result column="zhxbz" property="zhxbz" jdbcType="VARCHAR" />
+		<result column="ZISONG" property="zisong" jdbcType="BIT" />
+		<result column="ZITI" property="ziti" jdbcType="BIT" />
+		<result column="zyfs" property="zyfs" jdbcType="INTEGER" />
+	</resultMap>
+    
+    <resultMap type="com.ycgwl.kylin.transport.entity.ShqsdResult" id="shqsdResult">
+        <result column="hdfk" property="hdfk" jdbcType="NUMERIC" />
+        <result column="dsk" property="dsk" jdbcType="NUMERIC" />
+    </resultMap>
+    
+    <resultMap type="com.ycgwl.kylin.transport.entity.TransportSignRecordLog" id="transportSignRecordLog">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="ydbhid" property="ydbhid" jdbcType="VARCHAR" />
+        <result column="qsr" property="qsr" jdbcType="VARCHAR" />
+        <result column="qstime" property="qsTime" jdbcType="TIMESTAMP" />
+        <result column="lrr" property="lrr" jdbcType="VARCHAR" />
+        <result column="lrtime" property="lrTime" jdbcType="TIMESTAMP" />
+         <result column="qszt" property="qszt" jdbcType="INTEGER" />
+        <result column="comm" property="comm" jdbcType="VARCHAR" />
+        <result column="lrrgrid" property="lrrGrid" jdbcType="VARCHAR" />
+        <result column="gs" property="gs" jdbcType="VARCHAR" />
+        <result column="yxfhsj" property="yxfhsj" jdbcType="TIMESTAMP" />
+        <result column="jianshu" property="jianshu" jdbcType="NUMERIC" />
+        <result column="fazhan" property="fazhan" jdbcType="VARCHAR" />
+        <result column="qrr" property="qrr" jdbcType="VARCHAR" />
+        <result column="qrrgrid" property="qrrGrid" jdbcType="VARCHAR" />
+        <result column="qrtime" property="qrTime" jdbcType="TIMESTAMP" />
+        <result column="fdqstime" property="fdqsTime" jdbcType="TIMESTAMP" />
+        <result column="grid" property="grid" jdbcType="VARCHAR" />
+        <result column="xgsj" property="xgsj" jdbcType="TIMESTAMP" />
+        <result column="str1" property="str1" jdbcType="VARCHAR" />
+        <result column="str2" property="str2" jdbcType="VARCHAR" />
+        <result column="str3" property="str3" jdbcType="VARCHAR" />
+        <result column="int1" property="int1" jdbcType="INTEGER" />
+        <result column="int2" property="int2" jdbcType="INTEGER" />
+        <result column="datetime1" property="datetime1" jdbcType="TIMESTAMP" />
+        <result column="rowguid" property="rowGuid" jdbcType="VARCHAR" />
+        <result column="Psjianshu" property="psJianShu" jdbcType="NUMERIC" />
+        <result column="Dsjianshu" property="dsJianShu" jdbcType="NUMERIC" /> 
+        <result column="qsrphone" property="qsrphone" jdbcType="VARCHAR" />
+    </resultMap>
+    
+   	<resultMap type="com.ycgwl.kylin.transport.entity.TransportProcessStock" id="transportProcessStock">
+        <id column="GS" property="gs" jdbcType="VARCHAR" />
+        <result column="shhd" property="shhd" jdbcType="VARCHAR" />
+        <result column="ydbhid" property="ydbhid" jdbcType="VARCHAR" />
+        <result column="ydxzh" property="ydxzh" jdbcType="INTEGER" />
+        <result column="bzh" property="bzh" jdbcType="VARCHAR" />
+        <result column="jianshu" property="jianShu" jdbcType="INTEGER" />
+        <result column="pinming" property="pinMing" jdbcType="VARCHAR" />
+        <result column="tiji" property="tiji" jdbcType="NUMERIC" />
+        <result column="zhl" property="zhl" jdbcType="NUMERIC" />
+        <result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+        <result column="cangwei" property="cangWei" jdbcType="VARCHAR" />
+        <result column="xh" property="xh" jdbcType="VARCHAR" />
+        <result column="jffs" property="jffs" jdbcType="BIT" />
+        <result column="daozhan" property="daozhan" jdbcType="VARCHAR" />
+        <result column="shhrlxdh" property="shhrlxdh" jdbcType="VARCHAR" />
+        <result column="shhrmch" property="shhrmch" jdbcType="VARCHAR" />
+        <result column="str1" property="str1" jdbcType="VARCHAR" />
+        <result column="str2" property="str2" jdbcType="VARCHAR" />
+        <result column="str3" property="str3" jdbcType="VARCHAR" />
+        <result column="int1" property="int1" jdbcType="INTEGER" />
+        <result column="int2" property="int2" jdbcType="INTEGER" />
+        <result column="datetime1" property="datetime1" jdbcType="TIMESTAMP" />
+        <result column="rowguid" property="rowGuid" jdbcType="VARCHAR" />
+        <result column="ckbh" property="ckbh" jdbcType="VARCHAR" />
+        <result column="kcycbz" property="kcycbz" jdbcType="VARCHAR" />
+        <result column="dhsj" property="dhsj" jdbcType="TIMESTAMP" />
+        <result column="CHXH" property="chxh" jdbcType="VARCHAR" />
+        <result column="ZHCHRQ" property="zhchrq" jdbcType="TIMESTAMP" />
+        <result column="yiti" property="yiti" jdbcType="INTEGER" />
+        <result column="CaoZuoGongHao" property="caoZuoGongHao" jdbcType="VARCHAR" />
+        <result column="ziti" property="ziti" jdbcType="INTEGER" />
+        <result column="MuDiZhan" property="muDiZhan" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <resultMap type="com.ycgwl.kylin.transport.entity.TransportOrderTrace" id="transportOrderTrace">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="createuser" property="createUser" jdbcType="VARCHAR" />
+        <result column="creategsbh" property="createGsbh" jdbcType="VARCHAR" />
+        <result column="creategs" property="createGs" jdbcType="VARCHAR" />
+        <result column="createdate" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="updateuser" property="updateUser" jdbcType="VARCHAR" />
+        <result column="updategsbh" property="updateGsbh" jdbcType="VARCHAR" />
+        <result column="updategs" property="updateGs" jdbcType="VARCHAR" />
+        <result column="updatedate" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="recstatus" property="recstatus" jdbcType="INTEGER" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+        <result column="location" property="location" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="ot_dtime" property="otDtime" jdbcType="TIMESTAMP" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="fx_no" property="fxNo" jdbcType="VARCHAR" />
+        <result column="fx_company" property="fxCompany" jdbcType="VARCHAR" />
+        <result column="fx_code" property="fxCode" jdbcType="VARCHAR" />
+        <result column="customer_code" property="customerCode" jdbcType="VARCHAR" />
+        <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+        <result column="customer_order_code" property="customerOrderCode" jdbcType="VARCHAR" />
+        <result column="order_type" property="orderType" jdbcType="VARCHAR" />
+        <result column="carryon_prefigure_date_sup" property="carryonPrefigureDateSup" jdbcType="VARCHAR" />
+        <result column="carryon_receive_date_sup" property="carryonReceiveDateSup" jdbcType="VARCHAR" />
+        <result column="carryon_zcdj_is_contact_sup" property="carryonZcdjIsContactSup" jdbcType="VARCHAR" />
+        <result column="carryon_prefigure_date" property="carryonPrefigureDate" jdbcType="VARCHAR" />
+        <result column="carryon_receive_date" property="carryonReceiveDate" jdbcType="VARCHAR" />
+        <result column="carryon_zcdj_is_contact" property="carryonZcdjIsContact" jdbcType="VARCHAR" />
+        <result column="receive_flag_sup" property="receiveFlagSup" jdbcType="INTEGER" />
+        <result column="receive_time_sup" property="receiveTimeSup" jdbcType="TIMESTAMP" />
+        <result column="receive_flag" property="receiveFlag" jdbcType="INTEGER" />
+        <result column="receive_time" property="receiveTime" jdbcType="TIMESTAMP" />
+        <result column="status_confirm" property="statusConfirm" jdbcType="VARCHAR" />
+        <result column="ver" property="ver" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <resultMap type="com.ycgwl.kylin.transport.entity.FiwtResult" id="fiwtResult">
+        <result column="xianlu" property="xianlu" jdbcType="VARCHAR" />
+        <result column="cwpzhbh" property="cwpzhbh" jdbcType="INTEGER" />
+        <result column="nf" property="nf" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <resultMap type="com.ycgwl.kylin.transport.entity.CarOutResult" id="carOutResult">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="pcshd" property="pcshd" jdbcType="VARCHAR" />
+        <result column="pcshlc" property="pcshlc" jdbcType="INTEGER" />
+        <result column="Min" property="min" jdbcType="INTEGER" />
+        <result column="Max" property="max" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <resultMap type="com.ycgwl.kylin.transport.entity.UndoSignLog" id="undoSignLog">
+        <id column="ID" property="id" jdbcType="INTEGER" />
+        <result column="ydbhid" property="ydbhid" jdbcType="VARCHAR" />
+        <result column="ope_grid" property="opeGrid" jdbcType="VARCHAR" />
+        <result column="ope_xm" property="opeXm" jdbcType="VARCHAR" />
+        <result column="ope_date" property="opeDate" jdbcType="TIMESTAMP" />
+        <result column="ope_type" property="opeType" jdbcType="VARCHAR" />
+        <result column="recgendate" property="recgenDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--  
+    <resultMap type="com.ycgwl.kylin.transport.entity.TransportQsztBase" id="transportQsztBases">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="zt" property="zt" jdbcType="VARCHAR" />
+        <result column="number" property="number" jdbcType="INTEGER" />
+        <result column="str1" property="str1" jdbcType="VARCHAR" />
+        <result column="rowguid" property="rowguid" jdbcType="VARCHAR" />
+    </resultMap>-->
+    
+    <resultMap type="com.ycgwl.kylin.transport.entity.HwydRoute" id="hwydRoute">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="ydbhid" property="ydbhid" jdbcType="VARCHAR" />
+        <result column="shijian" property="shiJian" jdbcType="TIMESTAMP" />
+        <result column="cztype" property="cztype" jdbcType="VARCHAR" />
+        <result column="gs" property="gs" jdbcType="VARCHAR" />
+        <result column="grid" property="grid" jdbcType="VARCHAR" />
+        <result column="beizhu" property="beiZhu" jdbcType="VARCHAR" />
+        <result column="rowguid" property="rowGuid" jdbcType="VARCHAR" />
+        <result column="xuhao" property="xuHao" jdbcType="INTEGER" />
+        <result column="pushflag" property="pushFlag" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <resultMap id="bundleReceipt"
+		type="com.ycgwl.kylin.transport.entity.BundleReceipt">
+		<id column="xuhao" property="xuhao" jdbcType="INTEGER" />
+		<result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+		<result column="CHXH" property="chxh" jdbcType="VARCHAR" />
+		<result column="cl_owner" property="clOwner" jdbcType="VARCHAR" />
+		<result column="company" property="company" jdbcType="VARCHAR" />
+		<result column="DAOZHAN" property="daozhan" jdbcType="VARCHAR" />
+		<result column="dhgrid" property="dhgrid" jdbcType="VARCHAR" />
+		<result column="dhsj" property="dhsj" jdbcType="TIMESTAMP" />
+		<result column="dzshhd" property="dzshhd" jdbcType="VARCHAR" />
+		<result column="else_cost" property="elseCost" jdbcType="NUMERIC" />
+		<result column="FAZHAN" property="fazhan" jdbcType="VARCHAR" />
+		<result column="FCHRQ" property="fchrq" jdbcType="TIMESTAMP" />
+		<result column="fhdwmch" property="fhdwmch" jdbcType="VARCHAR" />
+		<result column="fhshj" property="fhshj" jdbcType="TIMESTAMP" />
+		<result column="fzshhd" property="fzshhd" jdbcType="VARCHAR" />
+		<result column="grid" property="grid" jdbcType="VARCHAR" />
+		<result column="hyy" property="hyy" jdbcType="VARCHAR" />
+		<result column="i_type" property="iType" jdbcType="INTEGER" />
+		<result column="is_kaiyun" property="isKaiyun" jdbcType="SMALLINT" />
+		<result column="JIANSHU" property="jianshu" jdbcType="INTEGER" />
+		<result column="khdh" property="khdh" jdbcType="VARCHAR" />
+		<result column="list_no" property="listNo" jdbcType="VARCHAR" />
+		<result column="lrsj" property="lrsj" jdbcType="TIMESTAMP" />
+		<result column="PINMING" property="pinming" jdbcType="VARCHAR" />
+		<result column="qd_cost" property="qdCost" jdbcType="NUMERIC" />
+		<result column="sent" property="sent" jdbcType="INTEGER" />
+		<result column="SHHRLXDH" property="shhrlxdh" jdbcType="VARCHAR" />
+		<result column="SHHRMCH" property="shhrmch" jdbcType="VARCHAR" />
+		<result column="sourceflag" property="sourceflag" jdbcType="INTEGER" />
+		<result column="TIJI" property="tiji" jdbcType="NUMERIC" />
+		<result column="wx_con_name" property="wxConName" jdbcType="VARCHAR" />
+		<result column="wx_item" property="wxItem" jdbcType="VARCHAR" />
+		<result column="wx_name" property="wxName" jdbcType="VARCHAR" />
+		<result column="wx_tel" property="wxTel" jdbcType="VARCHAR" />
+		<result column="xh" property="xh" jdbcType="VARCHAR" />
+		<result column="xiechechexin" property="xiechechexin" jdbcType="VARCHAR" />
+		<result column="xiechegrid" property="xiechegrid" jdbcType="VARCHAR" />
+		<result column="xiechesj" property="xiechesj" jdbcType="TIMESTAMP" />
+		<result column="YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+		<result column="ydxzh" property="ydxzh" jdbcType="SMALLINT" />
+		<result column="ydzh" property="ydzh" jdbcType="INTEGER" />
+		<result column="yiti" property="yiti" jdbcType="INTEGER" />
+		<result column="yjddshj" property="yjddshj" jdbcType="TIMESTAMP" />
+		<result column="ysfs" property="ysfs" jdbcType="VARCHAR" />
+		<result column="yxieche" property="yxieche" jdbcType="INTEGER" />
+		<result column="ZHCHRQ" property="zhchrq" jdbcType="TIMESTAMP" />
+		<result column="zhipiao" property="zhipiao" jdbcType="VARCHAR" />
+		<result column="zhipiao2" property="zhipiao2" jdbcType="VARCHAR" />
+		<result column="ZHL" property="zhl" jdbcType="NUMERIC" />
+		<result column="ZITI" property="ziti" jdbcType="BIT" />
+		<result column="driver_name" property="driverName" jdbcType="VARCHAR" />
+		<result column="driver_tel" property="driverTel" jdbcType="VARCHAR" />
+		<result column="transfer_flag" property="transferFlag" jdbcType="VARCHAR" />
+		<result column="new_bill" property="newbill" jdbcType="INTEGER" />
+	</resultMap>
+    
+    <parameterMap type="com.ycgwl.kylin.transport.entity.TransportSignRecord"
+		id="transportSignRecordQueryEntity">
+	</parameterMap>
+	
+    <parameterMap type="com.ycgwl.kylin.transport.entity.TransportSignRecordLog"
+		id="transportSignRecordLogQueryEntity">
+	</parameterMap>
+	
+	<parameterMap type="com.ycgwl.kylin.transport.entity.TransportProcessStock"
+		id="transportProcessStockQueryEntity">
+	</parameterMap>
+	
+	<parameterMap type="com.ycgwl.kylin.transport.entity.TransportOrderTrace"
+		id="transportOrderTraceQueryEntity">
+	</parameterMap>
+	
+	<parameterMap type="com.ycgwl.kylin.transport.entity.FiwtResult"
+		id="fiwtResultQueryEntity">
+	</parameterMap>
+	
+	<parameterMap type="com.ycgwl.kylin.transport.entity.UndoSignLog"
+		id="undoSignLogQueryEntity">
+	</parameterMap>
+	
+	<parameterMap type="com.ycgwl.kylin.transport.entity.HwydRoute"
+		id="hwydRouteQueryEntity">
+	</parameterMap>
+	
+	<sql id="columns_transport_sign_record_log">
+		ydbhid, qsr, qstime, lrr, lrtime, qszt, comm, lrrgrid, gs, yxfhsj,jianshu,fazhan,qrr,qrrgrid,qrtime,
+		fdqstime, grid, xgsj, str1, str2, str3, int1, int2, datetime1, Psjianshu,Dsjianshu,qsrphone
+	</sql>
+	
+	<sql id="columns_transport_order_trace">
+		createuser, creategsbh, creategs, createdate, updateuser, updategsbh, updategs, updatedate, recstatus, order_no,YDBHID,location,status,ot_dtime,remark,
+		fx_no, fx_company, fx_code, customer_code, customer_name, customer_order_code, order_type, carryon_prefigure_date_sup, carryon_receive_date_sup, 
+		carryon_zcdj_is_contact_sup,carryon_prefigure_date,carryon_receive_date, carryon_zcdj_is_contact, receive_flag_sup, receive_time_sup, receive_flag, 
+		receive_time,status_confirm,ver
+	</sql>
+	
+	<sql id="columns_undo_sign_log">
+		ydbhid, ope_grid, ope_xm, ope_date, ope_type, recgendate
+	</sql>
+	
+	<sql id="columns_hwyd_route">
+		ydbhid, shijian, cztype, gs, grid, beizhu,xuhao,pushflag
+	</sql>
+	
+	 <insert id="insertTransportSignRecordLog" parameterMap="transportSignRecordLogQueryEntity">
+    	INSERT INTO T_QS_log
+    	(
+  			<include refid="columns_transport_sign_record_log"/>
+    	) 
+    	VALUES 
+    	(
+    	#{ydbhid},
+    	#{qsr},
+    	#{qsTime},
+    	#{lrr},
+    	#{lrTime},
+    	#{qszt},
+    	#{comm}, 
+    	#{lrrGrid},
+    	#{gs}, 
+    	#{yxfhsj},
+    	#{jianshu}, 
+    	#{fazhan},
+    	#{qrr},
+    	#{qrrGrid},
+    	#{qrTime},
+    	#{fdqsTime},
+    	#{grid},
+    	#{xgsj},
+    	#{str1},
+    	#{str2},
+    	#{str3},
+    	#{int1}, 
+    	#{int2},
+    	#{datetime1}, 
+    	#{psJianShu},
+    	#{dsJianShu},
+    	#{qsrphone}
+    	)
+    </insert>
+	
+	<!-- 查询签收状态
+	<select id="selectQsztBase" resultMap="transportQsztBases">
+		SELECT * FROM T_QSZT_BASE
+	</select> -->	
+	
+	<!-- 检查是否该运单在运单作废表里 -->	
+	<select id="isOrderCanceled" resultType="long" parameterType="java.lang.String">
+		SELECT count(*) FROM HWYD_ZUOFEI WHERE YDBHID = #{ydbhid} AND zuofei = 1
+	</select>
+		
+	<!-- 获取签收表信息 -->	
+	<select id="getTransportSignRecordTime" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT top 1 FCHRQ,dateadd(d,-day(getdate())+1,getdate()) from HCZZQD_source where ydbhid = #{ydbhid}
+	</select>
+	
+	<!-- 根据运单号查询出运单信息 -->	
+	<select id="getTransportOrderByYdbhid" resultMap="transportOrder" parameterType="java.lang.String">
+		SELECT yshhm,fazhan,ysfs,daozhan FROM hwyd WHERE YDBHID = #{ydbhid}
+	</select>
+	
+	<!-- 获取判断是否到付的信息（合计大于0则是到付）-->	
+	<select id="getReachAfterPayInfo" resultMap="shqsdResult" parameterType="java.lang.String">
+		SELECT TOP 1 hdfk,dsk FROM V_SHQSD WHERE hwy_ydbhid = #{ydbhid}
+	</select>
+	
+	<!-- 查询是否做过成本和财凭-->	
+	<select id="countIncomeCost" resultType="integer" parameterType="java.lang.String">
+		SELECT count(*) FROM T_INCOME_COST_D WHERE ydbhid = #{ydbhid}
+	</select>
+	
+	<!-- 查询线路（判断是否收款）-->	
+	<select id="selectXianluByYdbhid" resultMap="fiwtResult" parameterType="java.lang.String">
+		select xianlu,cwpzhbh,nf from fiwt where hwy_ydbhid = #{ydbhid} and type=0
+	</select>
+	
+	<!-- 查询财凭（判断是否收款）-->	
+	<select id="selectFkfsh" resultType="java.lang.Boolean" parameterMap="fiwtResultQueryEntity">
+		select yshzhk_b from fkfsh where xianlu = #{xianlu} and cwpzhbh = #{cwpzhbh} 
+		and nf = #{nf} and type=0
+	</select>
+	
+	<select id="selectFkfshResult" resultMap="FkfshResult" parameterMap="fiwtResultQueryEntity">
+		select xianjin_b,yhshr_b,hdfk_b,yshk_b,yshzhk_b  from fkfsh where xianlu = #{xianlu} and cwpzhbh = #{cwpzhbh} 
+		and nf = #{nf} and type=0
+	</select>
+	
+	<!-- 查询放货通知（判断是否收款）-->	
+	<select id="selectFhtzd" resultType="integer" parameterType="java.lang.String">
+		select count(*)  
+		FROM T_FHTZD_MASTER INNER JOIN T_FHTZD_DETAIL ON T_FHTZD_MASTER.id = T_FHTZD_DETAIL.masterid 
+		where T_FHTZD_MASTER.ispass = 1 and T_FHTZD_DETAIL.ydbhid = #{ydbhid}
+	</select>
+	
+	<select id="selectCarOutByYdbhid" resultMap="carOutResult" parameterType="java.lang.String">
+		select top 1 id,pcshd,pcshlc,min,max  
+			from t_car_out where ydbhid = #{ydbhid} and pcyes >= 1
+	</select>
+	
+	<select id="selectThqsdByYdbhid" resultType="string" parameterType="java.lang.String">
+		select thqshdid from thqsd where ydbhid = #{ydbhid}
+	</select>
+	
+	<select id="selectCwsjDetailByYshm" resultType="string" parameterType="java.lang.String">
+		select sjid from t_cwsj_detail where yshm = #{yshm}
+	</select>
+	
+	<select id="selectCarOutShjhmByYdbhid" resultType="string" parameterType="java.lang.String">
+		 select top 1 shjhm from T_CAR_OUT where ydbhid = #{ydbhid}  
+	</select>
+	
+	<select id="selectThqsdShjhmByYdbhid" resultType="string" parameterType="java.lang.String">
+		  select top 1 shjhm from thqsd where ydbhid= #{ydbhid}  
+	</select>
+	
+	<!-- 查询绿色通道信息 -->	
+	<select id="selectGreenWayByYdbhid" resultType="integer" parameterType="java.lang.String">
+		 select count(1) from hwyd where ydbhid = #{ydbhid} and is_greenchannel = 1  
+	</select>
+	
+	<update id="updateTransportSignRecordByYdbhid" parameterMap="transportSignRecordQueryEntity">
+    	UPDATE T_QS
+    	 <trim prefix="set" suffixOverrides=","> 
+			<if test="qszt != null">
+				<![CDATA[ qszt = #{qszt}, ]]>
+			</if>
+			<if test="qsr != null">
+				<![CDATA[ qsr = #{qsr}, ]]>
+			</if>
+			<if test="qsTime != null">
+				<![CDATA[ qstime = #{qsTime}, ]]>
+			</if>
+			<if test="lrr != null">
+				<![CDATA[ lrr = #{lrr}, ]]>
+			</if>
+			<if test="khyqysTime != null">
+				<![CDATA[ khyqystime = #{khyqysTime}, ]]>
+			</if>
+			<if test="lrTime != null">
+				<![CDATA[ lrtime = #{lrTime}, ]]>
+			</if>
+			<if test="comm != null">
+				<![CDATA[ comm = #{comm}, ]]>
+			</if>
+			<if test="lrrGrid != null">
+				<![CDATA[ lrrgrid = #{lrrGrid}, ]]>
+			</if>
+			<if test="gs != null">
+				<![CDATA[ gs = #{gs}, ]]>
+			</if>
+			<if test="yxfhsj != null">
+				<![CDATA[ yxfhsj = #{yxfhsj}, ]]>
+			</if>
+			<if test="jianshu != null">
+				<![CDATA[ jianshu = #{jianshu}, ]]>
+			</if>
+			<if test="qrr != null">
+				<![CDATA[ qrr = #{qrr}, ]]>
+			</if>
+			<if test="qrrGrid != null">
+				<![CDATA[ qrrgrid = #{qrrGrid}, ]]>
+			</if>
+			<if test="qrTime != null">
+				<![CDATA[ qrtime = #{qrTime}, ]]>
+			</if>
+			<if test="fdqsTime != null">
+				<![CDATA[ fdqstime = #{fdqsTime}, ]]>
+			</if>
+			<if test="fdzt != null">
+				<![CDATA[ fdzt = #{fdzt}, ]]>
+			</if>
+			<if test="str1 != null">
+				<![CDATA[ str1 = #{str1}, ]]>
+			</if>
+			<if test="str2 != null">
+				<![CDATA[ str2 = #{str2}, ]]>
+			</if>
+			<if test="str3 != null">
+				<![CDATA[ str3 = #{str3}, ]]>
+			</if>
+			<if test="fdfsrGrid != null">
+				<![CDATA[ fdfsrgrid = #{fdfsrGrid}, ]]>
+			</if>
+			<if test="fdjcTime != null">
+				<![CDATA[ fdjctime = #{fdjcTime}, ]]>
+			</if>
+			<if test="fdlrTime != null">
+				<![CDATA[ fdlrtime = #{fdlrTime}, ]]>
+			</if>
+			<if test="fdfsComm != null">
+				<![CDATA[ fdfscomm = #{fdfsComm}, ]]>
+			</if>
+				<if test="fdfs != null">
+				<![CDATA[ fdfs = #{fdfs}, ]]>
+			</if>
+			<if test="shlc != null">
+				<![CDATA[ shlc = #{shlc}, ]]>
+			</if>
+			<if test="fdjsComm != null">
+				<![CDATA[ fdjscomm = #{fdjsComm}, ]]>
+			</if>
+			<if test="fdYouJiHao != null">
+				<![CDATA[ fdYouJiHao = #{fdYouJiHao}, ]]>
+			</if>
+			<if test="fdJinZhiLuRu != null">
+				<![CDATA[ fdJinZhiLuRu = #{fdJinZhiLuRu}, ]]>
+			</if>
+			<if test="psjianshu != null">
+				<![CDATA[ psjianshu = #{psjianshu}, ]]>
+			</if>
+			<if test="dsjianshu != null">
+				<![CDATA[ dsjianshu = #{dsjianshu}, ]]>
+			</if>
+			<if test="sfxgbs != null">
+				<![CDATA[ sfxgbs = #{sfxgbs}, ]]>
+			</if>
+			<if test="oldQsTime != null">
+				<![CDATA[ old_qstime = #{oldQsTime}, ]]>
+			</if>
+			<if test="sendFlag != null">
+				<![CDATA[ send_flag = #{sendFlag}, ]]>
+			</if>
+			<if test="min != null">
+				<![CDATA[ Min = #{min}, ]]>
+			</if>
+			<if test="max != null">
+				<![CDATA[ Max = #{max}, ]]>
+			</if>
+			<if test="daoZhanOk != null">
+				<![CDATA[ daozhan_ok = #{daoZhanOk}, ]]>
+			</if>
+			<if test="cxFlag != null">
+				<![CDATA[ cx_flag = #{cxFlag}, ]]>
+			</if>
+			<if test="qsrphone != null">
+				<![CDATA[ qsrphone = #{qsrphone}, ]]>
+			</if>
+			<if test="recordQsTime != null">
+				<![CDATA[ record_qstime = #{recordQsTime}, ]]>
+			</if>
+			<if test="cxNumber != null">
+				<![CDATA[ cx_number = #{cxNumber}, ]]>
+			</if>
+			
+			<if test="signType != null">
+				<![CDATA[ sign_type = #{signType}, ]]>
+			</if>
+		 </trim>  
+		WHERE ydbhid = #{ydbhid}
+    </update>
+    
+    <update id="updateTransportSignRecordLogByYdbhid" parameterMap="transportSignRecordLogQueryEntity">
+    	UPDATE T_QS_log
+    	 <trim prefix="set" suffixOverrides=","> 
+			<if test="qsr != null">
+				<![CDATA[ qsr = #{qsr}, ]]>
+			</if>
+			<if test="qsTime != null">
+				<![CDATA[ qstime = #{qsTime}, ]]>
+			</if>
+			<if test="lrr != null">
+				<![CDATA[ lrr = #{lrr}, ]]>
+			</if>
+			<if test="qszt != null">
+				<![CDATA[ qszt = #{qszt}, ]]>
+			</if>
+			<if test="lrTime != null">
+				<![CDATA[ lrtime = #{lrTime}, ]]>
+			</if>
+			<if test="comm != null">
+				<![CDATA[ comm = #{comm}, ]]>
+			</if>
+			<if test="lrrGrid != null">
+				<![CDATA[ lrrgrid = #{lrrGrid}, ]]>
+			</if>
+			<if test="gs != null">
+				<![CDATA[ gs = #{gs}, ]]>
+			</if>
+			<if test="yxfhsj != null">
+				<![CDATA[ yxfhsj = #{yxfhsj}, ]]>
+			</if>
+			<if test="jianshu != null">
+				<![CDATA[ jianshu = #{jianshu}, ]]>
+			</if>
+			<if test="fazhan != null">
+				<![CDATA[ fazhan = #{fazhan}, ]]>
+			</if>
+			<if test="qrr != null">
+				<![CDATA[ qrr = #{qrr}, ]]>
+			</if>
+			<if test="qrrGrid != null">
+				<![CDATA[ qrrgrid = #{qrrGrid}, ]]>
+			</if>
+			<if test="qrTime != null">
+				<![CDATA[ qrtime = #{qrTime}, ]]>
+			</if>
+			<if test="fdqsTime != null">
+				<![CDATA[ fdqstime = #{fdqsTime}, ]]>
+			</if>
+			<if test="grid != null">
+				<![CDATA[ grid = #{grid}, ]]>
+			</if>
+			<if test="xgsj != null">
+				<![CDATA[ xgsj = #{xgsj}, ]]>
+			</if>
+			<if test="str1 != null">
+				<![CDATA[ str1 = #{str1}, ]]>
+			</if>
+			<if test="str2 != null">
+				<![CDATA[ str2 = #{str2}, ]]>
+			</if>
+			<if test="str3 != null">
+				<![CDATA[ str3 = #{str3}, ]]>
+			</if>
+			<if test="int1 != null">
+				<![CDATA[ int1 = #{int1}, ]]>
+			</if>
+			<if test="int2 != null">
+				<![CDATA[ int2 = #{int2}, ]]>
+			</if>
+			<if test="datetime1 != null">
+				<![CDATA[ datetime1 = #{datetime1}, ]]>
+			</if>
+				<if test="psJianShu != null">
+				<![CDATA[ Psjianshu = #{psJianShu}, ]]>
+			</if>
+			<if test="dsJianShu != null">
+				<![CDATA[ Dsjianshu = #{dsJianShu}, ]]>
+			</if>
+			<if test="qsrphone != null">
+				<![CDATA[ qsrphone = #{qsrphone}, ]]>
+			</if>
+		 </trim>  
+		WHERE ydbhid = #{ydbhid}
+    </update>
+    
+    <delete id="deleteHwydRouteByYdbhid">
+    	delete HWYD_ROUTE where ydbhid = #{ydbhid} and cztype = #{cztype};
+    </delete>
+    
+    <!-- 根据运单号查询签收信息 -->	
+	<select id="selectTransportSignRecordByYdbhid" resultMap="transportSignRecord" parameterType="java.lang.String">
+		SELECT * FROM T_QS WHERE ydbhid = #{ydbhid}
+	</select>
+	
+	 <!-- 根据运单号查询当前签收状态-->	
+	<select id="selectSignStatusByYdbhid" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select qszt from T_QS where ydbhid=#{ydbhid}
+	</select>
+	
+	<update id="updatetransportProcessStockByGsAndYdbhid" parameterMap="transportProcessStockQueryEntity">
+    	UPDATE T_fenlikucun
+    	 <trim prefix="set" suffixOverrides=","> 
+			<if test="shhd != null">
+				<![CDATA[ shhd = #{shhd}, ]]>
+			</if>
+			<if test="ydxzh != null">
+				<![CDATA[ ydxzh = #{ydxzh}, ]]>
+			</if>
+			<if test="bzh != null">
+				<![CDATA[ bzh = #{bzh}, ]]>
+			</if>
+			<if test="jianShu != null">
+				<![CDATA[ jianshu = #{jianShu}, ]]>
+			</if>
+			<if test="pinMing != null">
+				<![CDATA[ pinming = #{pinMing}, ]]>
+			</if>
+			<if test="tiji != null">
+				<![CDATA[ tiji = #{tiji}, ]]>
+			</if>
+			<if test="zhl != null">
+				<![CDATA[ zhl = #{zhl}, ]]>
+			</if>
+			<if test="beizhu != null">
+				<![CDATA[ beizhu = #{beizhu}, ]]>
+			</if>
+			<if test="cangWei != null">
+				<![CDATA[ cangwei = #{cangWei}, ]]>
+			</if>
+			<if test="xh != null">
+				<![CDATA[ xh = #{xh}, ]]>
+			</if>
+			<if test="jffs != null">
+				<![CDATA[ jffs = #{jffs}, ]]>
+			</if>
+			<if test="daozhan != null">
+				<![CDATA[ daozhan = #{daozhan}, ]]>
+			</if>
+			<if test="shhrlxdh != null">
+				<![CDATA[ shhrlxdh = #{shhrlxdh}, ]]>
+			</if>
+			<if test="shhrmch != null">
+				<![CDATA[ shhrmch = #{shhrmch}, ]]>
+			</if>
+			<if test="str1 != null">
+				<![CDATA[ str1 = #{str1}, ]]>
+			</if>
+			<if test="str2 != null">
+				<![CDATA[ str2 = #{str2}, ]]>
+			</if>
+			<if test="str3 != null">
+				<![CDATA[ str3 = #{str3}, ]]>
+			</if>
+			<if test="int1 != null">
+				<![CDATA[ int1 = #{int1}, ]]>
+			</if>
+			<if test="int2 != null">
+				<![CDATA[ int2 = #{int2}, ]]>
+			</if>
+			<if test="datetime1 != null">
+				<![CDATA[ datetime1 = #{datetime1}, ]]>
+			</if>
+				<if test="ckbh != null">
+				<![CDATA[ ckbh = #{ckbh}, ]]>
+			</if>
+			<if test="kcycbz != null">
+				<![CDATA[ kcycbz = #{kcycbz}, ]]>
+			</if>
+				<if test="dhsj != null">
+				<![CDATA[ dhsj = #{dhsj}, ]]>
+			</if>
+			<if test="chxh != null">
+				<![CDATA[ CHXH = #{chxh}, ]]>
+			</if>
+			<if test="zhchrq != null">
+				<![CDATA[ ZHCHRQ = #{zhchrq}, ]]>
+			</if>
+				<if test="yiti != null">
+				<![CDATA[ yiti = #{yiti}, ]]>
+			</if>
+			<if test="caoZuoGongHao != null">
+				<![CDATA[ CaoZuoGongHao = #{caoZuoGongHao}, ]]>
+			</if>
+			<if test="ziti != null">
+				<![CDATA[ ziti = #{ziti}, ]]>
+			</if>
+			<if test="muDiZhan != null">
+				<![CDATA[ MuDiZhan = #{muDiZhan}, ]]>
+			</if>
+		 </trim> 
+		 WHERE ydbhid = #{ydbhid} AND GS = #{gs} 
+    </update>
+    
+    <insert id="insertTransportOrderTrace" parameterMap="transportOrderTraceQueryEntity">
+    	INSERT INTO T_WL_ORDERTRACE
+    	(
+  			<include refid="columns_transport_order_trace"/>
+    	) 
+    	VALUES 
+    	(
+    	#{createUser},
+    	#{createGsbh},
+    	#{createGs},
+    	#{createDate},
+    	#{updateUser},
+    	#{updateGsbh},
+    	#{updateGs}, 
+    	#{updateDate},
+    	#{recstatus}, 
+    	#{orderNo},
+    	#{ydbhid}, 
+    	#{location},
+    	#{status},
+    	#{otDtime},
+    	#{remark},
+    	#{fxNo},
+    	#{fxCompany},
+    	#{fxCode},
+    	#{customerCode},
+    	#{customerName},
+    	#{customerOrderCode},
+    	#{orderType}, 
+    	#{carryonPrefigureDateSup},
+    	#{carryonReceiveDateSup}, 
+    	#{carryonZcdjIsContactSup},
+    	#{carryonPrefigureDate},
+    	#{carryonReceiveDate},
+    	#{carryonZcdjIsContact},
+    	#{receiveFlagSup},
+    	#{receiveTimeSup},
+    	#{receiveFlag},
+    	#{receiveTime},
+    	#{statusConfirm},
+    	#{ver}
+    	)
+    </insert>
+    
+     <!-- 获取破损短少责任划分信息 -->	
+	<select id="selectFlagByYdbhid" resultType="java.lang.String" parameterType="java.lang.String">
+		select flag from lpcl_pshf_master where YDBHID = #{ydbhid}
+	</select>
+	
+	 <!-- 获取理赔信息 -->	
+	<select id="selectLdqppassByYdbhid" resultType="integer" parameterType="java.lang.String">
+		select ldqppass from T_LPCHL_MASTER where ydbhid = #{ydbhid}
+	</select>
+	
+	 <!-- 新增撤销日志信息 -->	
+	 <insert id="insertUndoSignLog" parameterMap="undoSignLogQueryEntity">
+    	INSERT INTO T_chexiao_log
+    	(
+  			<include refid="columns_undo_sign_log"/>
+    	) 
+    	VALUES 
+    	(
+    	#{ydbhid},
+    	#{opeGrid},
+    	#{opeXm},
+    	#{opeDate},
+    	#{opeType},
+    	#{recgenDate}
+    	)
+    </insert>
+    
+   	 <!-- 新增在途信息 -->	
+ 	<insert id="insertHwydRoute" parameterMap="hwydRouteQueryEntity">
+    	INSERT INTO HWYD_ROUTE
+    	(
+  			<include refid="columns_hwyd_route"/>
+    	) 
+    	VALUES 
+    	(
+    	#{ydbhid},
+    	#{shiJian},
+    	#{cztype},
+    	#{gs},
+    	#{grid},
+    	#{beiZhu},
+    	#{xuHao},
+    	#{pushFlag}
+    	)
+    </insert>
+    
+     <!-- 删除轨迹信息 -->
+    <delete id="deleteTransportOrderTraceByYdbhid">
+    	delete T_WL_ORDERTRACE where ydbhid = #{ydbhid} and status = '3'
+    </delete>
+    
+    <update id="undoSignByYdbhid" parameterMap="transportSignRecordQueryEntity">
+    	UPDATE T_QS SET 
+		qszt = #{qszt},
+		qsr = #{qsr}, 
+		qstime = #{qsTime}, 
+		lrr = #{lrr}, 
+		lrtime = #{lrTime}, 
+		comm = #{comm},  
+		psjianshu = #{psjianshu}, 
+		dsjianshu = #{dsjianshu}, 
+		sfxgbs = #{sfxgbs}, 
+		cx_flag = #{cxFlag},
+		qsrphone = #{qsrphone},
+		cx_number = #{cxNumber},
+		
+		old_qstime	= #{oldQsTime},
+		record_qstime = #{recordQsTime}
+		
+		WHERE ydbhid = #{ydbhid}
+    </update>
+    
+    <!-- 查询是否有送货派车单 -->
+    <select id="countSendCarBill" resultType="java.lang.Long" parameterType="java.lang.String">
+    	select count(*) from T_car_out where ydbhid=#{transportCode}
+    </select>
+    <!-- 查询是否有提货签收单 -->
+     <select id="countLadingSignBill" resultType="java.lang.Long" parameterType="java.lang.String">
+    	select count(*) from THQSD where where ydbhid=#{transportCode}
+    </select>
+    
+    <select id="selectBundleReceiptByChxhAndYdbhids" resultMap="bundleReceipt">
+		select * from hczzqd_source where chxh = #{chxh} and (daozhan = #{company} or fazhan = #{company}) and ydzh= 0 and ydbhid in
+		(
+		<foreach collection="ydbhids" item="ydbhid" separator="," >
+		 	#{ydbhid} 
+		</foreach>
+		)
+	</select>
+	
+	<select id="selectBundleReceiptByChxhAndYdbhidsWithoutCompany" resultMap="bundleReceipt">
+		select * from hczzqd_source where chxh = #{chxh} and ydzh= 0 and ydbhid in
+		(
+		<foreach collection="ydbhids" item="ydbhid" separator="," >
+		 	#{ydbhid} 
+		</foreach>
+		)
+	</select>
+	
+	<select id="selectReorder" resultType="com.ycgwl.kylin.transport.vo.ReorderVo">
+		SELECT  T_QS.ydbhid ,
+				HWYD.fazhan ,
+				convert(text,HWYD.FHDWMCH) as fhdwmch ,
+				HWYD.shhrmch ,
+				HWYD.is_greenchannel as isGreenchannel,
+				T_QS.fdfsr ,
+				T_QS.fdfsrgrid ,
+				T_QS.fdjctime ,
+				T_QS.fdfs ,
+				T_QS.fdlrtime ,
+				T_QS.fdfscomm ,
+				T_QS.fdYouJiHao ,
+				T_QS.fdJinZhiLuRu ,
+				T_QS.fdzt     
+	      FROM  T_QS , HWYD     
+		 WHERE  T_QS.ydbhid = HWYD.ydbhid
+		   AND  T_QS.ydbhid = #{waybillNum}
+		   AND  T_QS.fdzt != 1
+		   AND  T_QS.qszt > 0
+		 <!-- <if test="rightNum != 3">
+		 	AND (t_qs.fdJinZhiLuRu= 0 OR (t_qs.fdJinZhiLuRu is null AND t_qs.fdfsrgrid is null))
+		 </if> -->
+	</select>
+	
+	<insert id="saveReorderLog">
+		insert into t_fd_log(
+				ydbhid, xgr, xgsj, fdfsr, fdfsrgrid,
+				fdjctime, fdfs, fdyjh, fdlrtime, fdfscomm, 
+				fdzt, qrr, qrrgrid, qrtime, fdjscomm )
+		values (
+				#{ydbhid}, #{account}, getdate(), #{fdfsr}, #{account},
+				#{fdjctime}, #{fdfs}, #{fdyjh}, #{fdlrtime}, #{fdfscomm},
+				#{fdzt}, #{qrr}, #{qrrgrid}, #{qrtime}, #{fdjscomm}
+		)
+		
+	</insert>
+	<update id="saveReorder">
+		update T_QS set  fdfsrgrid = #{fdfsrgrid} 
+			<if test="fdfs != null and fdfs != ''">
+				,fdfs = #{fdfs}
+			</if>
+			<if test="fdyoujihao != null and fdyoujihao != ''">
+				,fdyoujihao = #{fdyoujihao}
+				,fdlrtime = getdate()
+				,fdfsr = #{fdfsr}
+			</if>
+			<if test="fdjctime != null and fdjctime != ''">
+				,fdjctime = #{fdjctime}
+			</if>
+			<if test="qrr != null and qrr != ''">
+				,qrr = #{qrr}
+			</if>
+			<if test="fdzt != null and fdzt != ''">
+				,fdzt = #{fdzt}
+			</if>
+			<if test="fdzt == 1 ">
+				,fdJinZhiLuRu = 1
+			</if>
+			<if test="fdqstime != null and fdqstime != ''">
+				,fdqstime = #{fdqstime}
+			</if>	
+			<if test="fdjscomm != null and fdjscomm != ''">
+				,fdjscomm = #{fdjscomm}
+			</if>	
+			<if test="fdfscomm != null and fdfscomm != ''">
+				,fdfscomm = #{fdfscomm}
+			</if>			
+		where ydbhid = #{waybillNum}
+	</update>
+	<select id="selectReorderConfigure" resultType="com.ycgwl.kylin.transport.entity.ReorderConfigure">
+		SELECT     T_FanDan_GuanLi_canshu.fazhan_chaoqi_tianshu_1 ,
+		           T_FanDan_GuanLi_canshu.fazhan_chaoqi_tianshu_2 ,
+		           T_FanDan_GuanLi_canshu.fazhan_chaoqi_tianshu_3 ,
+		           T_FanDan_GuanLi_canshu.daozhan_chaoqi_tianshu_1 ,
+		           T_FanDan_GuanLi_canshu.daozhan_chaoqi_tianshu_2 ,
+		           T_FanDan_GuanLi_canshu.daozhan_chaoqi_tianshu_3 ,
+		           T_FanDan_GuanLi_canshu.id     
+        FROM       T_FanDan_GuanLi_canshu
+	</select>
+	<update id="updateReorderConfigure">
+		update T_FanDan_GuanLi_canshu set fazhan_chaoqi_tianshu_1 = #{fazhan_chaoqi_tianshu_1},
+										  fazhan_chaoqi_tianshu_2 = #{fazhan_chaoqi_tianshu_2},
+										  fazhan_chaoqi_tianshu_3 = #{fazhan_chaoqi_tianshu_3},
+										  daozhan_chaoqi_tianshu_1 = #{daozhan_chaoqi_tianshu_1},
+										  daozhan_chaoqi_tianshu_2 = #{daozhan_chaoqi_tianshu_2},
+										  daozhan_chaoqi_tianshu_3 = #{daozhan_chaoqi_tianshu_3}
+	     where id = #{id}
+	</update>
+	<select id="selectfdfsrByydbhid" resultType="java.lang.String">
+		select fdfsr from T_QS where ydbhid = #{waybillNum}
+	</select>
+	<select id="selectReceiveReorder" resultType="com.ycgwl.kylin.transport.vo.ReorderVo">
+		SELECT T_QS.ydbhid, T_QS.fdqstime, T_QS.qrr, T_QS.qrrgrid, T_QS.qrtime, HWYD.FAZHAN, HWYD.FHDWMCH, 
+			   HWYD.SHHRMCH, T_QS.FDZT, T_QS.FDJSCOMM, T_QS.fdJinZhiLuRu   
+		  FROM T_QS, HWYD  
+		 WHERE T_QS.ydbhid = HWYD.YDBHID 
+		   and T_QS.YDBHID= #{waybillNum}
+		   and HWYD.FAZHAN= #{company} 
+		   and T_QS.FDZT != 1
+	</select>
+
+	<update id="updateSignRecordByYdbhid">
+		update t_qs
+		   set lrr=null, lrrgrid=null, lrtime=null, gs=null, qszt=0, qsr=null, qstime=null, shlc=null, comm=null
+		 where ydbhid = #{ydbhid}
+	</update>
+</mapper>

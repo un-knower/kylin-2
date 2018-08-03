@@ -1,0 +1,47 @@
+/*
+created by yl in 2018/05/17
+*/
+
+@CHARSET "UTF-8";
+
+/* 到站基础数据录入 */
+.breadcrumb span{display:none;}
+.layui-form-label{width:125px;}
+.company-list{width:50%;margin:0 auto;text-align:center;}
+.add-list{display:flex;diplay:-webkit-flex;justify-content:space-around;}
+.add-company{width:25%;text-align:center;}
+.add-btn{display:flex;diplay:-webkit-flex;flex-direction:column;justify-content:center;}
+.company-list button[disabled]{background-color:#ccc;cursor:not-allowed;}
+.add-company h4{font-size:18px;font-weight:600;line-height:40px;border:1px solid #ccc;border-bottom:0;}
+.add-company ul{max-height:360px;overflow-y:scroll;border:1px solid #ccc;}
+.add-company li{border-bottom:1px solid #ccc;line-height:30px;cursor:default;}
+.add-company li:hover{background-color:#f2f2f2;}
+.add-company li:nth-child{border-bottom:0;}
+.list-save-btn{margin-top:30px;}
+.current{background-color:#bbb !important;}
+
+/* 结款和基础设置 */
+.query-btn{margin:0 0 10px 100px;}
+.main-wrap{width:80%;margin:0 auto;text-align:center;}
+.layui-table tbody tr:hover input{background-color: #f2f2f2;}
+.layui-table td{word-break:break-all;}
+.layui-table input[disabled], .layui-table button[disabled]{background-color:#ccc;cursor:not-allowed;}
+.table-title{padding:10px 30px;margin:20px 0;background-color:#f2f2f2;text-align:left;}
+.table-title h4{font-size:20px;font-weight:900;line-height:30px;display:inline-block;}
+.table-title span{display:inline-block;line-height:30px;font-size:16px;}
+.tag-name{font-weight:600;}
+.tagRed-name{font-weight:600;color:red;}
+.cycle-info td{line-height:35px;min-height:35px;padding:0;}
+.not-fill{background-color:#ccc;display: inline-block;width: 96%;margin: 2px 2%;word-break:break-all;}
+.cycle-info input{width:96%;margin: 2px 2%;text-align:center;}
+.layui-input-selmoney .layui-input{width:160px;}
+.layui-label-quantity{width:315px;padding:9px 0;}
+.layui-input-quantity{width:60px;padding:0;text-align:center;}
+.layui-label-isyfk{width:100px;padding:9px 0;}
+.layui-input-checkbox{text-align:center;width:100%;min-height:20px;}
+.layui-form-checkbox[lay-skin=primary] span{float:none;padding-right:5px;}
+.save-wrap{margin-top:30px;}
+
+/* 客户价格登记 */
+.rrapp-form{margin-bottom:30px;}
+.layui-table th{font-weight:600;text-align:center;word-break:break-all;}

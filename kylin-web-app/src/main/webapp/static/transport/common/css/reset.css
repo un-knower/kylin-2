@@ -1,0 +1,78 @@
+/* 鍒濆鍖� */
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td { margin: 0; padding: 0; border: 0;box-sizing: border-box;-o-box-sizing: border-box;-ms-box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+html { color: #333;height: 100%;  }
+body { height:100%;background:#fff;font-size:16px;}
+body,button,input,select,textarea,a{ font-family: 'Microsoft Yahei';}
+ul,ol,li,dl,dd,dt{list-style: none;}
+em,i{ font-style: normal; }
+a { text-decoration: none;}
+a:hover { text-decoration: none; }
+legend { color: #333; }
+fieldset,img { border: 0; }
+img{vertical-align: top;}
+button { cursor: pointer; }
+input:-webkit-autofill {
+ -webkit-box-shadow: 0 0 0px 1000px white inset;
+ -webkit-text-fill-color: #333;
+}
+input,select,textarea{outline: none;}
+input:focus{ outline:none}
+/*瑙ｅ喅IE鍥剧墖缂╂斁澶辩湡*/
+img { -ms-interpolation-mode: bicubic; }
+/*娓呴櫎娴姩*/
+.clearfix:after { content: ''; display: block; height: 0; clear: both; visibility:hidden;overflow:hidden;}
+.clearfix { zoom: 1; }
+.clear { clear: both; }
+/*杩炵画鑻辨枃銆佹暟瀛楁崲琛�*/
+.wordwrap { word-break: break-all; word-wrap: break-word; }
+/*鍗曡鏂囧瓧瓒呭嚭鏄剧ず鐪佺暐鍙�*/
+.omg{overflow: hidden; text-overflow: ellipsis; white-space:nowrap;}
+th,td{}
+.hide {display: none;}
+.fr{float:right;}
+.fl{float:left;}
+input{outline:none;}
+/* placeholder瀛椾綋棰滆壊 */
+input::-webkit-input-placeholder {color:#adadad;}
+input:-moz-placeholder {color:#adadad;}
+input::-moz-placeholder {color:#adadad;}
+input:-ms-input-placeholder {color:#adadad;}
+
+.col-25{width:23.5%;}
+.col-50{width:49%;}
+.col-100{width:100%;}
+
+/*鎻掍欢鏍峰紡*/
+.form-con.col-25 .txt.noBorder{border:none;margin-left:-92px;}
+.form-con.col-25 .txt.noBorder label.checkbox{width:auto;color:#f00; }
+label.hCheckBox.checkbox {
+	padding-left: 12px;
+	cursor:pointer;
+	background:transparent url(../images/checkbox1.png) no-repeat left center; 
+	height:24px; 
+	line-height:24px;
+	width:56px;
+	display:inline-block;
+} 
+label.hCheckBox.checked {background:transparent url(../images/checkbox2.png) no-repeat left center;} 
+label.disabled{background-position:left 0px;}
+.hRadio 
+{
+    padding-left: 8px; 
+    display: inline-block;
+    width:70px;
+	background: transparent url(../images/radio1.png) no-repeat left center;
+	height: 24px; 
+	line-height:24px;
+	cursor:pointer;
+	vertical-align:middle;
+}
+.hRadio_Checked { background: transparent url(../images/radio2.png) no-repeat left center;}
+/* div.txt.checkBox,div.txt.radioBox{margin-top:0;margin-bottom:0;}
+div.txt.checkBox label.checkbox{margin-top:0;} */
+.txt.radioBox div{padding-top: 4px;}
+.txt.radioBox input{margin-left: 10px; vertical-align:middle;margin-top:-2px; cursor: pointer;padding-top: 6px; }
+.txt.checkBox div{padding-top: 4px;}
+.txt.checkBox input{margin-left: 10px; vertical-align:middle;margin-top:-2px; cursor: pointer;padding-top: 6px; }
+
+

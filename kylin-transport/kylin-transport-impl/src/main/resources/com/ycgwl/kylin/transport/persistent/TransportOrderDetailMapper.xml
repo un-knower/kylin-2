@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.ycgwl.kylin.transport.persistent.TransportOrderDetailMapper">
+
+	<resultMap type="com.ycgwl.kylin.transport.entity.TransportOrderDetail"
+		id="detailResult">
+		<id column="YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+		<result column="YDXZH" property="ydxzh" jdbcType="SMALLINT" />
+		<result column="BZH" property="bzh" jdbcType="VARCHAR" />
+		<result column="JIANSHU" property="jianshu" jdbcType="INTEGER" />
+		<result column="PINMING" property="pinming" jdbcType="VARCHAR" />
+		<result column="TIJI" property="tiji" jdbcType="DECIMAL" />
+		<result column="ZHL" property="zhl" jdbcType="DECIMAL" />
+		<result column="YFH" property="yfh" jdbcType="BIT" />
+		<result column="CHXH" property="chxh" jdbcType="VARCHAR" />
+		<result column="BEIZHU" property="beizhu" jdbcType="VARCHAR" />
+		<result column="TBJE" property="tbje" jdbcType="DECIMAL" />
+		<result column="cangwei" property="cangwei" jdbcType="VARCHAR" />
+		<result column="xh" property="xh" jdbcType="VARCHAR" />
+		<result column="zchl" property="zchl" jdbcType="DECIMAL" />
+		<result column="zzxl" property="zzxl" jdbcType="DECIMAL" />
+		<result column="qchl" property="qchl" jdbcType="DECIMAL" />
+		<result column="qzxl" property="qzxl" jdbcType="DECIMAL" />
+		<result column="jffs" property="jffs" jdbcType="INTEGER" />
+		<result column="decprice" property="decprice" jdbcType="DECIMAL" />
+		<result column="rowguid" property="rowguid" jdbcType="VARCHAR" />
+		<result column="yunjia" property="yunjia" jdbcType="DECIMAL" />
+		<result column="is_kaiyun" property="isKaiyun" jdbcType="SMALLINT" />
+	</resultMap>
+
+	<sql id="columns_transportOrderDetail">
+		YDBHID,YDXZH,BZH,JIANSHU,PINMING,TIJI,
+		ZHL,YFH,CHXH,BEIZHU,TBJE,cangwei,xh,zchl,zzxl,qchl,qzxl,
+		jffs,decprice,yunjia,is_kaiyun
+	</sql>
+
+	<select id="queryTransportOrderDetailByYdbhid" resultMap="detailResult"
+		parameterType="java.lang.String">
+		SELECT * FROM
+		HWYDXZ
+		WHERE YDBHID = #{ydbhid}
+	</select>
+
+	<insert id="InsertIntoHWYDXZ"
+		parameterType="com.ycgwl.kylin.transport.entity.TransportOrderDetail">
+		INSERT INTO
+		HWYDXZ
+		(
+		<include refid="columns_transportOrderDetail" />
+		)
+		VALUES(
+		#{ydbhid} , #{ydxzh} ,#{bzh} ,#{jianshu} ,
+		#{pinming} ,#{tiji}
+		,#{zhl},#{yfh} ,#{chxh} ,
+		#{beizhu} ,#{tbje} ,#{cangwei} ,#{xh}
+		,#{zchl},
+		#{zzxl} ,#{qchl} ,#{qzxl} ,#{jffs} ,#{decprice} ,
+		#{yunjia}
+		,#{isKaiyun}
+		)
+	</insert>
+
+	<insert id="batchInsertIntoHWYDXZ" parameterType="java.util.List">
+		INSERT INTO
+		HWYDXZ
+		(
+		<include refid="columns_transportOrderDetail" />
+		)
+		VALUES
+		<foreach collection="list" item="d" index="index" separator=",">
+			(
+			#{d.ydbhid} , #{d.ydxzh} ,#{d.bzh} ,#{d.jianshu} ,
+			#{d.pinming}
+			,#{d.tiji} ,#{d.zhl},#{d.yfh} ,#{d.chxh} ,
+			#{d.beizhu} ,#{d.tbje}
+			,#{d.cangwei} ,#{d.xh} ,#{d.zchl},
+			#{d.zzxl} ,#{d.qchl} ,#{d.qzxl}
+			,#{d.jffs} ,#{d.decprice} ,
+			#{d.yunjia} ,#{d.isKaiyun}
+			)
+		</foreach>
+	</insert>
+
+	<update id="updateHWYDXZ"
+		parameterType="com.ycgwl.kylin.transport.entity.TransportOrderDetail">
+		UPDATE HWYDXZ
+		<set>
+			<if test="bzh !=null">BZH =#{bzh},</if>
+			<if test="jianshu !=null">JIANSHU =#{jianshu},</if>
+			<if test="pinming !=null">PINMING =#{pinming},</if>
+			<if test="tiji !=null">TIJI =#{tiji},</if>
+			<if test="zhl !=null">ZHL =#{zhl},</if>
+			<if test="yfh !=null">YFH =#{yfh},</if>
+			<if test="chxh !=null">CHXH =#{chxh},</if>
+			<if test="beizhu !=null">BEIZHU =#{beizhu},</if>
+			<if test="tbje !=null">TBJE =#{tbje},</if>
+			<if test="cangwei !=null">cangwei =#{cangwei},</if>
+			<if test="xh !=null">xh =#{xh},</if>
+			<if test="zchl !=null">zchl =#{zchl},</if>
+			<if test="zzxl !=null">zzxl =#{zzxl},</if>
+			<if test="qchl !=null">qchl =#{qchl},</if>
+			<if test="qzxl !=null">qzxl =#{qzxl},</if>
+			<if test="jffs !=null">jffs =#{jffs},</if>
+			<if test="decprice !=null">decprice =#{decprice},</if>
+			<if test="rowguid !=null">rowguid =#{rowguid},</if>
+			<if test="yunjia !=null">yunjia =#{yunjia},</if>
+			<if test="isKaiyun !=null">is_kaiyun =#{isKaiyun},</if>
+		</set>
+		where YDBHID = #{ydbhid} AND YDXZH = #{ydxzh}
+	</update>
+	<delete id="deleteTransportOrderDetail">
+		delete from HWYDXZ where
+		YDBHID = #{ydbhid} and YDXZH = #{ydxzh}
+	</delete>
+
+	<select id="getWayBillByYdbhid" resultMap="detailResult">
+		SELECT SUM(ZHL) as ZHL , sum(TIJI) as TIJI , SUM(JIANSHU) as JIANSHU
+		FROM HWYDXZ
+		WHERE
+		YDBHID=#{ydbhid}
+	</select>
+	<select id="getOrderDetailByYdbhidAndYdxzh" resultMap="detailResult">
+		SELECT * FROM
+		HWYDXZ
+		WHERE YDBHID = #{ydbhid} AND
+		YDXZH = #{ydxzh}
+	
+	</select>
+
+	<delete id="deleteTransportOrderDetailByYdbhid" parameterType="java.lang.String">
+		delete from HWYDXZ where
+		YDBHID = #{ydbhid}
+	</delete>
+</mapper>
+
+

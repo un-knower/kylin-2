@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <description>Spring MVC Configuration</description>
+
+    <!--shiro注解需要在RequestMapping标记的方法上生效，需要保证@RequiresPermissions等标签的切面和Controller处于同一个ApplicationContext中-->
+    <!-- Enable Shiro Annotations for Spring-configured beans.  Only run after the lifecycleBeanProcessor has run: -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
+    <!-- 开启shiro注解 -->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+
+    <!-- 使用Annotation自动注册Bean,只扫描@Controller --><!-- base-package 如果多个，用“,”分隔 -->
+    <context:component-scan base-package="com.ycgwl.kylin.web" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+    <!-- 启用MVC注解 -->
+    <bean id="formatting.conversion.service.factory"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <set>
+                <bean class="com.ycgwl.kylin.web.master.extend.DateFormatter">
+                    <constructor-arg name="pattern" value="yyyy-MM-dd"/>
+                </bean>
+            </set>
+        </property>
+    </bean>
+    
+    
+<!-- 自定义异常处理--> 
+    <bean id="exceptionResolver" class="com.ycgwl.kylin.web.master.MyExceptionResolver"></bean> 
+   
+  <!--  <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.apache.shiro.authz.UnauthorizedException">/403</prop>
+			</props>
+		</property>
+	</bean>
+    -->
+   
+    <mvc:annotation-driven conversion-service="formatting.conversion.service.factory">
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+            <bean class="org.springframework.http.converter.FormHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/x-www-form-urlencoded;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="defaultCharset" value="UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 静态资源映射 -->
+    <mvc:resources mapping="/favicon.ico" location="/favicon.ico"/>
+    <mvc:resources mapping="/static/**" location="/static/"/>
+    <mvc:resources mapping="/statics/**" location="/statics/"/>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/static/**"/>
+            <mvc:exclude-mapping path="/statics/**"/>
+            <!-- 拦截器，可以记录一些日志什么的 -->
+            <bean class="com.ycgwl.kylin.web.master.CommonInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+    <!-- 视图文件解析配置  -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+    <!-- FreeMarker视图解析器     默认视图 -->
+    <!-- 	<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+            <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+            <property name="contentType" value="text/html; charset=utf-8"/>
+            <property name="requestContextAttribute" value="request"/>
+            <property name="cache" value="false"/>
+            <property name="viewNames" value="*.html" />
+            <property name="suffix" value=""/>
+            <property name="order" value="0"/>
+        </bean>
+
+
+        <bean id="viewResolverJsp" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <property name="prefix" value="/views/" />
+            <property name="viewNames" value="*.jsp" />
+            <property name="suffix" value="" />
+            <property name="order" value="1"/>
+        </bean>
+         -->
+
+
+    <!-- 上传文件拦截，设置最大上传文件大小 10M=10*1024*1024(B)=10485760 bytes -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760"/>
+    </bean>
+
+</beans>

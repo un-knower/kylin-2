@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<description>Spring dubbo service client configuration</description>
+
+	<!--消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="${dubbo.client.application.name}" logger="slf4j"/>
+
+	<!--zookeeper注册中心 -->
+	<dubbo:registry protocol="zookeeper" address="${dubbo.server.registry.address}" file="false" timeout="6000000" client="curator" />
+    <!-- 远程服务调用超时时间(毫秒) -->
+	<!-- <dubbo:consumer timeout="30000" check="false" /> -->
+	
+	<dubbo:provider timeout="6000000" retries="0"/>
+	<dubbo:consumer timeout="6000000" retries="0" check="false" />
+</beans>

@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+/*表格*/
+.layui-table td, .layui-table th{text-align: center; border: 1px solid darkgrey;}
+.layui-table thead tr, .layui-table-fixed-l tr, .layui-table-header, .layui-table-mend, .layui-table-patch, .layui-table-tool{
+	background-color: #DDECFF;
+}
+/**/
+.layui-input-block{float: left;margin-left: 0px;}
+.layui-form-select {display: inline-block;}
+.layui-body{overflow-y: scroll;}
+.breadcrumb{margin: 15px;display: block;}
+.layui-form-label{padding: 9px 0px;}
+.box_con { margin: 2% 2% 0 2%;}
+.clear{clear:both}
+.clearfix:after{content: ''; display: block; height: 0; clear: both;}
+.clearfix{zoom: 1;}
+.fl{float: left;}
+.fr{float:right}
+.layui-table-view{width:100% !important}
+.layui-btn-normal{ margin:0 5% 1% 0 !important}
+.layui-btn{
+	height: 38px;
+	line-height: 38px;
+	margin: 0 0 0 10px;
+	display: inline-block;
+}
+.textarea-div{width: 100%;}
+.toTips {
+    width: 80%;
+    margin-left: 10%;
+}
+.layui-textarea {min-height: 200px;}
+hr {margin-bottom: 2%;}
+.toCheck{position:relative;top:-4px}
+.must-item {
+    display: inline-block;
+    background: url(../../common/images/must.png) no-repeat;
+    width: 7px;
+    height: 7px;
+    background-size: cover;
+    vertical-align: 4px;
+}
+.beizhu{text-align: center; width: auto;}
+@media screen and (max-width: 1400px){
+	*{font-size: 12px !important;}
+	.layui-input, .layui-select, .layui-textarea{height: 30px;}
+	.layui-form-label{width: 82px;}
+	.waybillNum{width: 114px;}
+	.layui-btn{height: 30px; line-height: 30px;}
+	.toArrive{margin-top: -1px;}
+	.layui-table td, .layui-table th{padding: 5px 10px;}
+	.breadcrumb {margin: 6px;}
+	.layui-form-label {padding: 6px 0px;}
+}
+@media screen and (max-width: 1366px){
+	.btn-group{
+		margin:0 !important;
+	}
+	.layui-table td, .layui-table th {
+	    padding: 9px 5px !important;
+	}
+	.layui-textarea {min-height: 100px;}
+}

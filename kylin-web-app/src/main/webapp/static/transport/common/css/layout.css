@@ -1,0 +1,337 @@
+/* body{min-width: 1170px;} */
+/*===瀹革缚鏅堕崚妤勩��===*/
+/**
+#navigation{
+	width:240px;
+	background: #358ff0;
+	position: fixed;
+	top:0;
+	left:0;	
+	z-index:99;
+
+}
+*/
+#navigation h1 {
+	width: 100%;
+	height: 70px;
+	text-indent: -999px;
+	background: url(../images/logo-middle.png) no-repeat center center;
+	border-bottom: 1px solid #5da5f3;
+}
+
+.nav-list ul li a {
+	display: block;
+	width: 100%;
+	padding: 13px 0;
+	color: #ccdeff;
+	text-indent: 72px;
+	border-bottom: 1px solid #5da5f3;
+	font-size: 16px;
+}
+
+.nav-list>ul>li {
+	background: #358ff0;
+}
+
+.nav-list>ul>li.selected>a {
+	color: #fff;
+	background: #5da5f3;
+}
+
+.nav-list>ul>li>a {
+	position: relative;
+	text-indent: 50px;
+}
+
+.nav-list>ul>li .span-icon {
+	width: 20px;
+	height: 22px;
+	position: absolute;
+	top: 15px;
+	left: 40px;
+	background: url(../images/icon.png) no-repeat;
+}
+
+.nav-list>ul>li.nav1 .span-icon {
+	background-position-x: 0;
+	background-position-y: -39px;
+}
+
+.nav-list>ul>li.nav2 .span-icon {
+	width: 22px;
+	height: 23px;
+	background-position-x: -30px;
+	background-position-y: -39px;
+}
+
+.nav-list>ul>li.selected .span-icon {
+	background-position-y: -75px;
+}
+
+.nav-list>ul>li>a i.icon {
+	width: 20px;
+	height: 18px;
+	background: url(../images/up-small.png) no-repeat center;
+	position: absolute;
+	top: 17px;
+	right: 24px;
+}
+
+.nav-list>ul>li.selected>a i.icon {
+	background: url(../images/down-small.png) no-repeat center;
+}
+
+.nav-list .sub-menu {
+	display: none;
+}
+
+/*===閸欏厖鏅堕崘鍛啇===*/
+#content {
+	padding: 0 24px 0 10px;
+	box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	/*overflow: hidden;*/
+}
+
+#content .con-title>h2 {
+	height: 70px;
+	line-height: 70px;
+	font-size: 20px;
+	color: #113060;
+	font-weight: 400;
+}
+
+#content .con-main .part>h2 {
+	padding: 13px 0;
+	font-size: 16px;
+	color: #333;
+	font-weight: 400;
+	border-bottom: 2px solid #ebeff5;
+}
+
+#content .con-main .part>.sub-part {
+	padding-bottom: 20px;
+}
+
+#content .sub-part>h4 {
+	font-weight: 400;
+	color: #333;
+	font-size: 14px;
+}
+
+#content .sub-part .sub-part-form .clearfix {
+	margin-top: 15px;
+	width: 100%;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+	table-layout: fixed;
+}
+
+/*閸欏厖鏅堕崗铚傜秼閸愬懎顔�*/
+.form-con+.form-con {
+	margin-left: 2%;
+}
+
+#content .form-con {
+	float: left;
+	font-size: 12px;
+	height: 24px;
+	position: relative;
+}
+
+#content .form-con input, #content .form-con select {
+	font-size: 12px;
+}
+
+.form-con .labe-l {
+	width: 92px;
+	height: 24px;
+	line-height: 24px;
+	text-indent: 16px;
+	font-weight: 400;
+	display: inline-block;
+}
+/*韫囧懎锝為崣顏囶洣濞ｈ濮炴稉锟芥稉鐚皍st缁鎮曢崡鍐插讲*/
+.form-con .labe-l.must {
+	background: url(../images/must.png) no-repeat left center;
+}
+
+.form-con.col-25 .txt, .form-con.col-50 .txt, .form-con.col-100 .txt {
+	position: absolute;
+	top: 0;
+	left: 92px;
+	width: 66%;
+	height: 24px;
+	border: 1px solid #d3d6de;
+	border-radius: 4px;
+	text-indent: 6px;
+}
+
+.form-con.col-50 .txt {
+	width: 84%;
+}
+
+.form-con.col-100 .txt {
+	width: 92%;
+}
+
+.form-con.col-25 span.txt, .form-con.col-50 span.txt {
+	height: 22px;
+	line-height: 22px;
+}
+/*鐞涖劍鐗�*/
+.sub-part .sub-part-form>table {
+	font-size: 12px;
+	text-align: center;
+	margin-top: 10px;
+}
+
+.sub-part .sub-part-form>table th {
+	background: #f7f7f7;
+	font-weight: 400;
+}
+
+.sub-part .sub-part-form>table td, .sub-part .sub-part-form>table th {
+	border: 1px solid #c2c5cc;
+	padding: 0;
+}
+
+.sub-part .sub-part-form.wtable {
+	position: relative;
+}
+
+.sub-part .sub-part-form .handle {
+	position: absolute;
+	top: -28px;
+	left: 92px;
+}
+
+.sub-part .sub-part-form .handle>a {
+	display: inline-block;
+	width: 52px;
+	padding: 4px 0;
+	border-radius: 4px;
+	font-size: 12px;
+	text-align: center;
+	color: #fff;
+	text-indent: 14px;
+}
+
+.sub-part .sub-part-form .handle>a.handle-add {
+	background: #38c76e url(../images/add.png) no-repeat 6px center;
+}
+
+.sub-part .sub-part-form .handle>a.handle-add:active {
+	background: #34b866 url(../images/add.png) no-repeat 6px center;
+}
+
+.sub-part .sub-part-form .handle>a.handle-delete {
+	background: #ec1414 url(../images/delete.png) no-repeat 6px center;
+	margin-left: 10px;
+}
+
+.sub-part .sub-part-form .handle>a.handle-delete:active {
+	background: #d31313 url(../images/delete.png) no-repeat 6px center;
+}
+
+.sub-part .sub-part-form>table tbody td>input {
+	width: 100%;
+	text-align: center;
+	background-color: transparent;	
+	border: 0px solid #FF7378;
+	height:100%;
+}
+
+.sub-part .sub-part-form>table tbody td>select {
+	width: 65%;
+	border: none;
+	background-color: transparent;
+}
+
+.sub-part .sub-part-form>table td.noBorder, .sub-part .sub-part-form>table th.noBorder
+	{
+	border: none;
+	background: #fff;
+}
+
+.sub-part .sub-part-form>table .removeTr, .sub-part .sub-part-form>table .addTr
+	{
+	display: block;
+	width: 16px;
+	height: 16px;
+	background: #fff url(../images/icon-add.png) no-repeat center;
+	margin: 0 auto;
+}
+
+.sub-part .sub-part-form>table .removeTr {
+	background: #fff url(../images/icon-remove.png) no-repeat center;
+}
+
+/*閹绘劒姘﹂幐澶愭尦*/
+#content .con-btn {
+	text-align: center;
+	margin-top: 10px;
+}
+
+#content .con-btn>a {
+	display: inline-block;
+	width: 150px;
+	padding: 10px 0;
+	font-size: 16px;
+	background: #358ff0;
+	color: #fff;
+	border-radius: 6px;
+	border: 1px solid #358ff0;
+}
+
+#content .con-btn a.btn-new:active {
+	background: #3388e3;
+}
+
+#content .con-btn a.btn-save, #content .con-btn a.btn-cansel {
+	margin-left: 10px;
+	background: #fff;
+	color: #358ff0;
+}
+
+#content .con-btn a.btn-save:active, #content .con-btn a.btn-cansel:active {
+	background: #3081d8;
+	color: #fff;
+}
+
+.form-con.col-25 .valid, .form-con.col-50 .valid, .form-con.col-100 .valid {
+	border: 1px solid #d3d6de;
+}
+
+.form-con.col-25 .error, .form-con.col-50 .error, .form-con.col-100 .error {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+	border: 2px solid #FF7378;
+	
+}
+.sub-part .sub-part-form >table tbody td>.error {
+	width: 100%;
+	text-align: center;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+	border: 2px solid #FF7378;
+	
+}
+#layui_div_page{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align:center;
+}

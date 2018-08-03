@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.FinancialReceiptsMapper"> 
+	 <resultMap type="com.ycgwl.kylin.transport.entity.FinancialReceiptsMaster" id="financialReceiptsMaster">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="gs" property="gs" jdbcType="VARCHAR" />
+        <result column="khbm" property="khbm" jdbcType="VARCHAR" />
+        <result column="jkdw" property="jkdw" jdbcType="VARCHAR" />
+        <result column="jkr" property="jkr" jdbcType="VARCHAR" />
+        <result column="jksj" property="jksj" jdbcType="TIMESTAMP" />
+        <result column="sjtype" property="sjtType" jdbcType="VARCHAR" />
+        <result column="zhipiao" property="zhiPiao" jdbcType="VARCHAR" />
+        <result column="chuna" property="chuNa" jdbcType="VARCHAR" />
+        <result column="beizhu" property="beiZhu" jdbcType="VARCHAR" />
+        <result column="isreport" property="isReport" jdbcType="INTEGER" />
+        <result column="printed" property="printed" jdbcType="INTEGER" />
+        <result column="isaccount" property="isAccount" jdbcType="INTEGER" />
+        <result column="isshq" property="isShq" jdbcType="INTEGER" />
+        <result column="sqsj" property="sqsj" jdbcType="TIMESTAMP" />
+        <result column="rowguid" property="rowGuid" jdbcType="VARCHAR" />
+        <result column="yshm" property="yshm" jdbcType="VARCHAR" />
+        <result column="bbsj" property="bbsj" jdbcType="TIMESTAMP" />
+        <result column="dzshhd" property="dzshhd" jdbcType="VARCHAR" />
+        <result column="Fiwt_ydbhid" property="fiwtYdbhid" jdbcType="VARCHAR" />
+        <result column="Fiwt_cwpzhbh" property="fiwtCwpzhbh" jdbcType="NUMERIC" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="SJch_why" property="sjchWhy" jdbcType="VARCHAR" />
+        <result column="ver" property="ver" jdbcType="INTEGER" />
+        <result column="export_flag" property="exportFlag" jdbcType="VARCHAR" />
+        <result column="sourceflag" property="sourceFlag" jdbcType="VARCHAR" />
+        <result column="sys_name" property="sysName" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <resultMap type="com.ycgwl.kylin.transport.entity.FinancialReceiptsDetail" id="financialReceiptsDetail">
+        <id column="sjid" property="sjid" jdbcType="INTEGER" />
+        <result column="gs" property="gs" jdbcType="VARCHAR" />
+        <result column="xzh" property="xzh" jdbcType="INTEGER" />
+        <result column="shfxm" property="shfxm" jdbcType="VARCHAR" />
+        <result column="shfje" property="shfje" jdbcType="NUMERIC" />
+        <result column="shftype" property="shftype" jdbcType="VARCHAR" />
+         <result column="shsje" property="shsje" jdbcType="NUMERIC" />
+        <result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+        <result column="sqbz" property="sqbz" jdbcType="VARCHAR" />
+        <result column="yshm" property="yshm" jdbcType="VARCHAR" />
+        <result column="rowguid" property="rowGuid" jdbcType="VARCHAR" />
+        <result column="Fiwt_ydbhid" property="fiwtYdbhid" jdbcType="VARCHAR" />
+        <result column="Fiwt_cwpzhbh" property="fiwtCwpzhbh" jdbcType="NUMERIC" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="xjsr" property="xjsr" jdbcType="NUMERIC" />
+        <result column="yhsr" property="yhsr" jdbcType="NUMERIC" />
+        <result column="zzsr" property="zzsr" jdbcType="NUMERIC" />
+        <result column="ver" property="ver" jdbcType="INTEGER" />
+        <result column="shoukuandanimportfalg" property="shouKuanDanImportFalg" jdbcType="VARCHAR" />
+        <result column="khbm" property="khbm" jdbcType="VARCHAR" />
+        <result column="khmc" property="khmc" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <parameterMap type="com.ycgwl.kylin.transport.entity.FinancialReceiptsMaster"
+		id="financialReceiptsMasterQueryEntity">
+	</parameterMap>
+	
+    <parameterMap type="com.ycgwl.kylin.transport.entity.FinancialReceiptsDetail"
+		id="financialReceiptsDetailQueryEntity">
+	</parameterMap>
+	
+	<sql id="columns_financial_receipts_master">
+		id, gs, khbm, jkdw, jkr, jksj, sjtype, zhipiao, chuna, beizhu,sqsj,
+		yshm, bbsj, dzshhd, Fiwt_ydbhid, Fiwt_cwpzhbh, type, SJch_why, ver, export_flag,sys_name
+	</sql>
+	
+	<sql id="columns_financial_receipts_detail">
+		sjid, gs, xzh, shfxm, shfje, shftype,shsje, beizhu, sqbz, yshm, Fiwt_ydbhid,Fiwt_cwpzhbh,type,xjsr,yhsr,zzsr,
+		ver, shoukuandanimportfalg, khbm, khmc
+	</sql>
+	
+	<insert id="batchInsertFinancialReceiptsDetail" parameterType="java.util.List">
+		INSERT INTO
+		T_CWSJ_DETAIL
+		(
+		<include refid="columns_financial_receipts_detail" />
+		)
+		VALUES
+		<foreach collection="list" item="d" index="index" separator=",">
+			(
+			#{d.sjid} , #{d.gs} ,#{d.xzh} ,#{d.shfxm} ,
+			#{d.shfje}
+			,#{d.shftype},#{d.shsje} ,#{d.beizhu},#{d.sqbz} ,#{d.yshm} ,
+			#{d.fiwtYdbhid} ,#{d.fiwtCwpzhbh}
+			,#{d.type} ,#{d.xjsr} ,#{d.yhsr},
+			#{d.zzsr} ,#{d.ver} ,#{d.shouKuanDanImportFalg}
+			,#{d.khbm} ,#{d.khmc}
+			)
+		</foreach>
+	</insert>
+	
+	<insert id="insertFinancialReceiptsMaster" parameterMap="financialReceiptsMasterQueryEntity">
+		INSERT INTO
+		T_CWSJ_MASTER
+		(
+		<include refid="columns_financial_receipts_master" />
+		)
+		VALUES
+		(
+		#{id} , #{gs} ,#{khbm} ,#{jkdw} ,
+		#{jkr}
+		,#{jksj} ,#{sjtType},#{zhiPiao} ,#{chuNa} ,
+		#{beiZhu} ,
+		#{sqsj} ,#{yshm} ,#{bbsj}
+		,#{dzshhd} ,#{fiwtYdbhid} ,
+		#{fiwtCwpzhbh} ,#{type},
+		#{sjchWhy} ,#{ver} ,#{exportFlag},#{sysName}
+		)
+	</insert>
+	
+     <select id="selectFinancialReceiptsMasterByYdbhidAndGs" resultMap="financialReceiptsMaster">
+        SELECT  id, 
+				gs,   
+				jkdw,
+				jksj,
+				sjtype,
+				zhipiao,
+				chuna,
+				beizhu,
+				khbm,
+				jkr,
+				isreport,
+				printed, 
+				Fiwt_ydbhid,
+				Fiwt_cwpzhbh,
+				type,
+				ver	 
+		FROM T_CWSJ_MASTER 
+		WHERE id = #{id} AND gs = #{gs} AND Fiwt_ydbhid = #{ydbhid}
+    </select>
+    
+    <select id="selectFinancialReceiptsDetailByYdbhidAndGs" resultMap="financialReceiptsDetail">
+        SELECT 	sjid,  
+				xzh,
+				gs,
+				shfxm,
+				shfje,
+				shftype,
+				beizhu,
+				shsje,
+				sqbz,
+				yshm,
+				Fiwt_ydbhid,
+				Fiwt_cwpzhbh,
+				type ,
+				xjsr,
+				yhsr,
+				zzsr,
+				ver,
+				khbm,
+				khmc  
+		FROM 	T_CWSJ_DETAIL 
+		WHERE sjid = #{sjid} AND gs = #{gs} AND Fiwt_ydbhid = #{ydbhid}
+    </select>
+    
+    <select id="selectFinancialReceiptsMasterByYdbhid" resultMap="financialReceiptsMaster">
+        select top 1 * from T_CWSJ_MASTER where Fiwt_ydbhid = #{ydbhid} and type = 0 
+    </select>
+    
+    <select id="udtGetCwsjid" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+		    {   
+			call udt_get_cwsjid_v3(
+			#{gs,mode=IN,jdbcType=VARCHAR}, 
+			#{nf,mode=IN,jdbcType=INTEGER},
+			#{cwsjid,mode=OUT,jdbcType=INTEGER} )
+			}
+		]]>
+	</select>
+	
+	<select id="selectFinancialReceiptsMasterById" resultMap="financialReceiptsMaster">
+        select * from T_CWSJ_MASTER where id = #{id} and gs = #{gs} and type = 0 
+    </select>
+    
+    <update id="updateFinancialReceiptsMasterByIdAndGs" parameterMap="financialReceiptsMasterQueryEntity">
+    	UPDATE T_CWSJ_MASTER
+    	 <trim prefix="set" suffixOverrides=","> 
+			<if test="khbm != null">
+				<![CDATA[ khbm = #{khbm}, ]]>
+			</if>
+			<if test="jkdw != null">
+				<![CDATA[ jkdw = #{jkdw}, ]]>
+			</if>
+			<if test="jkr != null">
+				<![CDATA[ jkr = #{jkr}, ]]>
+			</if>
+			<if test="jksj != null">
+				<![CDATA[ jksj = #{jksj}, ]]>
+			</if>
+			<if test="sjtType != null">
+				<![CDATA[ sjtype = #{sjtType}, ]]>
+			</if>
+			<if test="zhiPiao != null">
+				<![CDATA[ zhipiao = #{zhiPiao}, ]]>
+			</if>
+			<if test="chuNa != null">
+				<![CDATA[ chuna = #{chuNa}, ]]>
+			</if>
+			<if test="beiZhu != null">
+				<![CDATA[ beizhu = #{beiZhu}, ]]>
+			</if>
+			<if test="isReport != null">
+				<![CDATA[ isreport = #{isReport}, ]]>
+			</if>
+			<if test="printed != null">
+				<![CDATA[ printed = #{printed}, ]]>
+			</if>
+			<if test="isAccount != null">
+				<![CDATA[ isaccount = #{isAccount}, ]]>
+			</if>
+			<if test="isShq != null">
+				<![CDATA[ isshq = #{isShq}, ]]>
+			</if>
+			<if test="sqsj != null">
+				<![CDATA[ sqsj = #{sqsj}, ]]>
+			</if>
+			<if test="yshm != null">
+				<![CDATA[ yshm = #{yshm}, ]]>
+			</if>
+			<if test="bbsj != null">
+				<![CDATA[ bbsj = #{bbsj}, ]]>
+			</if>
+			<if test="dzshhd != null">
+				<![CDATA[ dzshhd = #{dzshhd}, ]]>
+			</if>
+			<if test="fiwtYdbhid != null">
+				<![CDATA[ Fiwt_ydbhid = #{fiwtYdbhid}, ]]>
+			</if>
+			<if test="fiwtCwpzhbh != null">
+				<![CDATA[ Fiwt_cwpzhbh = #{fiwtCwpzhbh}, ]]>
+			</if>
+			<if test="type != null">
+				<![CDATA[ type = #{type}, ]]>
+			</if>
+			<if test="sjchWhy != null">
+				<![CDATA[ SJch_why = #{sjchWhy}, ]]>
+			</if>
+			<if test="ver != null">
+				<![CDATA[ ver = #{ver}, ]]>
+			</if>
+			<if test="exportFlag != null">
+				<![CDATA[ export_flag = #{exportFlag}, ]]>
+			</if>
+			<if test="sourceFlag != null">
+				<![CDATA[ sourceflag = #{sourceFlag}, ]]>
+			</if>
+		 </trim>  
+		WHERE id = #{id} AND gs = #{gs} AND type = 0
+    </update>
+    
+     <update id="updateFinancialReceiptsDetailBySjidAndGsAndXzh" parameterMap="financialReceiptsDetailQueryEntity">
+    	UPDATE T_CWSJ_DETAIL
+    	 <trim prefix="set" suffixOverrides=","> 
+			<if test="shfxm != null">
+				<![CDATA[ shfxm = #{shfxm}, ]]>
+			</if>
+			<if test="shfje != null">
+				<![CDATA[ shfje = #{shfje}, ]]>
+			</if>
+			<if test="shftype != null">
+				<![CDATA[ shftype = #{shftype}, ]]>
+			</if>
+			<if test="shsje != null">
+				<![CDATA[ shsje = #{shsje}, ]]>
+			</if>
+			<if test="beizhu != null">
+				<![CDATA[ beizhu = #{beizhu}, ]]>
+			</if>
+			<if test="sqbz != null">
+				<![CDATA[ sqbz = #{sqbz}, ]]>
+			</if>
+			<if test="yshm != null">
+				<![CDATA[ yshm = #{yshm}, ]]>
+			</if>
+			<if test="fiwtYdbhid != null">
+				<![CDATA[ Fiwt_ydbhid = #{fiwtYdbhid}, ]]>
+			</if>
+			<if test="fiwtCwpzhbh != null">
+				<![CDATA[ Fiwt_cwpzhbh = #{fiwtCwpzhbh}, ]]>
+			</if>
+			<if test="type != null">
+				<![CDATA[ type = #{type}, ]]>
+			</if>
+			<if test="xjsr != null">
+				<![CDATA[ xjsr = #{xjsr}, ]]>
+			</if>
+			<if test="yhsr != null">
+				<![CDATA[ yhsr = #{yhsr}, ]]>
+			</if>
+			<if test="zzsr != null">
+				<![CDATA[ zzsr = #{zzsr}, ]]>
+			</if>
+			<if test="ver != null">
+				<![CDATA[ ver = #{ver}, ]]>
+			</if>
+			<if test="shouKuanDanImportFalg != null">
+				<![CDATA[ shoukuandanimportfalg = #{shouKuanDanImportFalg}, ]]>
+			</if>
+			<if test="khbm != null">
+				<![CDATA[ khbm = #{khbm}, ]]>
+			</if>
+			<if test="khmc != null">
+				<![CDATA[ khmc = #{khmc}, ]]>
+			</if>
+		 </trim>  
+		WHERE sjid = #{sjid} AND gs = #{gs} AND xzh = #{xzh} AND type = 0
+    </update>
+    
+    <select id="selectFinancialReceiptsDetailByYdbhid" resultMap="financialReceiptsDetail">
+        SELECT 	sjid,  
+				xzh,
+				gs,
+				shfxm,
+				shfje,
+				shftype,
+				beizhu,
+				shsje,
+				sqbz,
+				yshm,
+				Fiwt_ydbhid,
+				Fiwt_cwpzhbh,
+				type ,
+				xjsr,
+				yhsr,
+				zzsr,
+				ver,
+				khbm,
+				khmc  
+		FROM 	T_CWSJ_DETAIL 
+		WHERE gs = #{gs} AND Fiwt_ydbhid = #{ydbhid}
+    </select>
+    
+      <select id="selectFinancialReceiptsDetailBySjid" resultMap="financialReceiptsDetail">
+        SELECT 	sjid,  
+				xzh,
+				gs,
+				shfxm,
+				shfje,
+				shftype,
+				beizhu,
+				shsje,
+				sqbz,
+				yshm,
+				Fiwt_ydbhid,
+				Fiwt_cwpzhbh,
+				type ,
+				xjsr,
+				yhsr,
+				zzsr,
+				ver,
+				khbm,
+				khmc  
+		FROM 	T_CWSJ_DETAIL 
+		WHERE gs = #{gs} AND sjid = #{sjid}
+    </select>
+    
+     <select id="offsetFinancialReceipts" parameterType="java.util.Map" statementType="CALLABLE">
+		<![CDATA[
+		    {   
+			call udt_cwsj_ch_v2(
+			#{sjhao,mode=IN,jdbcType=INTEGER}, 
+			#{gs,mode=IN,jdbcType=VARCHAR},
+			#{SJch_why,mode=IN,jdbcType=VARCHAR}, 
+			#{chuna,mode=IN,jdbcType=VARCHAR},
+			#{sjhao2,mode=IN,jdbcType=INTEGER}, 
+			#{retn,mode=OUT,jdbcType=INTEGER} )
+			}
+		]]>
+	</select>
+</mapper>

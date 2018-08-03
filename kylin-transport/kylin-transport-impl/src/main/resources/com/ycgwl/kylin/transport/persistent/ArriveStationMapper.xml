@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.ArriveStationMapper">
+	<update id="updateFenLiKuCun">
+		UPDATE t_fenlikucun SET 
+		jianshu = jianshu + #{bundleReceipt.jianshu} ,
+		tiji = tiji + #{bundleReceipt.tiji} ,
+		zhl = zhl+ #{bundleReceipt.zhl} ,
+		dhsj = #{dhsj},
+		chxh = #{bundleReceipt.chxh},
+		ZHCHRQ = #{bundleReceipt.zhchrq},
+		ziti = #{bundleReceipt.ziti},
+		itype = #{bundleReceipt.iType},
+		auto_arrive =#{bundleReceipt.autoArrive}
+		WHERE
+		ydbhid = #{bundleReceipt.ydbhid}
+		AND gs=#{gs}
+		AND ydxzh=#{bundleReceipt.ydxzh}
+	</update>
+	<update id="updateFenLiKuCunByXuhao">
+		UPDATE t_fenlikucun SET 
+		jianshu = jianshu + #{bundleReceipt.jianshu},
+		tiji = tiji + #{bundleReceipt.tiji} ,
+		zhl = zhl+ #{bundleReceipt.zhl} ,
+		chxh = #{bundleReceipt.chxh},
+		ZHCHRQ = #{bundleReceipt.zhchrq},
+		ziti = #{bundleReceipt.ziti},
+		itype = #{bundleReceipt.iType},
+		dhsj = #{dhsj},
+		auto_arrive = #{bundleReceipt.autoArrive} 
+		WHERE xuhao = #{bundleReceipt.xuhao}
+	</update>
+	<insert id="insertTFenLiKuCun">
+		INSERT INTO t_fenlikucun (ydbhid,ydxzh,jianshu,pinming,tiji,zhl,beizhu,xh,shhrmch,shhrlxdh,fazhan,daozhan,gs,ckbh,dhsj,chxh,
+		ZHCHRQ,MuDiZhan,auto_arrive,itype,xuhao) 
+		VALUES (
+		#{bundleReceipt.ydbhid},#{bundleReceipt.ydxzh},#{bundleReceipt.jianshu},
+		#{bundleReceipt.pinming},#{bundleReceipt.tiji} ,#{bundleReceipt.zhl} ,#{bundleReceipt.beizhu},
+		#{bundleReceipt.xh},#{order.shhrmch},#{order.shhrlxdh},
+		#{order.fazhan},#{order.daozhan},#{gs},#{ckbh},#{dhsj},#{bundleReceipt.chxh},
+		#{bundleReceipt.zhchrq},#{order.daozhan},#{bundleReceipt.autoArrive},
+		#{bundleReceipt.iType},#{bundleReceipt.xuhao}
+		)
+	</insert>
+	
+	<select id="queryFenlikucunByXuhaos" resultType="com.ycgwl.kylin.transport.entity.FenliKucunEntity">
+		select * from t_fenlikucun where xuhao in
+		<foreach collection="xuhaos" item="xuhao" open="("
+			separator="," close=")">
+			#{xuhao}
+		</foreach>
+	</select>
+	
+</mapper>

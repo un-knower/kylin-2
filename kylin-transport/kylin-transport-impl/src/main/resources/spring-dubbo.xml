@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<description>Spring dubbo service configuration</description>
+
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="${dubbo.server.name}" logger="slf4j" />
+
+	<!-- 使用zookeeper广播注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper" client="curator" address="${dubbo.server.registry.address}" timeout="6000000"/>
+	<dubbo:provider timeout="6000000" retries="0" />
+	<!-- 远程服务调用超时时间(毫秒) -->
+	<dubbo:consumer timeout="6000000" retries="0" check="false"/>
+
+	<!-- 用dubbo协议在20880端口暴露服务, 将访问日志输出到当前应用的slf4j日志： -->
+	<dubbo:protocol name="dubbo" port="${dubbo.server.protocol.port}" accesslog="true" charset="UTF-8"/>
+
+	<!-- 
+	<import resource="classpath*:dubbo-reference-schedule.xml" />
+	<import resource="classpath*:dubbo-reference-mapping.xml" />
+	<import resource="classpath*:dubbo-reference-register.xml" />
+	<import resource="classpath*:dubbo-reference-base.xml" />
+	<import resource="classpath*:dubbo-reference-user.xml" />
+ 	-->
+
+	<!-- 声明需要暴露的服务接口  -->
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.ITransportOrderService" ref="kylin.transport.dubbo.local.transportOrderService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.TransportOrderDetailService" ref="kylin.transport.dubbo.local.transportOrderDetailService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.BundleCostService" ref="kylin.transport.dubbo.local.bundleCostService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.BundleReceiptService" ref="kylin.transport.dubbo.local.bundleReceiptService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.AdjunctSomethingService" ref="kylin.transport.dubbo.local.adjunctSomethingService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.ITransportSignRecordService" ref="kylin.transport.dubbo.local.transportSignRecordService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.FinanceReceiveMoneyService" ref="kylin.transport.dubbo.local.financeReceiveMoneyService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.UndoLoadingService" ref="kylin.transport.dubbo.local.undoLoadingService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.IExceptionLogService" ref="kylin.transport.dubbo.local.exceptionLogService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.ITransportOrderGoodExceptionService" ref="kylin.transport.dubbo.local.transportOrderGoodExceptionService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.ITransportOrderEditService" ref="kylin.transport.dubbo.local.transportOrderEditService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.IGoodArriveService" ref="kylin.transport.dubbo.local.goodArriveService" retries="0" version="1.0.0"/>
+	
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.IBundleArriveService" ref="kylin.transport.dubbo.local.bundleArriveService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.IFinancialReceiptsService" ref="kylin.transport.dubbo.local.financialReceiptsService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.IDeliveryOperateService" ref="kylin.transport.dubbo.local.deliveryOperateService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.ITransportCarOutService" ref="kylin.transport.dubbo.local.transportCarOutService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.TransportWaybillService" ref="kylin.transport.dubbo.local.transportWaybillService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.GeneralInfoService" ref="kylin.transport.dubbo.local.generalInfoService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.ReportService" ref="kylin.transport.dubbo.local.reportService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.report.service.api.ReportLazyService" ref="kylin.transport.dubbo.local.reportLazyService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.ArriveStationService" ref="kylin.transport.dubbo.local.arriveStationService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.ISendMessageLogService" ref="kylin.transport.dubbo.local.sendMessageLogService" retries="0" version="1.0.0"/>
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.CustomerService" ref="kylin.transport.dubbo.local.customerServiceImpl" retries="0" version="1.0.0"/>
+	<!--2018年05月16号新增客户价格service  -->
+	<dubbo:service interface="com.ycgwl.kylin.transport.service.api.CustomerPriceService" ref="kylin.transport.dubbo.local.customerPriceService" retries="0" version="1.0.0"/>
+    
+	
+</beans>

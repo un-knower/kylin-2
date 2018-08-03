@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.BundleCostMapper"> 
+
+	<resultMap id="bundleCostTopic" type="com.ycgwl.kylin.transport.entity.BundleCostTopic">
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="i_type" property="iType" jdbcType="INTEGER" />
+		<result column="INS_NO" property="insNo" jdbcType="VARCHAR" />
+		<result column="CREATE_GS" property="createGs" jdbcType="VARCHAR" />
+		<result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+		<result column="CREATE_USERNAME" property="createUsername" jdbcType="VARCHAR" />
+		<result column="RECGENDATE" property="recgendate" jdbcType="TIMESTAMP" />
+		<result column="CXH" property="cxh" jdbcType="VARCHAR" />
+		<result column="DAOZHAN" property="daozhan" jdbcType="VARCHAR" />
+		<result column="FAZHAN" property="fazhan" jdbcType="VARCHAR" />
+		<result column="js_dttm" property="jsDttm" jdbcType="TIMESTAMP" />
+		<result column="js_tag" property="jsTag" jdbcType="VARCHAR" />
+		<result column="js_user" property="jsUser" jdbcType="VARCHAR" />
+		<result column="old_T_COST_ELSE" property="old_T_COST_ELSE" jdbcType="NUMERIC" />
+		<result column="old_T_COST_SALE" property="old_T_COST_SALE" jdbcType="NUMERIC" />
+		<result column="rowkeyflag" property="rowkeyflag" jdbcType="INTEGER" />
+		<result column="T_COST" property="tCost" jdbcType="NUMERIC" />
+		<result column="T_COST_ELSE" property="tCostElse" jdbcType="NUMERIC" />
+		<result column="T_COST_SALE" property="tCostSale" jdbcType="NUMERIC" />
+		<result column="t_cost_sale1" property="tCostSale1" jdbcType="NUMERIC" />
+		<result column="t_cost_sale2" property="tCostSale2" jdbcType="NUMERIC" />
+		<result column="T_INCOME" property="tIncome" jdbcType="NUMERIC" />
+		<result column="WX_GSNAME" property="wxGsname" jdbcType="VARCHAR" />
+		<result column="WX_GSNO" property="wxGsno" jdbcType="VARCHAR" />
+		<result column="wx_id" property="wxId" jdbcType="VARCHAR" />
+		<result column="wx_type" property="wxType" jdbcType="VARCHAR" />
+		<result column="YSFS" property="ysfs" jdbcType="VARCHAR" />
+		<result column="YSHM" property="yshm" jdbcType="VARCHAR" />
+		<result column="ZHCHRQ" property="zhchrq" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="columns_bundle_cost_topic">
+		i_type, INS_NO, CREATE_GS, CREATE_USER, CREATE_USERNAME, RECGENDATE, CXH, DAOZHAN, FAZHAN, js_dttm, js_tag, js_user, old_T_COST_ELSE, old_T_COST_SALE, 
+		rowkeyflag,  T_COST, T_COST_ELSE, T_COST_SALE, t_cost_sale1, t_cost_sale2, T_INCOME, WX_GSNAME, WX_GSNO, wx_id, wx_type, YSFS, YSHM, ZHCHRQ
+	</sql>
+	<sql id="where-bundle_cost_topic">
+		<if test="id != null and id > 0">
+			<![CDATA[ AND H.ID = #{id} ]]>
+		</if>
+		<if test="iType != null and iType > 0">
+			<![CDATA[ AND H.i_type = #{iType} ]]>
+		</if>
+		<if test="insNo != null and insNo != ''">
+			<![CDATA[ AND H.insNo = #{INS_NO} ]]>
+		</if>
+		<if test="createGs != null and createGs != ''">
+			<![CDATA[ AND H.CREATE_GS = #{createGs} ]]>
+		</if>
+		<if test="createUser != null and createUser != ''">
+			<![CDATA[ AND H.CREATE_USER  LIKE '%'+ #{createUser} +'%' ]]>
+		</if>
+		<if test="createUsername != null and createUsername != ''">
+			<![CDATA[ AND H.CREATE_USERNAME  LIKE '%'+ #{createUsername} +'%' ]]>
+		</if>
+		<if test="recgendate != null">
+			<![CDATA[ AND H.RECGENDATE = #{recgendate} ]]>
+		</if>
+		<if test="cxh != null and cxh != ''">
+			<![CDATA[ AND H.CXH = #{cxh} ]]>
+		</if>
+		<if test="daozhan != null and daozhan != ''">
+			<![CDATA[ AND H.DAOZHAN LIKE '%'+ #{daozhan} +'%' ]]>
+		</if>
+		<if test="fazhan != null and fazhan != ''">
+			<![CDATA[ AND H.FAZHAN LIKE '%'+ #{fazhan} +'%' ]]>
+		</if>
+		<if test="jsDttm != null and jsDttm != ''">
+			<![CDATA[ AND H.js_dttm = #{jsDttm} ]]>
+		</if>
+		<if test="jsTag != null and jsTag != ''">
+			<![CDATA[ AND H.js_tag = #{jsTag} ]]>
+		</if>
+		<if test="jsUser != null and jsUser != ''">
+			<![CDATA[ AND H.js_user = #{jsUser} ]]>
+		</if>
+		<if test="old_T_COST_ELSE != null and old_T_COST_ELSE != ''">
+			<![CDATA[ AND H.old_T_COST_ELSE = #{old_T_COST_ELSE} ]]>
+		</if>
+		<if test="old_T_COST_SALE != null and old_T_COST_SALE != ''">
+			<![CDATA[ AND H.old_T_COST_SALE = #{old_T_COST_SALE} ]]>
+		</if>
+		<if test="rowkeyflag != null and rowkeyflag != ''">
+			<![CDATA[ AND H.rowkeyflag = #{rowkeyflag} ]]>
+		</if>
+		<if test="wxGsname != null and wxGsname != ''">
+			<![CDATA[ AND H.WX_GSNAME LIKE '%'+ #{wxGsname} +'%' ]]>
+		</if>
+		<if test="wxGsno != null and wxGsno != ''">
+			<![CDATA[ AND H.WX_GSNO = #{wxGsno} ]]>
+		</if>
+		<if test="wxId != null and wxId != ''">
+			<![CDATA[ AND H.wx_id = #{wxId} ]]>
+		</if>
+		<if test="wxType != null and wxType != ''">
+			<![CDATA[ AND H.wx_type = #{wxType} ]]>
+		</if>
+		<if test="ysfs != null and ysfs != ''">
+			<![CDATA[ AND H.YSFS = #{ysfs} ]]>
+		</if>
+		<if test="yshm != null and yshm != ''">
+			<![CDATA[ AND H.YSHM = #{yshm} ]]>
+		</if>
+		<if test="zhchrq != null and zhchrq != ''">
+			<![CDATA[ AND H.ZHCHRQ <= #{zhchrq} ]]>
+		</if>
+	</sql>
+	
+	<resultMap id="bundleCostDetail" type="com.ycgwl.kylin.transport.entity.BundleCostDetail">
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="i_type" property="iType" jdbcType="INTEGER" />
+		<result column="INS_NO" property="insNo" jdbcType="VARCHAR" />
+		<result column="INS_XH" property="insXh" jdbcType="INTEGER" />
+		<result column="YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+		<result column="YDXZH" property="ydxzh" jdbcType="INTEGER" />
+		<result column="D_COST" property="dCost" jdbcType="NUMERIC" />
+		<result column="D_INCOME" property="dIncome" jdbcType="NUMERIC" />
+		<result column="T_COST_SALE" property="tCostElse" jdbcType="NUMERIC" />
+		<result column="T_COST_ELSE" property="tCostSale" jdbcType="NUMERIC" />
+		<result column="FAZHAN" property="fazhan" jdbcType="VARCHAR" />
+		<result column="DAOZHAN" property="daozhan" jdbcType="VARCHAR" />
+		<result column="PINGMING" property="pingming" jdbcType="VARCHAR" />
+		<result column="JIANSHU" property="jianshu" jdbcType="INTEGER" />
+		<result column="TIJI" property="tiji" jdbcType="NUMERIC" />
+		<result column="ZHL" property="zhl" jdbcType="NUMERIC" />
+		<result column="xuhao" property="xuhao" jdbcType="INTEGER" />
+		<result column="drecgendate" property="drecgendate" jdbcType="TIMESTAMP" />
+		<result column="fenlifee1" property="fenlifee1" jdbcType="NUMERIC" />
+		<result column="fenlifee2" property="fenlifee2" jdbcType="NUMERIC" />
+		<result column="js_dttm" property="jsDttm" jdbcType="TIMESTAMP" />
+		<result column="js_tag" property="jsTag" jdbcType="VARCHAR" />
+		<result column="YSFS" property="ysfs" jdbcType="VARCHAR" />
+		<result column="YSHM" property="yshm" jdbcType="VARCHAR" />
+		<result column="ZHCHRQ" property="zhchrq" jdbcType="TIMESTAMP" />
+		<result column="zhongzhuanfee" property="zhongzhuanfee" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="columns_bundle_cost_detail">
+		i_type, INS_NO, INS_XH, YDBHID, YDXZH, D_COST, D_INCOME, T_COST_SALE, T_COST_ELSE, FAZHAN, DAOZHAN, PINGMING, JIANSHU, TIJI, ZHL, 
+		xuhao,  drecgendate, fenlifee1, fenlifee2, js_dttm, js_tag, YSFS, YSHM, ZHCHRQ, zhongzhuanfee
+	</sql>
+	<!-- 
+	<resultMap id="bundleCost" type="com.ycgwl.kylin.transport.entity.BundleCostTopic" extends="bundleCostTopic">
+		<collection property="details" ofType="com.ycgwl.kylin.transport.entity.BundleCostDetail">
+			<id column="D_ID" property="id" jdbcType="INTEGER"/>
+			<result column="D_i_type" property="iType" jdbcType="INTEGER" />
+			<result column="D_INS_NO" property="insNo" jdbcType="VARCHAR" />
+			<result column="D_INS_XH" property="insXh" jdbcType="INTEGER" />
+			<result column="D_YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+			<result column="D_YDXZH" property="ydxzh" jdbcType="INTEGER" />
+			<result column="D_D_COST" property="dCost" jdbcType="NUMERIC" />
+			<result column="D_D_INCOME" property="dIncome" jdbcType="NUMERIC" />
+			<result column="D_T_COST_SALE" property="tCostElse" jdbcType="NUMERIC" />
+			<result column="D_T_COST_ELSE" property="tCostSale" jdbcType="NUMERIC" />
+			<result column="D_FAZHAN" property="fazhan" jdbcType="VARCHAR" />
+			<result column="D_DAOZHAN" property="daozhan" jdbcType="VARCHAR" />
+			<result column="D_PINGMING" property="pingming" jdbcType="VARCHAR" />
+			<result column="D_JIANSHU" property="jianshu" jdbcType="INTEGER" />
+			<result column="D_TIJI" property="tiji" jdbcType="NUMERIC" />
+			<result column="D_ZHL" property="zhl" jdbcType="NUMERIC" />
+			<result column="D_xuhao" property="xuhao" jdbcType="INTEGER" />
+			<result column="D_drecgendate" property="drecgendate" jdbcType="TIMESTAMP" />
+			<result column="D_fenlifee1" property="fenlifee1" jdbcType="NUMERIC" />
+			<result column="D_fenlifee2" property="fenlifee2" jdbcType="NUMERIC" />
+			<result column="D_js_dttm" property="jsDttm" jdbcType="TIMESTAMP" />
+			<result column="D_js_tag" property="jsTag" jdbcType="VARCHAR" />
+			<result column="D_YSFS" property="ysfs" jdbcType="VARCHAR" />
+			<result column="D_YSHM" property="yshm" jdbcType="VARCHAR" />
+			<result column="D_ZHCHRQ" property="zhchrq" jdbcType="TIMESTAMP" />
+			<result column="D_zhongzhuanfee" property="zhongzhuanfee" jdbcType="NUMERIC" />
+		</collection>
+	</resultMap>
+ 	-->
+
+	<insert id="insertCostTopic" parameterType="com.ycgwl.kylin.transport.entity.BundleCostTopic">
+		INSERT INTO T_INCOME_COST_H (
+			<include refid="columns_bundle_cost_topic"/>
+		) VALUES (
+			#{iType}, #{insNo}, #{createGs}, #{createUser}, #{createUsername}, #{recgendate}, #{cxh}, #{daozhan}, #{fazhan}, #{jsDttm}, #{jsTag}, #{jsUser}, 
+			#{old_T_COST_ELSE}, #{old_T_COST_SALE}, #{rowkeyflag}, #{tCost}, #{tCostElse}, #{tCostSale}, #{tCostSale1}, #{tCostSale2}, #{tIncome}, #{wxGsname}, 
+			#{wxGsno}, #{wxId}, #{wxType}, #{ysfs}, #{yshm}, #{zhchrq}
+		)
+	</insert>
+	<update id="updateCostTopicByID" parameterType="com.ycgwl.kylin.transport.entity.BundleCostTopic">
+		UPDATE T_INCOME_COST_H
+		<set>
+			<if test="iType != null">i_type = #{iType},</if>
+			<if test="createGs != null">CREATE_GS = #{createGs},</if>
+			<if test="createUser != null">CREATE_USER = #{createUser},</if>
+			<if test="createUsername != null">CREATE_USERNAME = #{createUsername},</if>
+			<if test="recgendate != null">RECGENDATE = #{recgendate},</if>
+			<if test="cxh != null">CXH = #{cxh},</if>
+			<if test="daozhan != null">DAOZHAN = #{daozhan},</if>
+			<if test="fazhan != null">FAZHAN = #{fazhan},</if>
+			<if test="jsDttm != null">js_dttm = #{jsDttm},</if>
+			<if test="jsTag != null">js_tag = #{jsTag},</if>
+			<if test="jsUser != null">js_user = #{jsUser},</if>
+			<if test="old_T_COST_ELSE != null">old_T_COST_ELSE = #{old_T_COST_ELSE},</if>
+			<if test="old_T_COST_SALE != null">old_T_COST_SALE = #{old_T_COST_SALE},</if>
+			<if test="rowkeyflag != null">rowkeyflag = #{rowkeyflag},</if>
+			<if test="wxGsname != null">WX_GSNAME = #{wxGsname},</if>
+			<if test="wxGsno != null">WX_GSNO = #{wxGsno},</if>
+			<if test="wxId != null">wx_id = #{wxId},</if>
+			<if test="wxType != null">wx_type = #{wxType},</if>
+			<if test="ysfs != null">YSFS = #{ysfs},</if>
+			<if test="yshm != null">YSHM = #{yshm},</if>
+			<if test="zhchrq != null">ZHCHRQ = #{zhchrq},</if>
+			<if test="tCost != null">T_COST = #{tCost},</if>
+			<if test="tCostElse != null">T_COST_ELSE = #{tCostElse},</if>
+			<if test="tCostSale != null">T_COST_SALE = #{tCostSale},</if>
+			<if test="tCostSale1 != null">t_cost_sale1 = #{tCostSale1},</if>
+			<if test="tCostSale2 != null">t_cost_sale2 = #{tCostSale2},</if>
+			<if test="tIncome != null">T_INCOME = #{tIncome},</if>
+		</set>
+		<where>
+			ID = #{id}
+		</where>
+	</update>
+	<insert id="insertCostDetail" parameterType="com.ycgwl.kylin.transport.entity.BundleCostDetail">
+		INSERT INTO T_INCOME_COST_D (
+			<include refid="columns_bundle_cost_detail"/>
+		) VALUES (
+			#{iType}, #{insNo}, #{insXh}, #{ydbhid}, #{ydxzh}, #{dCost}, #{dIncome}, #{tCostElse}, #{tCostSale}, #{fazhan}, #{daozhan}, #{pingming}, 
+			#{jianshu}, #{tiji}, #{zhl}, #{xuhao}, #{drecgendate}, #{fenlifee1}, #{fenlifee2}, #{jsDttm}, #{jsTag}, #{ysfs}, 
+			#{yshm}, #{zhchrq}, #{zhongzhuanfee}
+		)
+	</insert>
+	<insert id="batchInsertCostDetail" parameterType="java.util.List">
+		INSERT INTO T_INCOME_COST_D (
+			<include refid="columns_bundle_cost_detail"/>
+		) 
+		VALUES
+		<foreach collection="list" item="d" index="index" separator=",">
+            (
+			#{d.iType}, #{d.insNo}, #{d.insXh}, #{d.ydbhid}, #{d.ydxzh}, #{d.dCost}, #{d.dIncome}, #{d.tCostElse}, #{d.tCostSale}, #{d.fazhan}, #{d.daozhan}, #{d.pingming}, 
+			#{d.jianshu}, #{d.tiji}, #{d.zhl}, #{d.xuhao}, #{d.drecgendate}, #{d.fenlifee1}, #{d.fenlifee2}, #{d.jsDttm}, #{d.jsTag}, #{d.ysfs}, 
+			#{d.yshm}, #{d.zhchrq}, #{d.zhongzhuanfee}
+			)
+        </foreach>
+	</insert>
+	
+	<update id="updateCostDetailByID" parameterType="com.ycgwl.kylin.transport.entity.BundleCostDetail">
+		UPDATE T_INCOME_COST_D
+		<set>
+			<if test="iType != null">i_type = #{iType},</if>
+			<if test="recgendate != null">RECGENDATE = #{recgendate},</if>
+			<if test="daozhan != null">DAOZHAN = #{daozhan},</if>
+			<if test="fazhan != null">FAZHAN = #{fazhan},</if>
+			<if test="pingming != null">PINGMING = #{pingming},</if>
+			<if test="jianshu != null">JIANSHU = #{jianshu},</if>
+			<if test="tiji != null">TIJI = #{tiji},</if>
+			<if test="zhl != null">ZHL = #{zhl},</if>
+			<if test="tCost != null">T_COST = #{tCost},</if>
+			<if test="tCostElse != null">T_COST_ELSE = #{tCostElse},</if>
+			<if test="tCostSale != null">T_COST_SALE = #{tCostSale},</if>
+			<if test="tIncome != null">T_INCOME = #{tIncome},</if>
+			<if test="xuhao != null">xuhao = #{xuhao},</if>
+			<if test="drecgendate != null">drecgendate = #{drecgendate},</if>
+			<if test="fenlifee1 != null">fenlifee1 = #{fenlifee1},</if>
+			<if test="fenlifee2 != null">fenlifee2 = #{fenlifee2},</if>
+			<if test="jsTag != null">js_tag = #{jsTag},</if>
+			<if test="jsDttm != null">js_dttm = #{jsDttm},</if>
+			<if test="ysfs != null">YSFS = #{ysfs},</if>
+			<if test="yshm != null">YSHM = #{yshm},</if>
+			<if test="zhchrq != null">ZHCHRQ = #{zhchrq},</if>
+			<if test="zhongzhuanfee != null">zhongzhuanfee = #{zhongzhuanfee},</if>
+		</set>
+		<where>
+			ID = #{id}
+		</where>
+	</update>
+	
+	<select id="getBundleCostTopic" resultMap="bundleCostTopic" parameterType="java.lang.String">
+		SELECT 
+			H.*
+		FROM 
+			T_INCOME_COST_H H
+		WHERE 
+			H.INS_NO = #{insNo};
+	</select>
+	<select id="listBundleCostTopic" resultMap="bundleCostTopic" parameterType="com.ycgwl.kylin.transport.entity.BundleCostTopic">
+		SELECT 
+			H.*
+		FROM 
+			T_INCOME_COST_H H
+		WHERE 
+			1 = 1
+		<include refid="where-bundle_cost_topic"/>	
+	</select>
+	<select id="getBundleCostDetail" resultMap="bundleCostDetail" parameterType="java.lang.Integer">
+		SELECT 
+			D.*
+		FROM 
+			T_INCOME_COST_D D
+		WHERE 
+			D.ID = #{id};
+	</select>
+	<select id="listBundleCostDetail" resultMap="bundleCostDetail" parameterType="java.lang.String">
+		SELECT 
+			D.*
+		FROM 
+			T_INCOME_COST_D D
+		WHERE 
+			D.INS_NO = #{insNo}
+	</select>
+</mapper>

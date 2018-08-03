@@ -1,0 +1,220 @@
+/*
+created by yl in 2018/05/23
+回单开发
+*/
+
+@CHARSET "UTF-8";
+
+.clearAfter{zoom: 1;}
+.clearAfter:after{content:"."; display:block; height:0; visibility:hidden; clear:both;}
+[v-cloak]{display:none;}
+.breadcrumb{margin: 15px; display: block;visibility: visible !important;}
+.breadcrumb span{display:none;}
+.content-wrap{width:60%;margin:20px auto 0;}
+#demo th, #demo td{text-align:center;font-size:16px;word-wrap: break-word;}
+.layui-table .receipt-input{padding:9px 0;}
+.content-wrap .layui-btn{padding:0 9px;height:25px;line-height:25px;}
+.reciept-img img{width:100px;height:100px;cursor:pointer;}
+.layui-table tbody tr:hover{background-color:#fff !important;}
+.waybillNum{min-width:100px;max-width:150px;height:30px;text-align:center;background-color:#fff;}
+.shadow-input{ -moz-box-shadow:0px -1px 0px 1px rgba(0,0,0,0.1) inset,   /*上*/
+				                0px 1px 0px 1px rgba(0,0,0,0.1) inset,   /*下*/
+				                -1px 0px 0px 1px rgba(0,0,0,0.1) inset,  /*左*/
+				                1px 0px 0px 1px rgba(0,0,0,0.1) inset;   /*右*/     /*firefox*/
+			   -webkit-box-shadow:0px -1px 1px 0px rgba(0,0,0,0.1) inset,   /*上*/
+				                0px 1px 0px 1px rgba(0,0,0,0.1) inset,   /*下*/
+				                -1px 0px 0px 1px rgba(0,0,0,0.1) inset,  /*左*/
+				                1px 0px 0px 1px rgba(0,0,0,0.1) inset;   /*右*/     /*webkit*/
+			   box-shadow:0px -1px 0px 1px rgba(0,0,0,0.1) inset,   /*上*/
+				                0px 1px 0px 1px rgba(0,0,0,0.1) inset,   /*下*/
+				                -1px 0px 0px 1px rgba(0,0,0,0.1) inset,  /*左*/
+				                1px 0px 0px 1px rgba(0,0,0,0.1) inset;   /*右*/ }	
+.submit-data{float:right;margin-right:10px;}
+.sure-btn{display:none;}
+.alter-btn, .sure-btn{color:#0099ff;cursor:pointer;}
+.hint-info{font-size:16px;font-weight:600;}
+.receipt-qualified{color:#5FB878;}
+.checkSuccess{color:#ff0000;}
+.submit-line button[disabled]{background-color:#ccc;cursor:not-allowed;}
+.bar-process{background-color:rgba(0,0,0,0.5);}
+/* .loading-model input[disabled]{cursor:not-allowed;} */
+
+
+
+/*回单查看页面*/
+.wrap-images{padding:20px;}
+.items-list{marging:0 auto;}
+.items-list li{width:30%;height:275px;margin-right:5%;margin-bottom:20px;}
+.items-list li:nth-child(3n){margin-right:0;}
+.item-img{width:100%;height:245px;}
+.item-img img{width:100%;height:100%;}
+.item-name{width:100%;text-align:center;font-size:16px;line-height:30px;}
+
+
+
+.layer-alert-img{width:100%;height:100%;display:flex;disaplay:-webkit-flex;align-items:center;justify-content:center;text-align:center;}
+.layui-layer-setwin{z-index:5;}
+/*图片查看器*/
+
+.content-imgs{width:100%;height:100%;position:fixed;top:0;background-color:rgba(0,0,0,0.4);}
+.cont-img{width:90%;height:90%;position:relative;top: 50%;left: 50%;background-color:#fff;
+	 -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);}
+.cont-img-close{position:absolute;top:-15px;right:-15px;width: 30px;height: 30px;z-index: 5;}
+.oper{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    height: 38px;
+    z-index: 4;
+}
+.oper span{
+	width: 22px;
+    height: 38px;
+    background-color:#999;
+}
+.oper span:hover{opacity:0.8;}
+.oper .prev{
+	float:left;
+	margin-left: 20px;
+}
+.oper .next{
+	float:right;
+	margin-right: 20px;
+}
+.oper .prev.active i, .oper .next.active i{
+	display: inline-block;
+}
+
+.mask-layer-container {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    padding:10px;
+    position:relative;
+    z-index:5;
+}
+.tool-bar{
+    width: 100%;
+    height: 50px;
+    padding:10px 0;
+    text-align: center;
+    position:absolute;
+    bottom:20px;
+    z-index:4;
+}
+.layer-alert-img:hover .tool-bar, .cont-img:hover .tool-bar, .cont-img:hover .oper{z-index:6;}
+.toolct{
+    display: inline-block;
+    height: 30px;
+    background-color: #6f6965;
+    padding: 5px 14px;
+    box-sizing: border-box;
+    border-radius: 6px;
+}
+.toolct span{
+    margin-right: 20px;
+}
+.toolct span:last-child{
+    margin-right: 0px;
+}
+.oper i, .toolct i{
+	display: inline-block;
+	cursor: pointer;
+}
+.icon_tool-bigger{
+    width: 20px;
+    height: 19px;
+	background-image: url('./../../common/images/icon/bigger.png');
+}
+.icon_tool-smaller{
+    width: 20px;
+    height: 19px;
+	background-image: url('./../../common/images/icon/smaller.png');
+}
+.icon_tool-rotate{
+    width: 17px;
+    height: 20px;
+	background-image: url('./../../common/images/icon/rotate.png');
+}
+.icon_tool-prev{
+    width: 22px;
+    height: 38px;
+	background-image: url('./../../common/images/icon/prev.png');
+}
+.icon_tool-next{
+    width: 22px;
+    height: 38px;
+	background-image: url('./../../common/images/icon/next.png');
+}
+.mask-layer-imgbox {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.mask-layer-imgbox > p {
+    position: absolute;
+    cursor: move;
+    transform-origin: center;
+    width: 100%;
+    height: 100%;
+    text-align:center;
+    padding: 0;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    cursor: move;
+    left: 0;
+    top: 0;
+}
+
+.mask-layer-imgboxp > p > img {
+    display: inline-block;
+    vertical-align: middle;
+    cursor: move;
+}
+
+/*按钮样式*/
+.btn-default-styles {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    background: #8C85E6;
+    color: #fff;
+    border: solid 1px #8C85E6;
+    border-radius: 4px;
+}
+.btn-default-styles:focus {
+    outline: none;
+}
+.btn-default-styles:hover {
+    background: #8078e3;
+    animation: anniu 1s infinite;
+}
+.btn-default-styles:active {
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .2) inset;
+}
+img{
+    cursor: pointer;
+}

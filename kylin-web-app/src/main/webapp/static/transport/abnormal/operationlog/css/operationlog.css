@@ -1,0 +1,31 @@
+@CHARSET "UTF-8";
+.breadcrumb{margin: 15px;display: block;}
+.layui-form-label{width: 130px; margin-bottom: 0px;}
+.layui-input-block{margin-left: 130px;}
+.layui-form-item .layui-inline {margin-bottom: 0px;}
+.layui-table td, .layui-table th{text-align: center; border: 1px solid darkgrey;}
+.toArrive,.layui-input-block {margin-top: 5px;}
+.layui-table thead tr, .layui-table-fixed-l tr, .layui-table-header, .layui-table-mend, .layui-table-patch, .layui-table-tool{
+	background-color: #DDECFF;
+}
+
+.check-form{display: inline-block;}
+.btn-group{display: inlie-block; float: right;}
+.date-select{float: left; margin-left: 0px;}
+.date-copy{line-height: 38px; padding: 0px 9px;}
+#select-form{display: inline-block;}
+.operation-content{text-align: left !important;}
+
+@media screen and (min-width: 1400px){
+	.layui-form-label,.date-copy,.btn-group{margin-top: 5px;}
+}
+@media screen and (max-width: 1400px){
+	*{font-size: 12px !important;}
+	.layui-input, .layui-select, .layui-textarea{height: 30px;}
+	.layui-form-label{width: 82px;}
+	.waybillNum{width: 114px;}
+	.layui-btn{height: 30px; line-height: 30px;}
+	.toArrive{margin-top: -1px;}
+	.layui-table td, .layui-table th{padding: 5px 10px;}
+	.breadcrumb {margin: 6px;}
+}

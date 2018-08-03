@@ -1,0 +1,39 @@
+/*
+created by lhz on 2018/1/11
+*/
+[v-cloak]{
+	display: none;
+}
+ /*layui��ʽ����*/
+ .breadcrumb {
+    margin: 15px;
+    display: block;
+    visibility: visible !important;
+}
+.layui-form-label{
+	width: 100px;
+	float: left;
+}
+.layui-input-block{
+	margin-left: 0px;
+	float: left;  
+}
+.layui-form-radio{font-size: inherit;}
+.layui-table-view{
+	width: 90%;
+    margin-left: 5%;
+}
+.layui-table-page {
+    height: 44px;
+}
+@media screen and (max-width: 1400px){
+	*{font-size: 12px;} 
+	.layui-input, .layui-select, .layui-textarea{margin-top: 5px;height: 30px;}
+	.layui-btn{height: 30px; line-height: 30px;}
+	.toArrive{margin-top: -1px;}
+	.layui-table td, .layui-table th{padding: 5px 10px;}
+	.breadcrumb {margin: 6px;}
+	.layui-form-item {margin-bottom: 0px;}
+}
+.f_l{float:left;}
+.f_r{float:right;}

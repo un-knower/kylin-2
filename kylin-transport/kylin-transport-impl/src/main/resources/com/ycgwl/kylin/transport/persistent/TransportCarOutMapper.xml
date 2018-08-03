@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.TransportCarOutMapper"> 
+	 <resultMap type="com.ycgwl.kylin.transport.entity.TransportCarOut" id="transportCarOut">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="gsid" property="gsid" jdbcType="VARCHAR" />
+        <result column="gs" property="gs" jdbcType="VARCHAR" />
+        <result column="yshm" property="yshm" jdbcType="VARCHAR" />
+        <result column="ywlx" property="ywlx" jdbcType="VARCHAR" />
+        <result column="fhdw" property="fhdw" jdbcType="VARCHAR" />
+        <result column="fhlxr" property="fhlxr" jdbcType="VARCHAR" />
+        <result column="shdw" property="shdw" jdbcType="VARCHAR" />
+        <result column="shlxr" property="shlxr" jdbcType="VARCHAR" />
+        <result column="shdz" property="shdz" jdbcType="VARCHAR" />
+        <result column="shdh" property="shdh" jdbcType="VARCHAR" />
+        <result column="dzy" property="dzy" jdbcType="VARCHAR" />
+        <result column="dzygrid" property="dzyGrid" jdbcType="VARCHAR" />
+        <result column="kdtime" property="kdTime" jdbcType="TIMESTAMP" />
+        <result column="jhshtime" property="jhshTime" jdbcType="TIMESTAMP" />
+        <result column="thtime" property="thTime" jdbcType="TIMESTAMP" />
+        <result column="zxbz" property="zxbz" jdbcType="VARCHAR" />
+        <result column="cgyqm" property="cgyqm" jdbcType="VARCHAR" />
+        <result column="comm" property="comm" jdbcType="VARCHAR" />
+        <result column="khqs" property="khqs" jdbcType="VARCHAR" />
+        <result column="khqstime" property="khqsTime" jdbcType="TIMESTAMP" />
+        <result column="pcdd" property="pcdd" jdbcType="VARCHAR" />
+        <result column="pcddgrid" property="pcddGrid" jdbcType="VARCHAR" />
+        <result column="pcpctime" property="pcpcTime" jdbcType="TIMESTAMP" />
+        <result column="pcqsd" property="pcqsd" jdbcType="VARCHAR" />
+        <result column="pcshd" property="pcshd" jdbcType="VARCHAR" />
+        <result column="pccomm" property="pcComm" jdbcType="VARCHAR" />
+        <result column="sjcomm" property="sjComm" jdbcType="VARCHAR" />
+        <result column="tjhsr" property="tjhsr" jdbcType="VARCHAR" />
+        <result column="tjhsrgrid" property="tjhsrGrid" jdbcType="VARCHAR" />
+        <result column="tjcomm" property="tjComm" jdbcType="VARCHAR" />
+        <result column="tjtime" property="tjTime" jdbcType="TIMESTAMP" />
+        <result column="pcyes" property="pcyes" jdbcType="INTEGER" />
+        <result column="fhdh" property="fhdh" jdbcType="VARCHAR" />
+        <result column="inout" property="inout" jdbcType="INTEGER" />
+        <result column="shjhm" property="shjhm" jdbcType="INTEGER" />
+        <result column="ydbhid" property="ydbhid" jdbcType="VARCHAR" />
+        <result column="rowguid" property="rowguid" jdbcType="VARCHAR" />
+        <result column="dzshhd" property="dzshhd" jdbcType="VARCHAR" />
+        <result column="pcshlc" property="pcshlc" jdbcType="INTEGER" />
+        <result column="Min" property="min" jdbcType="INTEGER" />
+        <result column="Max" property="max" jdbcType="INTEGER" />
+        <result column="Mdd" property="mdd" jdbcType="VARCHAR" />
+        <result column="tangci" property="tangci" jdbcType="INTEGER" />
+        <result column="pcmdd" property="pcmdd" jdbcType="VARCHAR" />
+        <result column="khobject" property="khObject" jdbcType="VARCHAR" />
+        <result column="sys_name" property="sysName" jdbcType="VARCHAR" />
+    </resultMap>
+    
+     <resultMap type="com.ycgwl.kylin.transport.entity.TransportCarOutGoodsDetail" id="transportCarOutGoodsDetail">
+        <id column="detailid" property="detailId" jdbcType="INTEGER" />
+        <result column="gsid" property="gsid" jdbcType="VARCHAR" />
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="hwmc" property="hwmc" jdbcType="VARCHAR" />
+        <result column="ch" property="ch" jdbcType="VARCHAR" />
+        <result column="js" property="js" jdbcType="INTEGER" />
+        <result column="zl" property="zl" jdbcType="REAL" />
+        <result column="tj" property="tj" jdbcType="REAL" />
+        <result column="fd" property="fd" jdbcType="INTEGER" />
+        <result column="qdxh" property="qdxh" jdbcType="INTEGER" />
+        <result column="ydbhid" property="ydbhid" jdbcType="VARCHAR" />
+        <result column="ydxz" property="ydxz" jdbcType="INTEGER" />
+        <result column="dzshhd" property="dzshhd" jdbcType="VARCHAR" />
+        <result column="rowguid" property="rowguid" jdbcType="VARCHAR" />
+        <result column="duanyunjiegebiao_id" property="duanYunJieGeBiaoId" jdbcType="INTEGER" />
+        <result column="duanyunfei" property="duanYunFei" jdbcType="DECIMAL" />
+        <result column="is_kaiyun" property="isKaiYun" jdbcType="SMALLINT" />
+    </resultMap>
+    
+     <resultMap type="com.ycgwl.kylin.transport.entity.TransportCarOutVehicleDetail" id="transportCarOutVehicleDetail">
+        <id column="detailid" property="detailid" jdbcType="INTEGER" />
+        <result column="gsid" property="gsid" jdbcType="VARCHAR" />
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="clxz" property="clxz" jdbcType="VARCHAR" />
+        <result column="ch" property="ch" jdbcType="VARCHAR" />
+        <result column="cx" property="cx" jdbcType="VARCHAR" />
+        <result column="sj" property="sj" jdbcType="VARCHAR" />
+        <result column="rowguid" property="rowguid" jdbcType="VARCHAR" />
+    </resultMap>
+    
+     <resultMap type="com.ycgwl.kylin.transport.entity.TransportCarOutDetailSecond" id="transportCarOutDetailSecond">
+        <id column="detailid" property="detailid" jdbcType="INTEGER" />
+        <result column="gsid" property="gsid" jdbcType="VARCHAR" />
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="ydhm" property="ydhm" jdbcType="VARCHAR" />
+        <result column="hwmc" property="hwmc" jdbcType="VARCHAR" />
+        <result column="rowguid" property="rowguid" jdbcType="VARCHAR" />
+    </resultMap>
+    
+     <resultMap type="com.ycgwl.kylin.transport.entity.TransportCarOutDetailFourth" id="transportCarOutDetailFourth">
+        <id column="detailid" property="detailid" jdbcType="INTEGER" />
+        <result column="gsid" property="gsid" jdbcType="VARCHAR" />
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="ch" property="ch" jdbcType="VARCHAR" />
+        <result column="cftime" property="cftime" jdbcType="TIMESTAMP" />
+        <result column="cflmb" property="cflmb" jdbcType="INTEGER" />
+        <result column="ddtime" property="ddtime" jdbcType="TIMESTAMP" />
+        <result column="ddlmb" property="ddlmb" jdbcType="INTEGER" />
+        <result column="tzlqf" property="tzlqf" jdbcType="DECIMAL" />
+        <result column="tzfk" property="tzfk" jdbcType="DECIMAL" />
+        <result column="tzwxf" property="tzwxf" jdbcType="DECIMAL" />
+        <result column="jylmb" property="jylmb" jdbcType="INTEGER" />
+        <result column="jyss" property="jyss" jdbcType="REAL" />
+        <result column="jyje" property="jyje" jdbcType="DECIMAL" />
+        <result column="sj" property="sj" jdbcType="VARCHAR" />
+        <result column="rowguid" property="rowguid" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <resultMap type="com.ycgwl.kylin.transport.entity.TransportCarOutDetailFifth" id="transportCarOutDetailFifth">
+        <id column="detailid" property="detailid" jdbcType="INTEGER" />
+        <result column="gsid" property="gsid" jdbcType="VARCHAR" />
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="clxz" property="clxz" jdbcType="VARCHAR" />
+        <result column="ch" property="ch" jdbcType="VARCHAR" />
+        <result column="yfbz" property="yfbz" jdbcType="VARCHAR" />
+        <result column="yfjs" property="yfjs" jdbcType="DECIMAL" />
+        <result column="tc" property="tc" jdbcType="DECIMAL" />
+        <result column="qdfhtime" property="qdfhtime" jdbcType="TIMESTAMP" />
+        <result column="rowguid" property="rowguid" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <parameterMap type="com.ycgwl.kylin.transport.entity.TransportCarOut"
+		id="transportCarOutQueryEntity">
+	</parameterMap>
+	
+	<parameterMap type="com.ycgwl.kylin.transport.entity.TransportCarOutGoodsDetail"
+		id="transportCarOutGoodsDetailQueryEntity">
+	</parameterMap>
+	
+	<parameterMap type="com.ycgwl.kylin.transport.entity.TransportCarOutVehicleDetail"
+		id="transportCarOutVehicleDetailQueryEntity">
+	</parameterMap>
+	
+	<parameterMap type="com.ycgwl.kylin.transport.entity.TransportCarOutDetailSecond"
+		id="transportCarOutDetailSecondQueryEntity">
+	</parameterMap>
+	
+	 <parameterMap type="com.ycgwl.kylin.transport.entity.TransportCarOutDetailFourth"
+		id="transportCarOutDetailFourthQueryEntity">
+	</parameterMap>
+	
+	<parameterMap type="com.ycgwl.kylin.transport.entity.TransportCarOutDetailFifth"
+		id="transportCarOutDetailFifthQueryEntity">
+	</parameterMap>
+	
+	<sql id="columns_transport_carOut_vehicl_detail">
+		gsid, id, clxz, ch, cx, sj
+	</sql>
+	
+	<sql id="columns_transport_carOut_detail_second">
+		gsid, id, ydhm, hwmc
+	</sql>
+	
+	<sql id="columns_transport_carOut_detail_fourth">
+		gsid, id, ch, cftime, cflmb, ddtime, ddlmb, tzlqf, tzfk, tzwxf, jylmb, jyss, jyje, sj
+	</sql>
+	
+	<sql id="columns_transport_carOut_detail_fifth">
+		gsid, id, clxz, ch, yfbz, yfjs, tc, qdfhtime
+	</sql>
+	
+	 <select id="selectTransportCarOutByIdAndGs" resultMap="transportCarOut">
+        SELECT * FROM
+			T_CAR_OUT
+		WHERE
+			gsid = #{gsid}
+		AND id = #{id} 
+    </select>
+    
+    <select id="selectTransportCarOutGoodsDetailByIdAndGs" resultMap="transportCarOutGoodsDetail">
+       SELECT * FROM
+			T_CAR_OUT_DETAIL1
+		WHERE
+			gsid = #{gsid}
+		AND id = #{id}
+    </select>
+    
+    <select id="selectTransportCarOutVehicleDetaillByIdAndGs" resultMap="transportCarOutVehicleDetail">
+      	SELECT * FROM
+			T_CAR_OUT_DETAIL3
+		WHERE
+			gsid = #{gsid}
+		AND id = #{id}
+    </select>
+    
+    <insert id="batchInsertTransportCarOutVehicleDetail" parameterType="java.util.List">
+		INSERT INTO
+		T_CAR_OUT_DETAIL3
+		(
+		<include refid="columns_transport_carOut_vehicl_detail" />
+		)
+		VALUES
+		<foreach collection="list" item="d" index="index" separator=",">
+			(
+			#{d.gsid}, #{d.id},#{d.clxz},#{d.ch},
+			#{d.cx},#{d.sj}
+			)
+		</foreach>
+	</insert>
+	
+	 <insert id="batchInsertTransportCarOutDetailFourth" parameterType="java.util.List">
+		INSERT INTO
+		T_CAR_OUT_DETAIL4
+		(
+		<include refid="columns_transport_carOut_detail_fourth" />
+		)
+		VALUES
+		<foreach collection="list" item="d" index="index" separator=",">
+			(
+			#{d.gsid}, #{d.id},#{d.ch},#{d.cftime},
+			#{d.cflmb},#{d.ddtime},#{d.ddlmb},#{d.tzlqf},
+			#{d.tzfk},#{d.tzwxf},#{d.jylmb},#{d.jyss},
+			#{d.jyje},#{d.sj}
+			)
+		</foreach>
+	</insert>
+	
+	 <insert id="batchInsertTransportCarOutDetailFifth" parameterType="java.util.List">
+		INSERT INTO
+		T_CAR_OUT_DETAIL5
+		(
+		<include refid="columns_transport_carOut_detail_fifth" />
+		)
+		VALUES
+		<foreach collection="list" item="d" index="index" separator=",">
+			(
+			#{d.gsid}, #{d.id},#{d.clxz},#{d.ch},
+			#{d.yfbz},#{d.yfjs},#{d.tc},#{d.qdfhtime}
+			)
+		</foreach>
+	</insert>
+    
+     <update id="updateTransportCarOutByIdAndGs" parameterMap="transportCarOutQueryEntity">
+    	UPDATE T_CAR_OUT
+    	 <trim prefix="set" suffixOverrides=","> 
+			<if test="gsid != null">
+				<![CDATA[ gsid = #{gsid}, ]]>
+			</if>
+			<if test="yshm != null">
+				<![CDATA[ yshm = #{yshm}, ]]>
+			</if>
+			<if test="ywlx != null">
+				<![CDATA[ ywlx = #{ywlx}, ]]>
+			</if>
+			<if test="fhdw != null">
+				<![CDATA[ fhdw = #{fhdw}, ]]>
+			</if>
+			<if test="fhlxr != null">
+				<![CDATA[ fhlxr = #{fhlxr}, ]]>
+			</if>
+			<if test="shdw != null">
+				<![CDATA[ shdw = #{shdw}, ]]>
+			</if>
+			<if test="shlxr != null">
+				<![CDATA[ shlxr = #{shlxr}, ]]>
+			</if>
+			<if test="shdz != null">
+				<![CDATA[ shdz = #{shdz}, ]]>
+			</if>
+			<if test="shdh != null">
+				<![CDATA[ shdh = #{shdh}, ]]>
+			</if>
+			<if test="dzy != null">
+				<![CDATA[ dzy = #{dzy}, ]]>
+			</if>
+			<if test="dzyGrid != null">
+				<![CDATA[ dzygrid = #{dzyGrid}, ]]>
+			</if>
+			<if test="kdTime != null">
+				<![CDATA[ kdtime = #{kdTime}, ]]>
+			</if>
+			<if test="jhshTime != null">
+				<![CDATA[ jhshtime = #{jhshTime}, ]]>
+			</if>
+			<if test="thTime != null">
+				<![CDATA[ thtime = #{thTime}, ]]>
+			</if>
+			<if test="zxbz != null">
+				<![CDATA[ zxbz = #{zxbz}, ]]>
+			</if>
+			<if test="cgyqm != null">
+				<![CDATA[ cgyqm = #{cgyqm}, ]]>
+			</if>
+			<if test="comm != null">
+				<![CDATA[ comm = #{comm}, ]]>
+			</if>
+			<if test="khqs != null">
+				<![CDATA[ khqs = #{khqs}, ]]>
+			</if>
+			<if test="khqsTime != null">
+				<![CDATA[ khqstime = #{khqsTime}, ]]>
+			</if>
+			<if test="pcdd != null">
+				<![CDATA[ pcdd = #{pcdd}, ]]>
+			</if>
+			<if test="pcddGrid != null">
+				<![CDATA[ pcddgrid = #{pcddGrid}, ]]>
+			</if>
+			<if test="pcpcTime != null">
+				<![CDATA[ pcpctime = #{pcpcTime}, ]]>
+			</if>
+			<if test="pcqsd != null">
+				<![CDATA[ pcqsd = #{pcqsd}, ]]>
+			</if>
+			<if test="pcshd != null">
+				<![CDATA[ pcshd = #{pcshd}, ]]>
+			</if>
+			<if test="pcComm != null">
+				<![CDATA[ pccomm = #{pcComm}, ]]>
+			</if>
+				<if test="sjComm != null">
+				<![CDATA[ sjcomm = #{sjComm}, ]]>
+			</if>
+			<if test="tjhsr != null">
+				<![CDATA[ tjhsr = #{tjhsr}, ]]>
+			</if>
+			<if test="tjhsrGrid != null">
+				<![CDATA[ tjhsrgrid = #{tjhsrGrid}, ]]>
+			</if>
+			<if test="tjComm != null">
+				<![CDATA[ tjcomm = #{tjComm}, ]]>
+			</if>
+			<if test="tjTime != null">
+				<![CDATA[ tjtime = #{tjTime}, ]]>
+			</if>
+			<if test="pcyes != null">
+				<![CDATA[ pcyes = #{pcyes}, ]]>
+			</if>
+			<if test="fhdh != null">
+				<![CDATA[ fhdh = #{fhdh}, ]]>
+			</if>
+			<if test="inout != null">
+				<![CDATA[ inout = #{inout}, ]]>
+			</if>
+			<if test="shjhm != null">
+				<![CDATA[ shjhm = #{shjhm}, ]]>
+			</if>
+			<if test="ydbhid != null">
+				<![CDATA[ ydbhid = #{ydbhid}, ]]>
+			</if>
+			<if test="dzshhd != null">
+				<![CDATA[ dzshhd = #{dzshhd}, ]]>
+			</if>
+			<if test="pcshlc != null">
+				<![CDATA[ pcshlc = #{pcshlc}, ]]>
+			</if>
+			<if test="min != null">
+				<![CDATA[ Min = #{min}, ]]>
+			</if>
+			<if test="max != null">
+				<![CDATA[ Max = #{max}, ]]>
+			</if>
+			<if test="mdd != null">
+				<![CDATA[ Mdd = #{mdd}, ]]>
+			</if>
+			<if test="tangci != null">
+				<![CDATA[ tangci = #{tangci}, ]]>
+			</if>
+			<if test="pcmdd != null">
+				<![CDATA[ pcmdd = #{pcmdd}, ]]>
+			</if>
+			<if test="khObject != null">
+				<![CDATA[ khobject = #{khObject}, ]]>
+			</if>
+		 </trim>  
+		WHERE id = #{id} AND gs = #{gs} 
+    </update>
+    
+    <update id="updateTransportCarOutByDetailId" parameterMap="transportCarOutVehicleDetailQueryEntity">
+    	UPDATE T_CAR_OUT_DETAIL3
+    	 <trim prefix="set" suffixOverrides=","> 
+			<if test="gsid != null">
+				<![CDATA[ gsid = #{gsid}, ]]>
+			</if>
+			<if test="id != null">
+				<![CDATA[ id = #{id}, ]]>
+			</if>
+			<if test="clxz != null">
+				<![CDATA[ clxz = #{clxz}, ]]>
+			</if>
+			<if test="ch != null">
+				<![CDATA[ ch = #{ch}, ]]>
+			</if>
+			<if test="cx != null">
+				<![CDATA[ cx = #{cx}, ]]>
+			</if>
+			<if test="sj != null">
+				<![CDATA[ sj = #{sj}, ]]>
+			</if>
+		 </trim>  
+		WHERE detailid = #{detailId}
+    </update>
+    
+     <select id="selectTransportCarOutYdbhidByIdAndGsid" resultType="java.lang.String">
+      	select ydbhid from T_CAR_OUT where gs = #{gs} and id = #{id}
+    </select>
+    
+     <select id="selectDzshhdByYdbhid" resultType="java.lang.String">
+      	SELECT
+			HCZZQD_source.dzshhd
+		FROM
+			HCZZQD_source
+		INNER JOIN hwyd ON HCZZQD_source.ydbhid = hwyd.ydbhid
+		AND HCZZQD_source.fazhan = HCZZQD_source.daozhan
+		AND HCZZQD_source.fazhan != hwyd.fazhan
+		AND HCZZQD_source.daozhan = hwyd.daozhan
+		AND hwyd.ydbhid = #{ydbhid}
+		AND HCZZQD_source.fazhan = #{gs}
+    </select>
+    
+    <select id="selectShlcByYdGs" resultType="java.lang.Long">
+      	select count(*) from sys_shlc_parm_pcdjf2
+  			where gs = #{gs} and mdd = #{mdd}
+    </select>
+    
+    <delete id="deleteTransportCarOutVehicleDetailById">
+    	delete T_CAR_OUT_DETAIL3 where gsid = #{gsid} and id = #{id}
+    </delete>
+    
+    <delete id="deleteTransportCarOutDetailFourthById">
+    	delete T_CAR_OUT_DETAIL4 where gsid = #{gsid} and id = #{id}
+    </delete>
+    
+    <delete id="deleteTransportCarOutDetailFifthById">
+    	delete T_CAR_OUT_DETAIL5 where gsid = #{gsid} and id = #{id}
+    </delete>
+    
+    <select id="selectTransportCarOutDetailSecondByIdAndGs" resultMap="transportCarOutDetailSecond">
+      	SELECT
+			detailid,
+			gsid,
+			id,
+			ydhm,
+			hwmc
+		FROM
+			T_CAR_OUT_DETAIL2
+		WHERE
+			gsid = #{gsid}
+		AND id = #{id}
+    </select>
+    
+     <select id="selectTransportCarOutDetailFourthByIdAndGs" resultMap="transportCarOutDetailFourth">
+      	SELECT * FROM
+			T_CAR_OUT_DETAIL4
+		WHERE
+			gsid = #{gsid}
+		AND id = #{id}
+    </select>
+    
+    <select id="selectTransportCarOutDetailFifthByIdAndGs" resultMap="transportCarOutDetailFifth">
+      	SELECT * FROM
+			T_CAR_OUT_DETAIL5
+		WHERE
+			gsid = #{gsid}
+		AND id = #{id}
+    </select>
+</mapper>

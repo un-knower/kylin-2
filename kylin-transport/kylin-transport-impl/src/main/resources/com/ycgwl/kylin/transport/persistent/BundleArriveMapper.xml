@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.BundleArriveMapper">
+	<select id="excuteCheckfwfsandcar" statementType="CALLABLE">
+		<![CDATA[
+		    {   
+			#{flag,mode=OUT,jdbcType=INTEGER} = call dbo.usp_check_fwfs_car (
+			#{ydbhid,mode=IN,jdbcType=VARCHAR},
+			#{grid,mode=IN,jdbcType=VARCHAR}, 
+			#{message,mode=OUT,jdbcType=VARCHAR} )
+			}
+		]]>
+	</select>
+
+	<!-- 到货装载清单查询 没有运单号条件 -->
+	<select id="findBundleArriveList" parameterType="java.util.HashMap"
+		resultType="com.ycgwl.kylin.transport.entity.BundleArriveEntity">
+		SELECT TOP 500
+			HCZZQD_source.daozhan,
+			convert(varchar(16),HCZZQD_source.fchrq,120) as fchrq,
+			convert(varchar(16),HCZZQD_source.zhchrq,120) as zhchrq,
+			HCZZQD_source.chxh,
+			HCZZQD_source.jianshu,
+			HCZZQD_source.pinming,
+			HWYD.SHHRLXDH AS shhrlxdh,
+			HWYD.SHHRMCH as shhrmch,
+			HWYD.FHDWYB as fhdwyb,
+			HWYD.SHHRYB as shhryb,
+			HCZZQD_source.tiji,
+			HCZZQD_source.zhl,
+			HCZZQD_source.ziti,
+			HCZZQD_source.fazhan,
+			HCZZQD_source.beizhu,
+			HCZZQD_source.ydxzh,
+			HCZZQD_source.xh,
+			HCZZQD_source.xuhao,
+			HCZZQD_source.zhipiao,
+			HCZZQD_source.zhipiao2,
+			HCZZQD_source.YDBHID,
+			HCZZQD_source.hyy,
+			HCZZQD_source.ydzh,
+			HCZZQD_source.yiti,
+			HCZZQD_source.ysfs,
+			HCZZQD_source.grid,
+			convert(varchar(16),HCZZQD_source.lrsj,120) as lrsj,
+			HCZZQD_source.dhgrid,
+			HCZZQD_source.dhsj,
+			HCZZQD_source.fzshhd,
+			HCZZQD_source.dzshhd,
+			HCZZQD_source.is_kaiyun as isKaiyun,
+			HWYD.FHDWYB as fhdwyb,
+			HWYD.is_greenchannel as isGreenChannel,
+			convert(text,HWYD.fhdwmch) as fhdwmch,
+			HWYD.isfd,
+			HWYD.ywlx,
+			HWYD.yshhm,
+			HWYD.ysfs as ysfsHwyd,
+			HWYD.daozhan as daozhanHwyd,
+			HWYD.fazhan as fazhanHwyd,
+			convert(varchar(16),HWYD.fhshj,120) as fhshj,
+			HWYD.pszhsh,
+			HWYD.ydts,
+			HWYD.shhrdzh,
+			HWYD.shhd,
+			HWYD.dzshhd as dzshhdHwyd,
+			HWYD.yxzt as yxztHwyd,
+			HWYDXZ.tbje as tbjeHwydxz,
+			HWYDXZ.jffs as jffsHwydxz,
+			HWYDXZ.jianshu as jianshuHwydxz,
+			HWYD.hdfk as vhdfk,
+			HWYD.dsk as vdsk,
+			HWYD.hjje as vhjje,
+			convert(varchar(16),T_QS.lrtime,120) as lrtime,
+			0 as IsTiShi 
+			FROM 
+			(
+			SELECT HWYD.shhrlxdh,HWYD.FHDWYB,HWYD.YDBHID, 
+			HWYD.YSHHM,HWYD.FHDWMCH, HWYD.ysfs,HWYD.daozhan,HWYD.SHHRMCH, 
+			HWYD.FAZHAN,HWYD.FHSHJ,HWYD.isfd,HWYD.ywlx,
+		    HWYD.pszhsh,HWYD.ydts,HWYD.SHHRYB,HWYD.SHHRDZH,HWYD.shhd,HWYD.dzshhd,
+		    HWYD.yxzt,HWYD.is_greenchannel,b.hjje,b.dsk,b.hdfk from hwyd left join 
+		   (select FIWT.HWY_YDBHID,dbo.fkfsh.hjje, dbo.fkfsh.dsk, dbo.fkfsh.hdfk from FIWT INNER JOIN dbo.fkfsh ON dbo.FIWT.xianlu = dbo.fkfsh.xianlu AND dbo.FIWT.cwpzhbh = dbo.fkfsh.cwpzhbh AND dbo.FIWT.nf = dbo.fkfsh.nf 
+		   AND dbo.FIWT.type = dbo.fkfsh.type  where dbo.FIWT.type = 0 
+		   <if test="transportCode != null and transportCode != ''">
+				<![CDATA[ and  FIWT.HWY_YDBHID = #{transportCode}]]>
+			</if>
+		   )b  ON b.HWY_YDBHID = dbo.HWYD.YDBHID    
+		   <if test="transportCode != null and transportCode != ''">
+				<![CDATA[ WHERE HWYD.ydbhid = #{transportCode}]]>
+			</if> 
+	 	  ) as HWYD,
+			HCZZQD_source,
+			HWYDXZ,
+			T_QS
+			WHERE  HCZZQD_source.YDBHID = HWYD.YDBHID and HCZZQD_source.YDBHID = HWYDXZ.YDBHID and HCZZQD_source.ydxzh = HWYDXZ.YDXZH and
+			 HCZZQD_source.YDBHID = T_QS.ydbhid 
+			<include refid="where-findBundleArriveList" />
+	</select>
+
+	<sql id="where-findBundleArriveList">
+		<if test="daozhan != null and daozhan != ''">
+			<![CDATA[ and HCZZQD_source.daozhan = #{daozhan}]]>
+		</if>
+		<if test="fazhan != null and fazhan != ''">
+			<![CDATA[ and HCZZQD_source.fazhan = #{fazhan}]]>
+		</if>
+		<if test="transportCode != null and transportCode != ''">
+			<![CDATA[ AND HCZZQD_source.ydbhid = #{transportCode} ]]>
+		</if>
+  		<if test="carNo != null and carNo != ''">
+			<![CDATA[ AND ltrim(rtrim(HCZZQD_source.chxh)) = #{carNo} ]]>
+		</if>
+		<if test="loadingDateBegin != null and loadingDateBegin != '' and loadingDateEnd != null and loadingDateEnd != ''">
+			<![CDATA[ AND convert(varchar(20),HCZZQD_source.zhchrq,120) between #{loadingDateBegin} and #{loadingDateEnd} ]]>
+		</if>
+		<if test="ziti==0 || ziti==1">
+			<![CDATA[ AND HCZZQD_source.ziti = #{ziti} ]]>
+		</if>
+		<if test="yiti == 1">
+			<![CDATA[ AND HCZZQD_source.yiti = 1 ]]>
+		</if>
+		<if test="yiti == 0">
+			<![CDATA[ AND HCZZQD_source.yiti != 1 ]]>
+		</if>
+		<if test="ysfs != null and ysfs != ''">
+			<![CDATA[ and HCZZQD_source.ysfs = #{ysfs}]]>
+		</if>
+	</sql>
+	
+	<!-- 录入取货指令查询 -->
+	<select id="findTcarinEntity" resultType="com.ycgwl.kylin.transport.entity.DispatchCarPickGoods">
+		SELECT gsid,id,gs,sjcomm,tjybz,yywd,kfy,kfgrid,fhr,lxr,qhadd,lxdh,sffd,sfdzx,sfdyd,sfsyf,xdtime,convert(varchar(16),jhqhtime,120)
+		as jhqhtime,yqfhtime,khsm,ddpcdd,convert(varchar(16),ddpctime,120) as ddpctime
+		,ddqsd,ddqhd,ddcomm,tjyhsrgrid,pcyes,ddpcddgrid,khbm,pszhsh,IS_XuYao_FaPiao
+		as isXuYaoFaPiao,
+		tuoyunrenshuihao,FaSongLuJing_BianHao as
+		fasonglujingBianhao,hwdaozhan_WangDian as hwdaozhanWangdian,FHDWLXDH
+		as fhdwlxdh,
+		FHDWDZH as fhdwdzh,FHDWLXDH_ShouJi as
+		fhdwlxdhShouji,shhrmch,dh_shengfen as dhShengfen,dh_chengsi as
+		dhChengsi,dh_addr as dhAddr,
+		shhrdzh,shhrlxdh,shhryb,fwfs,FuKuanFangShi as
+		fuKuanFangShi,isfd,daikebaozhuang,caozuoyaoqiu,zyfs,fdnr,fdlc,fdsl,
+		dashoukuan_yuan as
+		dashoukuanYuan,songhuoshanglou,daikezhuangxie,ver,fpmc,swdb,ysfs,hwdaozhan,ywlx,
+		fh_shengfen as
+		fhShengFen,pcshlc,convert(varchar(10),min)+'-'+convert(varchar(10),max)
+		as lc,tangci,pcmdd,max,min,
+		Fh_chengshi as fhChengShi,OrderNo as
+		orderNo
+		FROM T_CAR_IN where gsid=#{gsid} and id=#{pcid}
+	</select>
+
+	<sql id="columns_insert_t_car_in">
+		gsid,id,gs,yywd,kfy,kfgrid,fhr,lxr,qhadd,lxdh,sffd,sfdzx,sfdyd,sfsyf,xdtime,
+		<if test="jhqhtime != null and jhqhtime != ''">
+		<![CDATA[ jhqhtime, ]]>
+		</if>
+		yqfhtime,
+		khsm,ddpcdd,
+		<if test="ddpctime != null and ddpctime != ''">
+		<![CDATA[ ddpctime, ]]>
+		</if>
+		ddqsd,ddqhd,ddcomm,tjyhsrgrid,pcyes,ddpcddgrid,khbm,pszhsh,IS_XuYao_FaPiao,
+		tuoyunrenshuihao,FaSongLuJing_BianHao,hwdaozhan_WangDian,FHDWLXDH,
+		FHDWDZH,FHDWLXDH_ShouJi,shhrmch,dh_shengfen,dh_chengsi,dh_addr,shhrdzh,shhrlxdh,shhryb,fwfs,
+		FuKuanFangShi,isfd,daikebaozhuang,caozuoyaoqiu,zyfs,fdnr,fdlc,fdsl,
+		dashoukuan_yuan,songhuoshanglou,daikezhuangxie,ver,fpmc,swdb,ysfs,hwdaozhan,ywlx,
+		fh_shengfen,pcshlc,max,min,tangci,pcmdd,fh_chengshi,OrderNo,sys_name
+	</sql>
+
+	<insert id="saveTCarInEntity" parameterType="com.ycgwl.kylin.transport.entity.DispatchCarPickGoods">
+		insert into T_CAR_IN (<include refid="columns_insert_t_car_in" />) values (
+		#{gsid},#{id},#{gs},#{yywd},#{kfy},#{kfgrid},#{fhr},#{lxr},#{qhadd},#{lxdh},#{sffd},#{sfdzx},#{sfdyd},#{sfsyf},#{xdtime},
+		<if test="jhqhtime != null and jhqhtime != ''">
+		<![CDATA[ #{jhqhtimeDate}, ]]>
+		</if>
+		#{yqfhtime},#{khsm},#{ddpcdd},
+		<if test="ddpctime != null and ddpctime != ''">
+		<![CDATA[ #{ddpctimeDate}, ]]>
+		</if>
+		#{ddqsd},#{ddqhd},#{ddcomm},#{tjyhsrgrid},#{pcyes},#{ddpcddgrid},#{khbm},
+		#{pszhsh},#{isXuYaoFaPiao},#{tuoyunrenshuihao},#{fasonglujingBianhao},
+		#{hwdaozhanWangDian},#{fhdwlxdh},#{fhdwdzh},#{fhdwlxdhShouji},
+		#{shhrmch},#{dhShengfen},#{dhChengsi},#{dhAddr},#{shhrdzh},#{shhrlxdh},#{shhryb},
+		#{fwfs},#{fuKuanFangShi},#{isfd},#{daikebaozhuang},#{caozuoyaoqiu},#{zyfs},#{fdnr},#{fdlc},#{fdsl},
+		#{dashoukuanYuan},#{songhuoshanglou},#{daikezhuangxie},#{ver},#{fpmc},#{swdb},#{ysfs},
+		#{hwdaozhan},#{ywlx},#{fhShengFen},#{pcshlc},#{max},#{min},#{tangci},#{pcmdd},#{fhChengShi},#{orderNo},#{sysName})
+	</insert>
+
+	<!-- 查询货物明细 -->
+	<select id="findTcarinGoodsList" parameterType="java.util.HashMap"
+		resultType="com.ycgwl.kylin.transport.entity.DispatchCarPickGoodsDetail">
+		SELECT gsid,id,detailid as detailId,hwmc,bz,jianshu,zl,tj,ShenMingJiaZhi as shenMingJiaZhi,BaoJiaJinE as baoJiaJinE
+		FROM T_CAR_IN_DETAIL1
+		where gsid=#{gsid} and id=#{pcid}
+	</select>
+
+	<!-- 保存货物明细 -->
+	<select id="saveGoodsDetail" parameterType="java.util.HashMap"
+		resultType="com.ycgwl.kylin.transport.entity.DispatchCarPickGoodsDetail">
+		insert into
+		T_CAR_IN_DETAIL1(gsid,id,hwmc,bz,jianshu,zl,tj,shenMingJiaZhi,baoJiaJinE)
+		values
+		(#{gsid},#{id},#{hwmc},#{bz},#{jianshu},#{zl},#{tj},#{shenMingJiaZhi},#{baoJiaJinE})
+	</select>
+
+	<!-- 更新货物明细 -->
+	<select id="updateGoodsDetail" parameterType="com.ycgwl.kylin.transport.entity.DispatchCarPickGoodsDetail">
+		update
+		T_CAR_IN_DETAIL1 set gsid =
+		#{gsid},id=#{id},hwmc=#{hwmc},bz=#{bz},jianshu=#{jianshu},
+		zl=#{zl},tj=#{tj},ShenMingJiaZhi=#{shenMingJiaZhi},BaoJiaJinE=#{baoJiaJinE}
+		where detailid = #{detailId}
+	</select>
+	
+	<!-- 更新运单信息
+	<update id="updateTCarInEntity2"
+		parameterType="com.ycgwl.kylin.transport.entity.DispatchCarPickGoods">
+		update T_CAR_IN set
+		yywd=#{yywd},
+		kfy=#{kfy},
+		kfgrid=#{kfgrid},
+		fhr=#{fhr},
+		lxr=#{lxr},
+		qhadd=#{qhadd},
+		lxdh=#{lxdh},
+		sffd=#{sffd},
+		sfdzx=#{sfdzx},
+		sfdyd=#{sfdyd},
+		sfsyf=#{sfsyf},
+		jhqhtime=#{jhqhtimeDate},
+		yqfhtime=#{yqfhtime},
+		khsm=#{khsm},
+		ddpcdd=#{ddpcdd},
+		ddpctime=#{ddpctime},
+		ddqsd=#{ddqsd},
+		ddqhd=#{ddqhd},
+		ddcomm=#{ddcomm},
+		tjyhsrgrid=#{tjyhsrgrid},
+		pcyes=#{pcyes},
+		ddpcddgrid=#{ddpcddgrid},
+		khbm=#{khbm},
+		pszhsh=#{pszhsh},
+		IS_XuYao_FaPiao=#{isXuYaoFaPiao},
+		tuoyunrenshuihao=#{tuoyunrenshuihao},
+		FaSongLuJing_BianHao=#{fasonglujingBianhao},
+		hwdaozhan_WangDian=#{hwdaozhanWangDian},
+		fhdwdzh=#{fhdwdzh},
+		fhdwlxdh=#{fhdwlxdh},
+		shhrmch=#{shhrmch},
+		dh_shengfen=#{dhShengfen},
+		dh_chengsi=#{dhChengsi},
+		dh_addr=#{dhAddr},
+		shhrdzh=#{shhrdzh},
+		shhrlxdh=#{shhrlxdh},
+		shhryb=#{shhryb},
+		fwfs=#{fwfs},
+		FuKuanFangShi=#{fuKuanFangShi},
+		isfd=#{isfd},
+		daikebaozhuang=#{daikebaozhuang},
+		caozuoyaoqiu=#{caozuoyaoqiu},
+		zyfs=#{zyfs},
+		fdnr=#{fdnr},
+		fdlc=#{fdlc},
+		fdsl=#{fdsl},
+		dashoukuan_yuan=#{dashoukuanYuan},
+		songhuoshanglou=#{songhuoshanglou},
+		daikezhuangxie=#{daikezhuangxie},
+		ver=#{ver},
+		fpmc=#{fpmc},
+		swdb=#{swdb},
+		ysfs=#{ysfs},
+		hwdaozhan=#{hwdaozhan},
+		ywlx=#{ywlx},
+		fh_shengfen=#{fhShengFen},
+		pcshlc=#{pcshlc},
+		max=#{max},
+		min=#{min},
+		tangci=#{tangci},
+		pcmdd=#{pcmdd},
+		fh_chengshi=#{fhChengShi},
+		orderNo=#{orderNo},
+		FHDWLXDH_ShouJi=#{fhdwlxdhShouji}
+		where gsid=#{gsid} and id=#{id}
+	</update> -->
+
+	<!-- 更新运单信息 -->
+	<update id="updateTCarInEntity"
+		parameterType="com.ycgwl.kylin.transport.entity.DispatchCarPickGoods">
+		update T_CAR_IN set
+		fhr=#{fhr},
+		lxr=#{lxr},
+		qhadd=#{qhadd},
+		lxdh=#{lxdh},
+		sffd=#{sffd},
+		sfdzx=#{sfdzx},
+		sfdyd=#{sfdyd},
+		sfsyf=#{sfsyf},
+		jhqhtime=#{jhqhtimeDate},
+		yqfhtime=#{yqfhtime},
+		khsm=#{khsm},
+		khbm=#{khbm},
+		pszhsh=#{pszhsh},
+		IS_XuYao_FaPiao=#{isXuYaoFaPiao},
+		tuoyunrenshuihao=#{tuoyunrenshuihao},
+		FaSongLuJing_BianHao=#{fasonglujingBianhao},
+		hwdaozhan_WangDian=#{hwdaozhanWangDian},
+		fhdwdzh=#{fhdwdzh},
+		fhdwlxdh=#{fhdwlxdh},
+		shhrmch=#{shhrmch},
+		dh_shengfen=#{dhShengfen},
+		dh_chengsi=#{dhChengsi},
+		dh_addr=#{dhAddr},
+		shhrdzh=#{shhrdzh},
+		shhrlxdh=#{shhrlxdh},
+		shhryb=#{shhryb},
+		fwfs=#{fwfs},
+		FuKuanFangShi=#{fuKuanFangShi},
+		isfd=#{isfd},
+		daikebaozhuang=#{daikebaozhuang},
+		caozuoyaoqiu=#{caozuoyaoqiu},
+		zyfs=#{zyfs},
+		fdnr=#{fdnr},
+		fdlc=#{fdlc},
+		fdsl=#{fdsl},
+		dashoukuan_yuan=#{dashoukuanYuan},
+		songhuoshanglou=#{songhuoshanglou},
+		daikezhuangxie=#{daikezhuangxie},
+		ver=#{ver},
+		fpmc=#{fpmc},
+		swdb=#{swdb},
+		ysfs=#{ysfs},
+		hwdaozhan=#{hwdaozhan},
+		ywlx=#{ywlx},
+		fh_shengfen=#{fhShengFen},
+		fh_chengshi=#{fhChengShi},
+		orderNo=#{orderNo},
+		FHDWLXDH_ShouJi=#{fhdwlxdhShouji}
+		where gsid=#{gsid} and id=#{id}
+	</update>
+
+
+
+	<update id="updateTCarInAboutAccount"
+		parameterType="com.ycgwl.kylin.transport.entity.DispatchCarPickGoods">
+		UPDATE T_CAR_IN SET
+		tjyhsr = #{tjyhsr},
+		tjyhsrgrid = #{tjyhsrgrid},
+		tjyjstime = #{tjyjstime},
+		tjybz = #{tjybz},
+		sjcomm = #{sjcomm} 
+		WHERE gsid =
+		#{gsid} AND id = #{id}
+	</update>
+
+	<!-- AND fhr = #{fhr} AND lxr = #{lxr} and sjcomm is null and czyxm is null 
+		and czyqscomm is null and tjyhsr is null and tjybz is null and pcyes = 1 
+		and tjyhsrgrid is null -->
+
+	<!-- 派车 -->
+	<update id="updateTCarIn"
+		parameterType="com.ycgwl.kylin.transport.entity.DispatchCarPickGoods">
+		update T_CAR_IN set
+		ddpcdd=#{ddpcdd},
+		ddpctime=#{ddpctime},
+		ddpcddgrid=#{ddpcddgrid},
+		pcyes=1,
+		ddqsd=#{ddqsd},
+		ddqhd=#{ddqhd},
+		ddcomm=#{ddcomm},
+		pcshlc=#{pcshlc},
+		Min=#{min},
+		Max=#{max},
+		pcmdd=#{pcmdd},
+		tangci=#{tangci}
+		where id =#{id} and gs=#{gs}
+	</update>
+
+
+	<!-- 取货派车处理查询 -->
+	<select id="searchDeliveryCarHandling"
+		resultType="com.ycgwl.kylin.transport.entity.DispatchCarPickGoods">
+		SELECT TOP 2000 T_CAR_IN.gsid,
+		T_CAR_IN.id,
+		T_CAR_IN.yywd,
+		T_CAR_IN.kfy,
+		T_CAR_IN.hwdaozhan,
+		T_CAR_IN.ywlx,
+		T_CAR_IN.fhr,
+		T_CAR_IN.qhadd,
+		convert(varchar(16),T_CAR_IN.xdtime,120) as xdtime,
+		convert(varchar(16),T_CAR_IN.jhqhtime,120) as jhqhtime,
+		T_CAR_IN.ddpcdd,
+		convert(varchar(16),T_CAR_IN.ddpctime,120) as ddpctime,
+		T_CAR_IN.pcyes,
+		T_CAR_IN.Ver as ver,
+		T_CAR_IN.ysfs,
+		T_CAR_IN.OrderNo,
+		V_CAR_IN_HEJI1.js,
+		V_CAR_IN_HEJI1.zl,
+		V_CAR_IN_HEJI1.tj
+		FROM T_CAR_IN,
+		V_CAR_IN_HEJI1
+		WHERE ( T_CAR_IN.gsid = V_CAR_IN_HEJI1.gsid ) AND
+		( V_CAR_IN_HEJI1.id = T_CAR_IN.id )
+		<if test="gsid != null and gsid != ''">
+		<![CDATA[ AND T_CAR_IN.gsid=#{gsid} ]]>
+		</if>
+		<if test="pcyes != null">
+		<![CDATA[ AND T_CAR_IN.pcyes=#{pcyes} ]]>
+		</if>
+		<if
+			test="xdtimeStart != null and xdtimeStart != '' and xdtimeEnd != null and xdtimeEnd != ''">
+		<![CDATA[ and T_CAR_IN.xdtime >=#{xdtimeStart} and T_CAR_IN.xdtime <=#{xdtimeEnd} ]]>
+		</if>
+		
+		<if test="id != null and id != ''">
+		<![CDATA[ AND T_CAR_IN.id=#{id} ]]>
+		</if>
+	</select>
+	
+	<select id="getT_Car_InByIdAndGsId" resultType="java.util.HashMap">
+	SELECT  T_CAR_IN.gsid ,
+           T_CAR_IN.id ,
+           T_CAR_IN.gs ,
+           T_CAR_IN.yywd ,
+           T_CAR_IN.kfy ,
+           T_CAR_IN.kfgrid ,
+           T_CAR_IN.hwdaozhan ,
+           T_CAR_IN.fhr ,
+           T_CAR_IN.lxr ,
+           T_CAR_IN.qhadd ,
+           T_CAR_IN.lxdh ,
+           T_CAR_IN.sffd ,
+           T_CAR_IN.sfdzx ,
+           T_CAR_IN.sfdyd ,
+           T_CAR_IN.sfsyf ,
+           T_CAR_IN.xdtime ,
+           T_CAR_IN.jhqhtime ,
+           T_CAR_IN.yqfhtime ,
+           T_CAR_IN.khsm ,
+           T_CAR_IN.ddpcdd ,
+           T_CAR_IN.ddpctime ,
+           T_CAR_IN.ddqsd ,
+           T_CAR_IN.ddqhd ,
+           T_CAR_IN.ddcomm ,
+           T_CAR_IN.tjyhsrgrid ,
+           T_CAR_IN.pcyes ,
+           T_CAR_IN.ddpcddgrid ,
+           T_CAR_IN.khbm ,
+           T_CAR_IN.pszhsh ,
+           T_CAR_IN.IS_XuYao_FaPiao ,
+           T_CAR_IN.tuoyunrenshuihao ,
+           T_CAR_IN.FaSongLuJing_BianHao ,
+           T_CAR_IN.hwdaozhan_WangDian ,
+           T_CAR_IN.FHDWLXDH ,
+           T_CAR_IN.FHDWDZH ,
+           T_CAR_IN.FHDWLXDH_ShouJi ,
+           T_CAR_IN.shhrmch ,
+           T_CAR_IN.dh_shengfen ,
+           T_CAR_IN.dh_chengsi ,
+           T_CAR_IN.dh_addr ,
+           T_CAR_IN.shhrdzh ,
+           T_CAR_IN.shhrlxdh ,
+           T_CAR_IN.shhryb ,
+           T_CAR_IN.fwfs ,
+           T_CAR_IN.FuKuanFangShi fkfs,
+           T_CAR_IN.isfd ,
+           T_CAR_IN.daikebaozhuang ,
+           T_CAR_IN.caozuoyaoqiu ,
+           T_CAR_IN.zyfs ,
+           T_CAR_IN.fdnr ,
+           T_CAR_IN.fdlc ,
+           T_CAR_IN.fdsl ,
+           T_CAR_IN.dashoukuan_yuan ,
+           T_CAR_IN.songhuoshanglou ,
+           T_CAR_IN.daikezhuangxie ,
+           T_CAR_IN.Ver ,
+           T_CAR_IN.fpmc ,
+           T_CAR_IN.swdb ,
+           T_CAR_IN.ysfs ,
+           T_CAR_IN.ywlx ,
+           T_CAR_IN.sjcomm ,
+           T_CAR_IN.tjybz ,+
+           T_CAR_IN.tjyhsr ,
+           T_CAR_IN.OrderNo     
+        FROM T_CAR_IN      
+        WHERE  T_CAR_IN.id = #{id}  and  T_CAR_IN.gsid = #{gsid}    
+	</select>
+	
+	
+</mapper>
+
+

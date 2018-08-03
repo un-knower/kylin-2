@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<description>Spring dubbo client configuration</description>
+	<dubbo:reference id="kylin.security.dubbo.reference.sysMenuService" version="1.0.0" check="false" interface="com.ycgwl.kylin.security.service.api.SysMenuService" />
+	<dubbo:reference id="kylin.security.dubbo.reference.sysUserMenuService" version="1.0.0" check="false" interface="com.ycgwl.kylin.security.service.api.SysUserMenuService" />
+	<dubbo:reference id="kylin.security.dubbo.reference.sysRoleService" version="1.0.0" check="false" interface="com.ycgwl.kylin.security.service.api.SysRoleService" />
+	<dubbo:reference id="kylin.security.dubbo.reference.sysUserService" version="1.0.0" check="false" interface="com.ycgwl.kylin.security.service.api.SysUserService" />
+	<dubbo:reference id="kylin.security.dubbo.reference.kylinTUserGsService" version="1.0.0" check="false" interface="com.ycgwl.kylin.security.service.api.IKylinTUserGsService" />
+
+</beans>

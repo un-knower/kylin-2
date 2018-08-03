@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<description>Spring persistence configuration</description>
+
+	<!-- 创建SqlSessionFactory，同时指定数据源 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:com/ycgwl/kylin/transport/persistent/*Mapper.xml" />
+		<property name="configLocation" value="classpath:spring-mybatis.xml" />
+	</bean>
+	
+	<!-- 创建slave SqlSessionFactory，同时指定数据源 -->
+	<bean id="sqlSessionFactorySlave" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource_slave" />
+		<property name="mapperLocations" value="classpath:com/ycgwl/kylin/report/persistent/*Mapper.xml" />
+		<property name="configLocation" value="classpath:spring-mybatis.xml" />
+	</bean>
+
+	<!-- Scan for mappers and let them be autowired -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<property name="basePackage" value="com.ycgwl.kylin.transport.persistent" />
+	</bean>
+	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactorySlave" />
+		<property name="basePackage" value="com.ycgwl.kylin.report.persistent" />
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+
+	<!-- 正式库 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">  
+        <property name="driverClassName" value="${dbcp.jdbc.driver}" />  
+        <property name="url" value="${dbcp.jdbc.url}" />  
+        <property name="username" value="${dbcp.jdbc.username}" />  
+        <property name="password" value="${dbcp.jdbc.password}" />  
+
+        <!-- 初始化连接大小 -->  
+        <property name="initialSize" value="${dbcp.jdbc.initialSize}"></property>  
+        <!-- 连接池最大数量 -->  
+        <property name="maxTotal" value="${dbcp.jdbc.maxActive}"></property>  
+        <!-- 连接池最大空闲 -->  
+        <property name="maxIdle" value="${dbcp.jdbc.maxIdle}"></property>  
+        <!-- 连接池最小空闲 -->  
+        <property name="minIdle" value="${dbcp.jdbc.minIdle}"></property>  
+        <!-- 获取连接最大等待时间 -->  
+        <property name="maxWaitMillis" value="${dbcp.jdbc.maxWait}"></property>  
+    </bean> 
+    
+    <!-- 查询库（不实时） -->
+    <bean id="dataSource_slave" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">  
+        <property name="driverClassName" value="${dbcp.jdbc.driver}" />  
+        <property name="url" value="${slave.dbcp.jdbc.url}" />  
+        <property name="username" value="${slave.dbcp.jdbc.username}" />  
+        <property name="password" value="${slave.dbcp.jdbc.password}" />  
+
+        <!-- 初始化连接大小 -->  
+        <property name="initialSize" value="${dbcp.jdbc.initialSize}"></property>  
+        <!-- 连接池最大数量 -->  
+        <property name="maxTotal" value="${dbcp.jdbc.maxActive}"></property>  
+        <!-- 连接池最大空闲 -->  
+        <property name="maxIdle" value="${dbcp.jdbc.maxIdle}"></property>  
+        <!-- 连接池最小空闲 -->  
+        <property name="minIdle" value="${dbcp.jdbc.minIdle}"></property>  
+        <!-- 获取连接最大等待时间 -->  
+        <property name="maxWaitMillis" value="${dbcp.jdbc.maxWait}"></property>  
+    </bean> 
+	
+</beans>

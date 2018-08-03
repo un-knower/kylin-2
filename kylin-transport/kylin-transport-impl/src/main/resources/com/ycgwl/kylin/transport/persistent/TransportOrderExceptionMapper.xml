@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.TransportOrderExceptionMapper">
+	<select id="getExceptionInformation" resultMap="exceptionInformation" parameterType="com.ycgwl.kylin.transport.entity.TransportOrderGoodExceptionResult">
+	    select hwyd.fazhan,
+	     	   hwyd.daozhan,
+	     	   hwyd.fhdwmch,
+	     	   hwyd.khdh,
+	     	   hczzqd_source.chxh,
+	     	   hczzqd_source.driver_name,
+	     	   hczzqd_source.driver_tel,
+	     	   hczzqd_source.pinming,
+	     	   hczzqd_source.jianshu,
+	     	   hczzqd_source.tiji,
+	     	   hczzqd_source.zhl,
+	     	   hwydxz.bzh
+	     from hwyd inner join hczzqd_source on hwyd.ydbhid=hczzqd_source.ydbhid
+	     inner join hwydxz on hczzqd_source.ydbhid=hwydxz.ydbhid and hczzqd_source.ydxzh =hwydxz.ydxzh
+	    where hwyd.ydbhid=#{transportCode} and hczzqd_source.daozhan=#{userCompany}
+	</select>
+	<resultMap type="com.ycgwl.kylin.transport.entity.TransportOrderGoodExceptionResult" id="exceptionInformation">
+		<result column="fazhan" property="faZhan" jdbcType="VARCHAR"/>
+		<result column="daozhan" property="daoZhan" jdbcType="VARCHAR"/>
+		<result column="fhdwmch" property="customerName" jdbcType="VARCHAR"/>
+		<result column="khdh" property="customerOrderCode" jdbcType="VARCHAR"/>
+		<result column="chxh" property="carNo" jdbcType="VARCHAR"/>
+		<result column="driver_name" property="driverName" jdbcType="VARCHAR"/>
+		<result column="driver_tel" property="driverTelephone" jdbcType="VARCHAR"/>
+		<result column="pinming" property="pinMing" jdbcType="VARCHAR"/>
+		<result column="jianshu" property="piece" jdbcType="INTEGER" />
+		<result column="tiji" property="volume" jdbcType="NUMERIC"/>
+		<result column="zhl" property="weight" jdbcType="NUMERIC"/>
+		<result column="bzh" property="packing" jdbcType="VARCHAR"/>
+	</resultMap>
+	<insert id="saveExceptionInformation" parameterType="java.util.List">
+	insert into t_hshc (gs,ydbhid,daozhan,grid,jiaojie,jieshou,hjbh,chxh,pinming,jianshu,shj,ds,pl,ssh,flmb,bz,delayed,chuanhuo,excepquantity,salvage,frozenhurt,fazhan,drivename,drivetele,scene,happendate,customername,customerno,packing,other)
+	values
+	<foreach collection="list" item="GoodException" separator=",">
+	(#{GoodException.company},#{GoodException.ydbhid},#{GoodException.daoZhan},#{GoodException.grid},#{GoodException.jiaoJie},#{GoodException.jieShou},#{GoodException.hjbh},#{GoodException.chxh},#{GoodException.pinMing},#{GoodException.jianShu},#{GoodException.shj},#{GoodException.ds},#{GoodException.pl},#{GoodException.ssh},#{GoodException.flmb},#{GoodException.bz},#{GoodException.delayed},#{GoodException.chuanhuo},#{GoodException.excepquantity},#{GoodException.salvage},#{GoodException.frozenhurt},#{GoodException.faZhan},#{GoodException.driveName},#{GoodException.driveTele},#{GoodException.scene},#{GoodException.happenDate},#{GoodException.customerName},#{GoodException.customerNo},#{GoodException.packing},#{GoodException.other})
+	</foreach>
+	
+	</insert>
+</mapper>

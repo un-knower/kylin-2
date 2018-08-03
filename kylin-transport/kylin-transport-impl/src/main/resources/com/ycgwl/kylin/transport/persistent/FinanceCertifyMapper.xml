@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.FinanceCertifyMapper"> 
+	<resultMap id="financeCertify" type="com.ycgwl.kylin.transport.entity.FinanceCertify">
+		<result column="HWY_YDBHID" property="conveyKey" jdbcType="VARCHAR" />
+		<result column="hjje" property="cost" jdbcType="NUMERIC" />
+		<result column="qhyj" property="lightprice" jdbcType="NUMERIC" />
+		<result column="zhhyj" property="weightprice" jdbcType="NUMERIC" />
+		<result column="ajyj" property="piecework" jdbcType="NUMERIC" />
+		<result column="SHSHMF" property="delivery" jdbcType="NUMERIC" />
+		<result column="SHMSHHF" property="tohome" jdbcType="NUMERIC" />
+		<result column="bdf" property="invoice" jdbcType="NUMERIC" />
+		<result column="dsk" property="receipt" jdbcType="NUMERIC" />
+		<result column="qtfy" property="other" jdbcType="NUMERIC" />
+		<!-- 补充 -->
+		<result column="yshzhk_b" property="receiveMoneyStatus" jdbcType="INTEGER" />
+		<result column="yshzhk" property="receiveLackMoney" jdbcType="NUMERIC" />
+		<result column="hdfk" property="deliveryCash" jdbcType="NUMERIC" />
+		<result column="hdfk_b" property="deliveryCashStatus" jdbcType="INTEGER" />
+		<result column="chuna" property="chuna" jdbcType="VARCHAR" />
+		<result column="dsk_b" property="receiptStatus" jdbcType="INTEGER" />
+		<result column="baolu" property="premiumRate" jdbcType="NUMERIC" />
+		<result column="zhzhxfdj" property="heavyHandlingPrice" jdbcType="NUMERIC" />
+		<result column="qhzhxfdj" property="lightHandlingPrice" jdbcType="NUMERIC" />
+		<result column="zhjxzyf" property="forkliftPrice" jdbcType="NUMERIC" />
+		<result column="dtf" property="dtf" jdbcType="NUMERIC" />
+		<result column="yfhj" property="transportTotalFee" jdbcType="NUMERIC" />
+		<result column="bxf" property="premiumFee" jdbcType="NUMERIC" />
+		<result column="chcf" property="forkliftFee" jdbcType="NUMERIC" />
+		<result column="qtfymch" property="otherFeeName" jdbcType="VARCHAR" />
+		<result column="cwpzhbh" property="cwpzhbh" jdbcType="NUMERIC" />
+		<result column="sys_name" property="sysName" jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<resultMap id="financeCertifyResult" type="com.ycgwl.kylin.transport.entity.FinanceCertifyResult">
+		<result column="HWY_YDBHID" property="ydbhid" jdbcType="VARCHAR" />
+		<result column="hjje" property="hjje" jdbcType="NUMERIC" />
+		<result column="cwpzhbh" property="cwpzhbh" jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<select id="callProcedureInsert" statementType="CALLABLE"  parameterType="com.ycgwl.kylin.transport.entity.FinanceCertify">
+		<![CDATA[
+		    {call usp_autogencwpzh_mn_dkh_new (
+		    	#{conveyKey,mode=IN,jdbcType=VARCHAR}, 
+		    	#{cost,mode=IN,jdbcType=DECIMAL}, 
+		    	#{lightprice,mode=IN,jdbcType=DECIMAL},
+		    	#{weightprice,mode=IN,jdbcType=DECIMAL}, 
+		    	#{piecework,mode=IN,jdbcType=DECIMAL}, 
+		    	#{delivery,mode=IN,jdbcType=DECIMAL}, 
+		    	#{tohome,mode=IN,jdbcType=DECIMAL}, 
+		    	#{invoice,mode=IN,jdbcType=DECIMAL}, 
+		    	#{receipt,mode=IN,jdbcType=DECIMAL}, 
+		    	#{other,mode=IN,jdbcType=DECIMAL}, 
+		    	#{receiptStatus,mode=IN,jdbcType=INTEGER},
+		    	#{receiveLackMoney,mode=IN,jdbcType=DECIMAL},
+		    	#{receiveMoneyStatus,mode=IN,jdbcType=INTEGER},
+		    	#{chuna,mode=IN,jdbcType=VARCHAR},
+		    	#{deliveryCash,mode=IN,jdbcType=DECIMAL},
+		    	#{deliveryCashStatus,mode=IN,jdbcType=INTEGER},
+		    	#{premiumRate,mode=IN,jdbcType=DECIMAL},
+		    	#{heavyHandlingPrice,mode=IN,jdbcType=DECIMAL},
+		    	#{lightHandlingPrice,mode=IN,jdbcType=DECIMAL},
+		    	#{forkliftPrice,mode=IN,jdbcType=DECIMAL},
+		    	#{dtf,mode=IN,jdbcType=DECIMAL},
+		    	#{transportTotalFee,mode=IN,jdbcType=DECIMAL},
+		    	#{premiumFee,mode=IN,jdbcType=DECIMAL},
+		    	#{forkliftFee,mode=IN,jdbcType=DECIMAL},
+		    	#{otherFeeName,mode=IN,jdbcType=VARCHAR},
+		    	#{sysName,mode=IN,jdbcType=VARCHAR},
+		    	#{message,mode=OUT,jdbcType=VARCHAR}
+		    )}
+		]]>
+	</select>
+	
+	<select id="getFinanceCertifyByYdbhid" resultMap="financeCertify"  parameterType="java.lang.String">
+		SELECT 
+			A.cwpzhbh,A.HWY_YDBHID, A.zhhyj, A.qhyj, A.ajyj, A.dsk, A.bdf, A.SHMSHHF, A.SHSHMF,B.qtfymch,B.bxf,B.yfhj,B.chcf,B.qtfy,B.hjje,B.yshzhk_b,A.baolu,A.zhzhxfdj,A.qhzhxfdj,A.zhjxzyf
+		 FROM 
+			FIWT A INNER JOIN fkfsh B
+		ON 
+			A.xianlu = B.xianlu AND A.cwpzhbh = B.cwpzhbh AND A.nf = B.nf AND A.type = B.type
+		WHERE 
+			A.type = 0 AND A.HWY_YDBHID = #{ydbhid}
+	</select>
+	
+	<select id="getCwpzhbhAndHjjeByYdbhid" resultMap="financeCertifyResult"  parameterType="java.lang.String">
+		SELECT 
+			A.HWY_YDBHID,A.cwpzhbh, B.hjje
+		 FROM 
+			FIWT A INNER JOIN fkfsh B
+		ON 
+			A.xianlu = B.xianlu AND A.cwpzhbh = B.cwpzhbh AND A.nf = B.nf AND A.type = B.type
+		WHERE 
+			A.type = 0 AND A.HWY_YDBHID = #{ydbhid}
+	</select>
+</mapper>

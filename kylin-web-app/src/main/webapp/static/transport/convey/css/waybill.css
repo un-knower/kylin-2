@@ -1,0 +1,291 @@
+.search-3{
+	width: 80px;
+	height: 24px;
+	background:#F29D08;
+	color: #FFFFFF;
+	display: inline-block;
+	text-align: center;
+	line-height: 24px;
+	font-size: 15px;
+	border-radius: 5px;
+	cursor:pointer;
+}
+.eject{
+	width:760px;
+	height:600px;
+	border-radius:5px;
+	position: absolute;
+	top:10%;
+	left:30%;
+	background:#358FF0;
+	z-index:99;
+}
+.biaoti{
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 50px;
+	font-size: 18px;
+}
+.close{
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	background: #FFFFFF;
+	position: absolute;
+	top:12.5px;
+	right:20px;
+	color: #358FF0;
+	font-size:20px;
+	text-align: center;
+	line-height: 25px;
+	font-weight:600;
+}
+.content-2{
+	width: 94%;
+	height:530px;
+	background: #FFFFFF;
+	margin-left:3%;
+	border-radius:5px;
+}
+.search{
+	width: 100%;
+	position: relative;
+	top: 10px;
+	left: 0;
+}
+.s1,.s2,.s3,.s4,.s5,.s6{
+	width:32%;
+	height: 24px;
+	display: inline-block;
+	margin-bottom:10px;
+}
+.labe-2{
+	font-size: 12px;
+	color: #333333;
+	margin-left:10px;
+	margin-right:10px;
+}
+.labe-3{
+	font-size: 12px;
+	color: #333333;
+	margin-left:8px;
+}
+.txt-2{
+	width:60%;
+	height: 24px;
+	border: 1px solid #d3d6de;
+	border-radius:3px;
+}
+#txt-one{
+	margin-left: 10px;
+}
+#txt-two{
+	margin-left:15px;
+}
+#sou{
+	width:80px;
+	height:24px;
+	background:#358FF0;
+	margin-left: 10px;
+	font-size: 17px;
+	color: #FFFFFF;
+}
+.result{
+	font-size: 13px;
+	margin-left:20px;
+}
+.con-main{
+	width: 100%;
+}
+.content-con{
+	width:100%;
+	height:360px;
+	margin-left:7px;
+	margin-top: 20px;
+}
+.con-header{
+	width:100%;
+	height:40px;
+	background:#DDECFF;
+	margin-top: 10px;
+}
+.hed{
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	float: left;
+	font-size: 15px;
+}
+.biaoge{
+	margin-top: 20px;
+}
+.form{
+	margin-bottom: 20px;
+}
+.form .aaddress{
+	border: 1px solid #E4E4E4;
+}
+.form .aaddress td{
+	border: 1px solid #E4E4E4;
+	font-size: 13px;
+	line-height:25px;
+    word-break: break-all;
+}
+.form .center{
+	text-align: center;
+}
+.company{
+	background: #E4E4E4;
+	font-size:15px;
+	color: #54544E;
+	line-height: 30px;
+}
+.font-color{
+	color:#4EA2FD;
+}
+.full{
+	float: left;
+}
+.foll{
+	width: 60%;
+	background:yellowgreen;
+	display: inline-block;
+	margin-top: 3px;
+	color: #FFFFFF;
+	border-radius: 3px;
+}
+.foll1{
+	width: 60%;
+	background:#cccccc;
+	display: inline-block;
+	margin-top: 3px;
+	color: #FFFFFF;
+	border-radius: 3px;
+}
+.choss{
+	font-size: 13px;
+}
+.batch{
+	width: 80px;
+	height:30px;
+	background: orange;
+	border-radius:5px;
+	margin-left: 20px;
+	color: #FFFFFF;
+	font-size: 15px;
+}
+.left{
+	width: 26px;
+	height: 26px;
+	border: 1px solid #FFA500;
+	display: inline-block;
+	text-align: center;
+	line-height: 26px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.data{
+	float: right;
+	margin-top: 3px;
+	margin-right: 10px;
+	font-size: 15px;
+}
+#add-num{
+	display: inline-block;
+	width: 80px;
+	height: 28px;
+	text-align: center;
+	line-height: 28px;
+	background:#358FF0;
+	border-radius: 5px;
+	color: #FFFFFF;
+	font-size: 15px;
+	margin-left:20px;
+}
+/*分页*/
+#paging{
+	width:100%;
+	height:40px;
+	margin-top:10px;
+	/*background: #F5F8FD;*/
+}
+#paging p{
+	color:#696969;
+	font-size:15px;
+	text-align: center;
+	line-height: 40px;
+}
+#paging input[type=button]{
+  width: 30px;
+  height: 30px;
+  font-size:18px;
+  background:#FFFFFF;
+}
+#paging strong{
+	width: 30px;
+	font-size:15px;
+	text-align: center;
+}
+#list{
+	margin-left: 20px;
+	margin-right: 20px;
+}
+#kuang{
+	width: 60px;
+	height:30px;
+	border: 1px solid #CCCCCC;
+	margin-left:10px;
+	margin-right:10px;
+}
+#confim{
+	width: 35px;
+	height: 30px;
+	color: #FFFFFF;
+	background:#F29D08;
+	font-size: 12px;
+	border-radius: 5px;
+}
+#homepage{
+	color:#F7B04E;
+}
+#Shadowe{
+	color:#F7B04E;
+}
+#btnn1{
+	background: #F59C00;
+	color:#FFFFFF;
+}
+.left-1{
+	border: 1px solid #FFA500;
+	width: 30px;
+	height: 30px;
+}
+.bian{
+	border: 1px solid #FFA500;
+	width: 50px;
+	height: 28px;
+	display: inline-block;
+	text-align: center;
+	line-height: 30px;
+}
+.boo{
+	color:#FFA500;
+}
+@media (min-width:768px ) and (max-width:1024px ){
+    .con-main{
+		width:780px;
+	}
+	.content-con{
+		width:780px;
+	}
+	
+}
+@media (max-width:1024px ){
+	.con-main{
+		width: 710px;
+	}
+	.content-con{
+		width:710px;
+	}
+	
+}

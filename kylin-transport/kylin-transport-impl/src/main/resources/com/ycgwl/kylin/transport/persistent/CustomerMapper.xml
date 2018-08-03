@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.CustomerMapper">
+	<select id="selectDaoZhanBaseData" resultType="java.lang.String">
+		select daozhan from XIANLU where GS = #{company}
+	</select>
+	<select id="selectNoDaoZhanBaseData" resultType="java.lang.String">
+		select name from gongsi where name not in (select DAOZHAN from XIANLU where GS = #{company})
+	</select>
+	<insert id="saveDaoZhanBaseData" parameterType="map" >
+		INSERT INTO XIANLU (daozhan,XIANLU, gs) 
+		VALUES
+		<foreach collection="daozhans" item="item" index="index" separator=",">  
+            ( #{item}, #{company} ,#{company})
+        </foreach>
+	</insert>
+	<delete id="removeDaoZhanBaseData">
+		delete from XIANLU where GS = #{company}
+	</delete>
+
+	<select id="findRecurringCustomerByKhbmAndKhmc" resultType="com.ycgwl.kylin.transport.vo.CustomerVo">
+		select id, khbm,khchsh,khtxdz,khmc,khlxr,lxrzw,khdh,pinming,khsj,uclearingcode,quantity,isyfk,
+		ywht,hetonghao,fpmc,swzh,ysfs,khzt,lipeisx,fdyq,rec_flag,yw_ky,yw_xb,yw_wd,yw_xy,yw_hk,yw_jzx,yw_cj,yw_sy,yw_fl,yw_gjys,yw_zz,yw_cc,yw_wx,
+
+		basicaccount,bankaccountno,businessregistrationno,switchboardno,companyurl,shipper,checker,
+		shippertel,checkertel,shipperemail,checkeremail,clearingcode,ufandan,isyuejie,CONVERT (VARCHAR(19) ,contractstartdate, 120) as contractstartdate,
+		CONVERT (VARCHAR(19) ,firststatementdate, 120) as firststatementdate,
+		CONVERT (VARCHAR(19) ,contractenddate, 120) as contractenddate,
+		CONVERT (VARCHAR(19) ,laststatementdate, 120) as laststatementdate,
+		recordstatus,warningday,waringdaycont,
+
+		guesttype,frdb,khlxbh,zyzm,fzr,fzrzw,fzrdh,fzrsr,ckdz,cgydh,hwmch,hwliux,khjj,swdb,
+		CONVERT (VARCHAR(19) ,djrq, 120) as djrq,
+		CONVERT (VARCHAR(19) ,ksrq, 120) as ksrq,
+		CONVERT (VARCHAR(19) ,zx_time, 120) as zx_time,
+		ywjdid
+		from customer
+		<where>
+			<if test="khbm != null and khbm != ''">
+				and khbm = #{khbm}
+			</if>
+			<if test="khmc != null and khmc != ''">
+				and khmc = #{khmc}
+			</if>
+		</where>
+	</select>
+
+	<select id="findRecurringCustomers" resultType="com.ycgwl.kylin.transport.vo.CustomerVo">
+	   select id, khbm,khchsh,khtxdz,khmc,khlxr,lxrzw,khdh,pinming,khsj,uclearingcode,uquantity as quantity,isyfk,
+	   		  ywht,hetonghao,fpmc,swzh,ysfs,khzt,lipeisx,fdyq,rec_flag,yw_ky,yw_xb,yw_wd,yw_xy,yw_hk,yw_jzx,yw_cj,yw_sy,yw_fl,yw_gjys,yw_zz,yw_cc,yw_wx,
+			       
+			  basicaccount,bankaccountno,businessregistrationno,switchboardno,companyurl,shipper,checker,
+			  shippertel,checkertel,shipperemail,checkeremail,clearingcode,ufandan,isyuejie,CONVERT (VARCHAR(19) ,contractstartdate, 120) as contractstartdate,
+			  CONVERT (VARCHAR(19) ,firststatementdate, 120) as firststatementdate,
+			  CONVERT (VARCHAR(19) ,contractenddate, 120) as contractenddate,
+			  CONVERT (VARCHAR(19) ,laststatementdate, 120) as laststatementdate,
+			  recordstatus,warningday,waringdaycont,
+			  
+			  guesttype,frdb,khlxbh,zyzm,fzr,fzrzw,fzrdh,fzrsr,ckdz,cgydh,hwmch,hwliux,khjj,swdb,
+			  CONVERT (VARCHAR(19) ,djrq, 120) as djrq,
+			  CONVERT (VARCHAR(19) ,ksrq, 120) as ksrq,
+			  CONVERT (VARCHAR(19) ,zx_time, 120) as zx_time,
+			  ywjdid
+	      from customer where gs = #{company}
+	    <if test="khbm != null and khbm != ''">
+			and khbm = #{khbm}
+		</if>
+		<if test="khmc != null and khmc != ''">
+			and khmc = #{khmc}
+		</if>
+	</select>
+	<update id="editRecurringCustomers">
+		update customer 
+		<set>
+		 <choose>
+		    <when test="uclearingcode == 'N1' or uclearingcode == 'N2' or uclearingcode == 'N3'">
+			    <if test="uclearingcode != null and uclearingcode != ''">uclearingcode=#{uclearingcode},</if>
+				<if test="quantity != null and quantity != ''">uquantity=#{quantity},</if>
+				<if test="isyfk != null and isyfk != ''">isyfk=#{isyfk},</if>
+		        <if test="ufandan != null and ufandan != ''">ufandan=#{ufandan},</if>
+		  		<if test="isyuejie != null and isyuejie != ''">isyuejie=#{isyuejie},</if>
+		  		<if test="firststatementdate != null and firststatementdate != ''">firststatementdate=#{firststatementdate},</if>
+		  		<if test="warningday != null and warningday != ''">warningday=#{warningday},</if>
+	      		<if test="waringdaycont != null and waringdaycont != ''">waringdaycont=#{waringdaycont},</if>
+	      		<if test="rec_flag != null and rec_flag != ''">rec_flag=#{rec_flag}</if>
+		    </when>
+		    <otherwise>
+			  <if test="uclearingcode != null and uclearingcode != ''">uclearingcode=#{uclearingcode},</if>
+			  <if test="quantity != null and quantity != ''">uquantity=#{quantity},</if>
+			  <if test="isyfk != null and isyfk != ''">isyfk=#{isyfk},</if>
+		    
+		      <if test="basicaccount != null and basicaccount != ''">basicaccount=#{basicaccount},</if>
+		      <if test="bankaccountno != null and bankaccountno != ''">bankaccountno=#{bankaccountno},</if>
+		      <if test="businessregistrationno != null and businessregistrationno != ''">businessregistrationno=#{businessregistrationno},</if>
+		      <if test="switchboardno != null and switchboardno != ''">switchboardno=#{switchboardno},</if>
+		      <if test="companyurl != null and companyurl != ''">companyurl=#{companyurl},</if>
+		      <if test="shipper != null and shipper != ''">shipper=#{shipper},</if>
+		      <if test="checker != null and checker != ''">checker=#{checker},</if>
+		      
+		      <if test="shippertel != null and shippertel != ''">shippertel=#{shippertel},</if>
+		      <if test="checkertel != null and checkertel != ''">checkertel=#{checkertel},</if>
+		      <if test="shipperemail != null and shipperemail != ''">shipperemail=#{shipperemail},</if>
+		      <if test="checkeremail != null and checkeremail != ''">checkeremail=#{checkeremail},</if>
+		      <if test="clearingcode != null and clearingcode != ''">clearingcode=#{clearingcode},</if>
+		      <if test="ufandan != null and ufandan != ''">ufandan=#{ufandan},</if>
+		      <if test="isyuejie != null and isyuejie != ''">isyuejie=#{isyuejie},</if>
+		      <if test="contractstartdate != null and contractstartdate != ''">contractstartdate=#{contractstartdate},</if>
+		      
+		      <if test="firststatementdate != null and firststatementdate != ''">firststatementdate=#{firststatementdate},</if>
+		      <if test="contractenddate != null and contractenddate != ''">contractenddate=#{contractenddate},</if>
+		      <if test="laststatementdate != null and laststatementdate != ''">laststatementdate=#{laststatementdate},</if>
+		      <if test="recordstatus != null and recordstatus != ''">recordstatus=#{recordstatus},</if>
+		      <if test="warningday != null and warningday != ''">warningday=#{warningday},</if>
+		      <if test="waringdaycont != null and waringdaycont != ''">waringdaycont=#{waringdaycont},</if>
+		      <if test="rec_flag != null and rec_flag != ''">rec_flag=#{rec_flag}</if>
+		    </otherwise>
+		  </choose>
+	    </set>
+		 where id = #{id} and gs = #{company}
+	</update>
+	
+</mapper>
+
+
+
+

@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ycgwl.kylin.transport.persistent.DeliveryOperateMapper">
+	<select id="excuteCheckfwfsandcar" statementType="CALLABLE">
+		<![CDATA[
+		    {   
+			#{flag,mode=OUT,jdbcType=INTEGER} = call dbo.usp_check_fwfs_car (
+			#{ydbhid,mode=IN,jdbcType=VARCHAR},
+			#{grid,mode=IN,jdbcType=VARCHAR}, 
+			#{message,mode=OUT,jdbcType=VARCHAR} )
+			}
+		]]>
+	</select>
+	
+	<update id="modifyT_fenlikucun">
+		 update T_fenlikucun set yiti=#{yiti},jianshu=#{jianshu},zhl=#{zhl},tiji=#{tiji} where  gs=#{company}
+		 	 and ydxzh=#{ydxzh} and ydbhid=#{ydbhid} 				
+	</update>
+	
+	<insert id="insertIntoTHQSD">
+			insert into  THQSD  (
+		   thqshdid , YDBHID , SHHRMCH , PINMING ,
+           JIANSHU ,ZHL ,tiji , SHHRLXDH , KPR ,
+           BEIZHU ,SHIJIAN , YDXZH , gs ,
+           thqsdxz ,  thrmch , thrsfzhm , shhrsfzhm ,
+           xuhao , beizhu2 ,cangwei1 ,bzh ,sys_name 
+           )
+           values(
+           	 #{thqshdid},#{ydbhid},#{shhrmch},#{pinming},#{jianshu},#{zhl},#{tiji},
+           	 #{SHHRLXDH},#{kpr},#{beizhu},#{shijian},#{ydxzh},#{company},#{thqsdxz},
+           	 #{thrmch},#{thrsfzhm},#{shhrsfzhm},#{xuhao},#{beizhu2},#{cangwei1} ,#{bzh},'麒麟'
+           )     
+	</insert>
+	
+	<insert id="insertIntoT_CAR_OUT">
+		insert into t_car_out (
+			gsid , id , gs , yshm , ywlx , 
+			fhdw , fhlxr , shdw , shlxr , shdz ,
+			shdh , dzy , dzygrid , kdtime , jhshtime ,
+			thtime , zxbz , cgyqm , comm , fhdh ,
+			ydbhid , dzshhd , pccomm,sys_name
+		)values(
+			#{gsid},#{id},#{company},#{yshhm},#{ywlx},
+			#{hdwmch},#{fhdwlxdh},#{shhrmch},#{shlxr},#{shhrdzh},
+			#{shhrlxdh},#{grid},#{account},#{kdtime},#{jhshtime},
+			#{thtime},#{zxbz},#{cgyqm},#{comm},#{fhdh},
+			#{ydbhid},#{dzshhd},#{tiebieshuoming},'麒麟'
+		)
+	</insert>
+	
+	<insert id="insertIntoT_CAR_OUT_DETAIL1">
+		insert into T_CAR_OUT_DETAIL1( 
+			gsid,id,hwmc,ch,js,zl,tj,fd,qdxh,ydbhid,ydxz,dzshhd
+		)values(
+			#{gsid},#{id},#{pinming},#{chxh},#{jianshu},#{zhl},
+			#{tiji},#{isfd},#{xuhao},#{ydbhid},#{ydxzh},#{dzshhd}
+		)
+	</insert>
+	
+	<insert id="insertIntoT_CAR_OUT_Detail2">
+		insert into T_CAR_OUT_DETAIL2(
+			gsid,id,ydhm,hwmc
+		)values(
+			#{gsid},#{id},#{ydbhid},#{pinming}
+		)
+	</insert>
+	
+
+	
+	<select id="pagebillOfdeliverymanage" resultMap="billOfdelivery">
+		SELECT  	
+			thqshdid , YDBHID ,   SHHRMCH ,  PINMING ,
+         	JIANSHU ,   ZHL ,	tiji ,  BZH ,    CANGWEI1 ,
+           	thrsfzhm ,  shhrsfzhm ,  KPR , BEIZHU , SHIJIAN ,
+           	YDXZH , printed , gs , thqsdxz , thrmch ,    thrlxdh ,
+           	xuhao , old , shjhm     
+        FROM THQSD  where 1=1
+        <if test="ydbhid != null and ydbhid !=''">
+			<![CDATA[ AND ydbhid = #{ydbhid} ]]>
+		</if>
+        <if test="thqshdid != null and thqshdid !=''">
+			<![CDATA[ AND thqshdid = #{thqshdid} ]]>
+		</if>
+        <if test="gs != null and gs !=''">
+			<![CDATA[ AND gs = #{gs} ]]>
+		</if>
+        <if test="thrmch != null and thrmch !=''">
+			<![CDATA[ AND thrmch = #{thrmch} ]]>
+		</if>
+        <if test="shhrmch != null and shhrmch !=''">
+			<![CDATA[ AND shhrmch = #{shhrmch} ]]>
+		</if>
+	</select>
+	
+	<delete id="deleteArriveLoadingHWYD_ROUTEByYdbhid">
+		delete from HWYD_ROUTE where 
+			(cztype='送货途中' or  cztype='等待派车' or  cztype='提货' or cztype='签收成功')
+		and gs= #{gs}
+		and YDBHID=#{ydbhid}
+	</delete>
+	<delete id="modifyT_fenlikucunByTransportOrderDetail">
+		UPDATE T_fenlikucun
+			SET jianshu = #{detail.jianshu},
+				zhl = #{detail.zhl},
+				tiji = #{detail.tiji}
+			WHERE
+					ydbhid = #{detail.ydbhid}
+				and ydxzh =#{detail.ydxzh}
+				and gs = #{gs}
+	</delete>
+	
+	<resultMap type="com.ycgwl.kylin.transport.entity.BillOfdeliveryEntity" id="billOfdelivery">
+		<result column="thqshdid" property="thqshdid" jdbcType="INTEGER"/>
+		<result column="YDBHID" property="ydbhid" jdbcType="VARCHAR"/>
+		<result column="SHHRMCH" property="shhrmch" jdbcType="VARCHAR"/>
+		<result column="PINMING" property="pinming" jdbcType="VARCHAR"/>
+		<result column="JIANSHU" property="jianshu" jdbcType="INTEGER"/>
+		<result column="ZHL" property="zhl" jdbcType="NUMERIC"/>
+		<result column="tiji" property="tiji" jdbcType="NUMERIC"/>
+		<result column="BZH" property="bzh" jdbcType="VARCHAR"/>
+		<result column="CANGWEI1" property="cangwei1" jdbcType="VARCHAR"/>
+		<result column="thrsfzhm" property="thrsfzhm" jdbcType="VARCHAR"/>
+		<result column="shhrsfzhm" property="shhrsfzhm" jdbcType="VARCHAR"/>
+		<result column="KPR" property="kpr" jdbcType="VARCHAR"/>
+		<result column="BEIZHU" property="beizhu" jdbcType="VARCHAR"/>
+		<result column="SHIJIAN" property="shijian" jdbcType="TIMESTAMP"/>
+		<result column="YDXZH" property="ydxzh" jdbcType="SMALLINT"/>
+		<result column="printed" property="printed" jdbcType="VARCHAR"/>
+		<result column="gs" property="gs" jdbcType="VARCHAR"/>
+		<result column="thqsdxz" property="thqsdxz" jdbcType="INTEGER"/>
+		<result column="thrmch" property="thrmch" jdbcType="VARCHAR"/>
+		<result column="thrlxdh" property="thrlxdh" jdbcType="VARCHAR"/>
+		<result column="xuhao" property="xuhao" jdbcType="INTEGER"/>
+		<result column="old" property="old" jdbcType="INTEGER"/>
+		<result column="shjhm" property="shjhm" jdbcType="INTEGER"/>
+	</resultMap>
+	<resultMap type="com.ycgwl.kylin.transport.entity.DeliveryOperateEntity" id="deliveryOperate">
+		<result column="gsid" property="gsid" jdbcType="VARCHAR"/>
+		<result column="id" property="id" jdbcType="INTEGER"/>
+		<result column="gs" property="gs" jdbcType="VARCHAR"/>
+		<result column="yshm" property="yshm" jdbcType="VARCHAR"/>
+		<result column="ywlx" property="ywlx" jdbcType="VARCHAR"/>
+		<result column="fhdw" property="fhdw" jdbcType="VARCHAR"/>
+		<result column="shdw" property="shdw" jdbcType="VARCHAR"/>
+		<result column="shlxr" property="shlxr" jdbcType="VARCHAR"/>
+		<result column="shdz" property="shdz" jdbcType="VARCHAR"/>
+		<result column="shdh" property="shdh" jdbcType="VARCHAR"/>
+		<result column="dzy" property="dzy" jdbcType="VARCHAR"/>
+		<result column="dzygrid" property="dzygrid" jdbcType="VARCHAR"/>
+		<result column="kdtime" property="kdtime" jdbcType="TIMESTAMP"/>
+		<result column="jhshtime" property="jhshtime" jdbcType="TIMESTAMP"/>
+		<result column="thtime" property="thtime" jdbcType="TIMESTAMP"/>
+		<result column="zxbz" property="zxbz" jdbcType="VARCHAR"/>
+		<result column="cgyqm" property="cgyqm" jdbcType="VARCHAR"/>
+		<result column="qsr" property="qsr" jdbcType="VARCHAR"/>
+		<result column="qstime" property="qstime" jdbcType="TIMESTAMP"/>
+		<result column="pcdd" property="pcdd" jdbcType="VARCHAR"/>
+		<result column="pcddgrid" property="pcddgrid" jdbcType="VARCHAR"/>
+		<result column="pcpctime" property="pcpctime" jdbcType="TIMESTAMP"/>
+		<result column="pcqsd" property="pcqsd" jdbcType="VARCHAR"/>
+		<result column="pcshd" property="pcshd" jdbcType="VARCHAR"/>
+		<result column="tjhsr" property="tjhsr" jdbcType="VARCHAR"/>
+		<result column="tjhsrgrid" property="tjhsrgrid" jdbcType="VARCHAR"/>
+		<result column="tjtime" property="tjtime" jdbcType="TIMESTAMP"/>
+		<result column="pcyes" property="pcyes" jdbcType="VARCHAR"/>
+		<result column="fhdh" property="fhdh" jdbcType="VARCHAR"/>
+		<result column="JS" property="js" jdbcType="INTEGER"/>
+		<result column="ZL" property="zl" jdbcType="REAL"/>
+		<result column="TJ" property="tj" jdbcType="REAL"/>
+		<result column="hdfk" property="hdfk" jdbcType="NUMERIC"/>
+		<result column="dsk" property="dsk" jdbcType="NUMERIC"/>
+		<result column="pszhsh" property="pszhsh" jdbcType="INTEGER"/>
+		<result column="shhd" property="shhd" jdbcType="VARCHAR"/>
+	</resultMap>
+	<select id="pagedeliverydocumentsmanage" resultMap="deliveryOperate">
+	<![CDATA[
+		SELECT
+			top 200
+			dbo.T_CAR_OUT.gsid,
+			dbo.T_CAR_OUT.id,
+			dbo.T_CAR_OUT.gs,
+			dbo.T_CAR_OUT.yshm,
+			dbo.T_CAR_OUT.ywlx,
+			dbo.T_CAR_OUT.fhdw,
+			dbo.T_CAR_OUT.shdw,
+			dbo.T_CAR_OUT.shlxr,
+			dbo.T_CAR_OUT.shdz,
+			dbo.T_CAR_OUT.shdh,
+			dbo.T_CAR_OUT.dzy,
+			dbo.T_CAR_OUT.dzygrid,
+			dbo.T_CAR_OUT.kdtime,
+			dbo.T_CAR_OUT.jhshtime,
+			dbo.T_CAR_OUT.thtime,
+			dbo.T_CAR_OUT.zxbz,
+			dbo.T_CAR_OUT.cgyqm,
+			dbo.T_QS.qsr,
+			dbo.T_QS.qstime,
+			dbo.T_CAR_OUT.pcdd,
+			dbo.T_CAR_OUT.pcddgrid,
+			dbo.T_CAR_OUT.pcpctime,
+			dbo.T_CAR_OUT.pcqsd,
+			dbo.T_CAR_OUT.pcshd,
+			dbo.T_CAR_OUT.tjhsr,
+			dbo.T_CAR_OUT.tjhsrgrid,
+			dbo.T_CAR_OUT.tjtime,
+			dbo.T_CAR_OUT.pcyes,
+			dbo.T_CAR_OUT.fhdh,
+			dbo.T_CAR_OUT.ydbhid,
+			dbo.V_CAR_OUT_HEJI.JS,
+			dbo.V_CAR_OUT_HEJI.ZL,
+			dbo.V_CAR_OUT_HEJI.TJ,
+			dbo.V_CWPZH.hdfk,
+			dbo.V_CWPZH.dsk,
+			dbo.HWYD.pszhsh,
+			dbo.HWYD.shhd
+		FROM
+			dbo.T_CAR_OUT
+		INNER JOIN dbo.V_CAR_OUT_HEJI ON dbo.T_CAR_OUT.gsid = dbo.V_CAR_OUT_HEJI.gsid
+		AND dbo.T_CAR_OUT.id = dbo.V_CAR_OUT_HEJI.id
+		INNER JOIN dbo.V_CWPZH ON dbo.T_CAR_OUT.ydbhid = dbo.V_CWPZH.HWY_YDBHID
+		INNER JOIN dbo.HWYD ON dbo.T_CAR_OUT.ydbhid = dbo.HWYD.YDBHID
+		LEFT OUTER JOIN dbo.T_QS ON dbo.T_CAR_OUT.ydbhid = dbo.T_QS.ydbhid
+		]]>
+		where  1=1
+        <if test="ydbhid != null and ydbhid !=''">
+			<![CDATA[ AND T_CAR_OUT.ydbhid = #{ydbhid} ]]>
+		</if>
+        <if test="thqshdid != null and thqshdid !=''">
+			<![CDATA[ AND T_CAR_OUT.id = #{thqshdid} ]]>
+		</if>
+        <if test="gs != null and gs !=''">
+			<![CDATA[ AND T_CAR_OUT.gs = #{gs} ]]>
+		</if>
+         <if test="starttime != null and starttime !=''">
+			<![CDATA[ AND T_CAR_OUT.kdtime >= #{starttime} ]]>
+		</if>
+         <if test="endtime != null and endtime !=''">
+			<![CDATA[ AND T_CAR_OUT.kdtime <= #{endtime} ]]>
+		</if>
+         <if test="yipai != null">
+			<![CDATA[ AND  T_CAR_OUT.pcyes = #{yipai} ]]>
+		</if>
+		
+	</select>
+	
+	<select id="pagedeliverydocumentsmanageForDriver" resultType="java.util.HashMap">
+	<![CDATA[
+			SELECT top 200
+		T_CAR_OUT.gsid,
+		T_CAR_OUT.id,
+		T_CAR_OUT.gs,
+		T_CAR_OUT.yshm,
+		T_CAR_OUT.ywlx,
+		T_CAR_OUT.fhdw,
+		T_CAR_OUT.shdw,
+		T_CAR_OUT.shlxr,
+		T_CAR_OUT.shdz,
+		T_CAR_OUT.shdh,
+		T_CAR_OUT.dzy,
+		T_CAR_OUT.dzygrid,
+		T_CAR_OUT.kdtime,
+		T_CAR_OUT.jhshtime,
+		T_CAR_OUT.thtime,
+		T_CAR_OUT.zxbz,
+		T_CAR_OUT.cgyqm,
+		T_QS.qsr,
+		T_QS.qstime,
+		T_CAR_OUT.pcdd,
+		T_CAR_OUT.pcddgrid,
+		T_CAR_OUT.pcpctime,
+		T_CAR_OUT.pcqsd,
+		T_CAR_OUT.pcshd,
+		T_CAR_OUT.tjhsr,
+		T_CAR_OUT.tjhsrgrid,
+		T_CAR_OUT.tjtime,
+		T_CAR_OUT.pcyes,
+		T_CAR_OUT.fhdh,
+		T_CAR_OUT.ydbhid,
+		V_CAR_OUT_HEJI.JS ,
+		V_CAR_OUT_HEJI.ZL,
+		V_CAR_OUT_HEJI.TJ,
+		V_CWPZH.hdfk,
+		V_CWPZH.dsk,
+		HWYD.pszhsh,
+		HWYD.shhd,
+		T_CAR_OUT_DETAIL3.ch,
+		T_CAR_OUT_DETAIL3.sj,
+		T_CAR_OUT_DETAIL2.hwmc,
+		T_CAR_OUT.pccomm
+	FROM
+		T_CAR_OUT
+	INNER JOIN V_CAR_OUT_HEJI ON T_CAR_OUT.gsid = V_CAR_OUT_HEJI.gsid
+	AND T_CAR_OUT.id = V_CAR_OUT_HEJI.id
+	INNER JOIN V_CWPZH ON V_CWPZH.HWY_YDBHID = T_CAR_OUT.ydbhid
+	INNER JOIN HWYD ON T_CAR_OUT.ydbhid = HWYD.YDBHID
+	LEFT JOIN T_CAR_OUT_DETAIL3 ON T_CAR_OUT.gsid = T_CAR_OUT_DETAIL3.gsid
+	AND T_CAR_OUT.id = T_CAR_OUT_DETAIL3.id
+	LEFT JOIN T_CAR_OUT_DETAIL2 ON T_CAR_OUT.gsid = T_CAR_OUT_DETAIL2.gsid
+	AND T_CAR_OUT.id = T_CAR_OUT_DETAIL2.id
+	LEFT OUTER JOIN T_QS ON T_CAR_OUT.ydbhid = T_QS.ydbhid
+	]]>
+	where  1=1
+		 <if test="company != null and company !=''">
+			<![CDATA[ AND T_CAR_OUT.gs = #{company} ]]>
+		</if>
+		 <if test="ydbhid != null and ydbhid !=''">
+			<![CDATA[ AND T_CAR_OUT.ydbhid = #{ydbhid} ]]>
+		</if>
+        <if test="thqshdid != null and thqshdid !=''">
+			<![CDATA[ AND T_CAR_OUT.id = #{thqshdid} ]]>
+		</if>
+         <if test="starttime != null and starttime !=''">
+			<![CDATA[ AND T_CAR_OUT.kdtime >= #{starttime} ]]>
+		</if>
+         <if test="endtime != null and endtime !=''">
+			<![CDATA[ AND T_CAR_OUT.kdtime <= #{endtime} ]]>
+		</if>
+		  <if test="yipai != null">
+			<![CDATA[ AND  T_CAR_OUT.pcyes = #{yipai} ]]>
+		</if>
+	</select>
+	
+	<select id="searchBillOfdelivery" resultType="java.util.HashMap">
+		SELECT 
+		thqshdid,shijian,thrmch,thrsfzhm,shhrsfzhm,shjhm ,
+		YDBHID as ydbhid,PINMING as pinming,JIANSHU as jianshu,ZHL zhl,tiji,
+		SHHRMCH as shhrmch,CANGWEI1 as cangwei,beizhu ,KPR as kpr,xuhao
+		from THQSD 
+		where thqshdid = #{thqshdid} AND gs = #{gs}
+	</select>
+	
+	<update id="modifyTHQSD">
+		UPDATE THQSD set thrmch= #{thrmch},  thrsfzhm= #{thrsfzhm} , shijian = #{shijian},
+		shhrsfzhm = #{shhrsfzhm}  , kpr =#{kpr}  , beizhu2 =#{beizhu2}  , cangwei1 = #{cangwei1}
+		where thqshdid = #{thqshdid}
+		and xuhao = #{xuhao}
+	</update>
+</mapper>
+
+
