@@ -18,8 +18,9 @@ public class RequestJsonEntity extends HashMap<String, Object> {
 
     public String getString(String key) {
         String value = String.valueOf(super.get(key));
-        if ("null".equals(value))
-            return "";
+        if ("null".equals(value)) {
+          return "";
+        }
         return value.trim();
     }
 

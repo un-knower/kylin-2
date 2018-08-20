@@ -1,7 +1,5 @@
 package com.ycgwl.kylin.web.master.controller;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,7 +15,6 @@ import com.ycgwl.kylin.security.client.ContextHepler;
 import com.ycgwl.kylin.security.entity.KylinTUserGsEntity;
 import com.ycgwl.kylin.security.service.api.IKylinTUserGsService;
 
-
 /**
  * @Descrption 登录相关
  * @email <a href="109668@ycgwl.com">lihuixia</a>
@@ -26,33 +23,32 @@ import com.ycgwl.kylin.security.service.api.IKylinTUserGsService;
 @Controller
 public class SysLoginController {
 
-	@Resource
-	private IKylinTUserGsService kylinTUserGsService;
+  @Resource
+  private IKylinTUserGsService kylinTUserGsService;
 
-	@RequestMapping("/login")
-	public String logPage(){
-		return  "loginPage";
-	}
+  @RequestMapping("/login")
+  public String logPage() {
+    return "loginPage";
+  }
 
+  @RequestMapping("/companyChoice ")
+  public String homePage(ModelMap modelMap) {
+    List<KylinTUserGsEntity> companyList;
+    companyList = kylinTUserGsService.queryList(ContextHepler.getCurrentUser().getAccount());
+    modelMap.put("companyList", companyList);
+    return "companyChoice";
 
-	@RequestMapping("/companyChoice")
-	public String homePage(ModelMap modelMap){
-		List<KylinTUserGsEntity> companyList = new ArrayList<KylinTUserGsEntity>();
-		companyList = kylinTUserGsService.queryList(ContextHepler.getCurrentUser().getAccount());
-		modelMap.put("companyList", companyList);
-		return  "companyChoice";
-	}
+  }
 
-	/**
-	 * 退出
-	 */
-	@RequestMapping(value = "logout", method = RequestMethod.GET)
-	public String logout() {
-		Subject subject = SecurityUtils.getSubject();
-		if (subject.isAuthenticated()) {
-			subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存
-		}
-		return "redirect:login";
-	}
-	
+  /**
+   * 退出
+   */
+  @RequestMapping(value = "logout", method = RequestMethod.GET)
+  public String logout() {
+    Subject subject = SecurityUtils.getSubject();
+    if (subject.isAuthenticated()) {
+      subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存
+    }
+    return "redirect:login";
+  }
 }

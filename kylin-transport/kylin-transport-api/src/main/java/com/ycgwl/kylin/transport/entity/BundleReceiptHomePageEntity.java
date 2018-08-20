@@ -99,24 +99,27 @@ public class BundleReceiptHomePageEntity extends BaseEntity {
 		this.jianshu = jianshu;
 	}
 	public BigDecimal getZhl() {
-		if(zhl == null)
-			return BigDecimal.ZERO;
+		if(zhl == null) {
+      return BigDecimal.ZERO;
+    }
 		return zhl;
 	}
 	public void setZhl(BigDecimal zhl) {
 		this.zhl = zhl;
 	}
 	public BigDecimal getTiji() {
-		if(tiji == null)
-			return BigDecimal.ZERO;
+		if(tiji == null) {
+      return BigDecimal.ZERO;
+    }
 		return tiji;
 	}
 	public void setTiji(BigDecimal tiji) {
 		this.tiji = tiji;
 	}
 	public String getChxh() {
-		if(chxh==null)
-			return "";
+		if(chxh==null) {
+      return "";
+    }
 		return chxh;
 	}
 	public void setChxh(String chxh) {
@@ -159,13 +162,15 @@ public class BundleReceiptHomePageEntity extends BaseEntity {
 		this.daozhan = daozhan;
 	}
 	public BigDecimal getElse_cost() {
-		if(else_cost == null)
-			return BigDecimal.ZERO;
+		if(else_cost == null) {
+      return BigDecimal.ZERO;
+    }
 		return else_cost;
 	}
 	public BigDecimal getQd_cost() {
-		if(qd_cost == null)
-			return BigDecimal.ZERO;
+		if(qd_cost == null) {
+      return BigDecimal.ZERO;
+    }
 		return qd_cost;
 	}
 	public void setElse_cost(BigDecimal else_cost) {

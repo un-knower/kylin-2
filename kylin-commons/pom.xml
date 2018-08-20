@@ -15,6 +15,11 @@
         <module>kylin-commons-utils</module>
     </modules>
     <artifactId>kylin-commons</artifactId>
-
+<dependencies>
+    <dependency>
+        <groupId></groupId>
+        <artifactId></artifactId>
+    </dependency>
+</dependencies>
 
 </project>

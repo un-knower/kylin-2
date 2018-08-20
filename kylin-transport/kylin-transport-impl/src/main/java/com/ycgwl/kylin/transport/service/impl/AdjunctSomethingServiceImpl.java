@@ -1,7 +1,5 @@
 package com.ycgwl.kylin.transport.service.impl;
 
-import com.alibaba.dubbo.common.utils.CollectionUtils;
-import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.util.StringUtil;
@@ -11,9 +9,30 @@ import com.ycgwl.kylin.entity.PageInfo;
 import com.ycgwl.kylin.entity.RequestJsonEntity;
 import com.ycgwl.kylin.exception.BusinessException;
 import com.ycgwl.kylin.exception.ParameterException;
-import com.ycgwl.kylin.transport.dto.*;
-import com.ycgwl.kylin.transport.entity.*;
-import com.ycgwl.kylin.transport.entity.adjunct.*;
+import com.ycgwl.kylin.transport.dto.FreightRecordDetailDto;
+import com.ycgwl.kylin.transport.dto.FreightRecordDetailSerachDto;
+import com.ycgwl.kylin.transport.dto.FreightRecordDto;
+import com.ycgwl.kylin.transport.dto.FreightRecordInputDto;
+import com.ycgwl.kylin.transport.dto.FreightRecordSerachDto;
+import com.ycgwl.kylin.transport.dto.UpdateFreightRecordDto;
+import com.ycgwl.kylin.transport.entity.BundleReceipt;
+import com.ycgwl.kylin.transport.entity.ChargingProjects;
+import com.ycgwl.kylin.transport.entity.FenliKucunEntity;
+import com.ycgwl.kylin.transport.entity.FinanceStandardPrice;
+import com.ycgwl.kylin.transport.entity.FreightRecord;
+import com.ycgwl.kylin.transport.entity.FreightRecordDetail;
+import com.ycgwl.kylin.transport.entity.KucunEntity;
+import com.ycgwl.kylin.transport.entity.TransportOrder;
+import com.ycgwl.kylin.transport.entity.TransportSignRecord;
+import com.ycgwl.kylin.transport.entity.adjunct.Company;
+import com.ycgwl.kylin.transport.entity.adjunct.ConveyWay;
+import com.ycgwl.kylin.transport.entity.adjunct.Customer;
+import com.ycgwl.kylin.transport.entity.adjunct.Employee;
+import com.ycgwl.kylin.transport.entity.adjunct.ForeignRoute;
+import com.ycgwl.kylin.transport.entity.adjunct.Industry;
+import com.ycgwl.kylin.transport.entity.adjunct.ReleaseWaiting;
+import com.ycgwl.kylin.transport.entity.adjunct.StoreHouse;
+import com.ycgwl.kylin.transport.entity.adjunct.VehicleInfo;
 import com.ycgwl.kylin.transport.persistent.AdjunctSomethingMapper;
 import com.ycgwl.kylin.transport.persistent.TransportOrderMapper;
 import com.ycgwl.kylin.transport.persistent.TransportRightMapper;
@@ -21,6 +40,17 @@ import com.ycgwl.kylin.transport.service.api.ITransportSignRecordService;
 import com.ycgwl.kylin.transport.vo.CustomerLabelVo;
 import com.ycgwl.kylin.transport.vo.FreightRecordVo;
 import com.ycgwl.kylin.transport.vo.LoadingListVo;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.annotation.Resource;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -28,10 +58,6 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-
-import javax.annotation.Resource;
-import java.math.BigDecimal;
-import java.util.*;
 
 @Service("kylin.transport.dubbo.local.adjunctSomethingService")
 public class AdjunctSomethingServiceImpl implements com.ycgwl.kylin.transport.service.api.AdjunctSomethingService {
@@ -70,7 +96,6 @@ public class AdjunctSomethingServiceImpl implements com.ycgwl.kylin.transport.se
 	}
 	/**
 	 *  模糊查询中转站
-	 * @param transfer 中转站
 	 * @return  匹配到的所有中转站
 	 */
 	@Override
@@ -271,8 +296,9 @@ public class AdjunctSomethingServiceImpl implements com.ycgwl.kylin.transport.se
 	public Customer checkKhmessage(String khbm, String fhdwmch,String company) throws ParameterException {
 		List<Customer> customerList = listCustomerByKhmc(company,fhdwmch);
 		
-		if(CollectionUtils.isEmpty(customerList))
-			throw new ParameterException("当前登录公司下不存在该客户："+fhdwmch);
+		if(CollectionUtils.isEmpty(customerList)) {
+      throw new ParameterException("当前登录公司下不存在该客户："+fhdwmch);
+    }
 		
 		if(StringUtils.isEmpty(khbm)){
 			if(customerList.size()>=1) {
@@ -389,8 +415,9 @@ public class AdjunctSomethingServiceImpl implements com.ycgwl.kylin.transport.se
 	public List<String> getArriveNetWorkList(String daozhan) {
 		//参数是编号,转化一下
 		Company companyByName = somethingMapper.getCompanyByName(daozhan);
-		if(companyByName != null)
-			return somethingMapper.getArriveNetWorkList(companyByName.getCompanyCode());
+		if(companyByName != null) {
+      return somethingMapper.getArriveNetWorkList(companyByName.getCompanyCode());
+    }
 		return Collections.emptyList();
 	}
 
@@ -545,8 +572,9 @@ public class AdjunctSomethingServiceImpl implements com.ycgwl.kylin.transport.se
 	@Override
 	public boolean isSuperAuthentor(String account) {
 		Integer rightNum = rightMapper.getRightNum(AuthorticationConstant.SUP_CANCEL_RIGHT,account);
-		if(rightNum != null && rightNum >= 1) 
-			return true;
+		if(rightNum != null && rightNum >= 1) {
+      return true;
+    }
 		return false;
 	}
 
@@ -564,8 +592,9 @@ public class AdjunctSomethingServiceImpl implements com.ycgwl.kylin.transport.se
 	@Override
 	public boolean isReleaseWaiting(String ydbdhid) {
 		ReleaseWaiting releaseWaiting = this.getReleaseWaitingByYdbhid(ydbdhid);
-		if(releaseWaiting == null) 
-			return false;
+		if(releaseWaiting == null) {
+      return false;
+    }
 		return releaseWaiting.getDdfhzt() == 1;
 	}
 

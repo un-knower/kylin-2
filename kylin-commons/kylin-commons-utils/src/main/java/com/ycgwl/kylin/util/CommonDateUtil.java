@@ -83,8 +83,9 @@ public class CommonDateUtil {
         for (Map.Entry<String, Object> entry : entrySet) {
             if (entry.getValue().getClass().isAssignableFrom(Date.class)) {
                 result.put(entry.getKey(), DateToString((Date) entry.getValue(), CommonDateUtil.PATTERN1));
-            } else
-                result.put(entry.getKey(), entry.getValue());
+            } else {
+              result.put(entry.getKey(), entry.getValue());
+            }
         }
         return result;
     }

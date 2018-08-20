@@ -427,22 +427,25 @@ public class TransportOrderServiceImpl implements ITransportOrderService {
 			adjunctSomethingService.checkKhmessage(map.getString("khbm"), map.getString("fhdwmch"), companyName);
 		} catch (ParameterException e) {
 			String tipMessage = e.getTipMessage();
-			if (tipMessage.indexOf("客户名称不存在") != -1)
-				result.put("fhdwmch", tipMessage);
+			if (tipMessage.indexOf("客户名称不存在") != -1) {
+        result.put("fhdwmch", tipMessage);
+      }
 			result.put("khbm", tipMessage);
 		}
 		// second step: check for ydbhid
-		if (StringUtils.isEmpty(ydbhid))
-			result.put("ydbhid", adjunctSomethingService.createYdbhid("H", map.getString("grid")));
-		else if (getTransportOrderByYdbhid(ydbhid) != null)
-			result.put("ydbhid", "运单号" + ydbhid + "已存在!");
+		if (StringUtils.isEmpty(ydbhid)) {
+      result.put("ydbhid", adjunctSomethingService.createYdbhid("H", map.getString("grid")));
+    } else if (getTransportOrderByYdbhid(ydbhid) != null) {
+      result.put("ydbhid", "运单号" + ydbhid + "已存在!");
+    }
 
 		// finally step: check for daozhan
 		Collection<String> daozhanList = adjunctSomethingService.listStationCompanys().stream()
 				.map(company -> company.getCompanyName()).collect(Collectors.toList());
 
-		if (!daozhanList.contains(map.getString("daozhan")))
-			result.put("daozhan", "到站不存在");
+		if (!daozhanList.contains(map.getString("daozhan"))) {
+      result.put("daozhan", "到站不存在");
+    }
 
 		return result;
 
@@ -655,10 +658,11 @@ public class TransportOrderServiceImpl implements ITransportOrderService {
 		transportOrderMapper.insert(order);
 		ReleaseWaiting releaseWaiting = new ReleaseWaiting().setYdbhid(entity.getYdbhid()).setFazhan(entity.getFazhan())
 				.setDdfhczshijian(new Date()).setDdfhczygh(entity.getZhipiao());
-		if (apply)
-			releaseWaiting.setDdfhzt(1).setTzfhzt(1);
-		else
-			releaseWaiting.setDdfhzt(0).setTzfhzt(0);
+		if (apply) {
+      releaseWaiting.setDdfhzt(1).setTzfhzt(1);
+    } else {
+      releaseWaiting.setDdfhzt(0).setTzfhzt(0);
+    }
 		adjunctSomethingMapper.insertReleaseWaiting(releaseWaiting);
 		// 插明细
 		TransportOrderDetail detail = createDeatail(entity);
@@ -667,8 +671,9 @@ public class TransportOrderServiceImpl implements ITransportOrderService {
 		if("是".equals(entity.getWithFinance())) {//是否录入财务凭证
 			FinanceCertify certify = createFinanceCertify(entity, price,username);
 			financeCertifyMapper.callProcedureInsert(certify);
-			if (StringUtils.isNotBlank(certify.getMessage()))
-				throw new BusinessException(certify.getMessage());
+			if (StringUtils.isNotBlank(certify.getMessage())) {
+        throw new BusinessException(certify.getMessage());
+      }
 		}
 		List<TransportOrderDetail> detailList = new ArrayList<TransportOrderDetail>();
 		detailList.add(detail);

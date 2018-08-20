@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>kylin-security</artifactId>
-        <groupId>com.ycgwl</groupId>
-        <version>2.0-SNAPSHOT</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>kylin-security</artifactId>
+    <groupId>com.ycgwl</groupId>
+    <version>2.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kylin-security-client</artifactId>
-
-
-    <dependencies>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring -->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ycgwl</groupId>
-            <artifactId>kylin-security-api</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-        </dependency>
+  <artifactId>kylin-security-client</artifactId>
 
 
+  <dependencies>
 
-    </dependencies>
+    <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring -->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-spring</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.ycgwl</groupId>
+      <artifactId>kylin-security-api</artifactId>
+      <version>2.0-SNAPSHOT</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-redis</artifactId>
+    </dependency>
+
+
+  </dependencies>
 
 </project>

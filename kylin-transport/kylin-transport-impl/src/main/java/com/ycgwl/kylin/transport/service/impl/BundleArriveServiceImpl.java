@@ -292,9 +292,15 @@ public class BundleArriveServiceImpl implements IBundleArriveService {
 				if((ObjectUtils.isEmpty(jianshu) || jianshu == 0) && ObjectUtils.isEmpty(tiji) && ObjectUtils.isEmpty(zhongliang)){
 					Assert.trueIsWrong("DispatchCarPickGoodsDetail",true,"货物明细中的件数、体积、重量至少填一个 ！");
 				}
-				if(ObjectUtils.isEmpty(jianshu) || jianshu == 0) goodsList.get(i).setJianshu(0);
-				if(ObjectUtils.isEmpty(tiji)) goodsList.get(i).setTj(0.00);
-				if(ObjectUtils.isEmpty(zhongliang)) goodsList.get(i).setZl(0.00);
+				if(ObjectUtils.isEmpty(jianshu) || jianshu == 0) {
+          goodsList.get(i).setJianshu(0);
+        }
+				if(ObjectUtils.isEmpty(tiji)) {
+          goodsList.get(i).setTj(0.00);
+        }
+				if(ObjectUtils.isEmpty(zhongliang)) {
+          goodsList.get(i).setZl(0.00);
+        }
 				goodsList.get(i).setGsid(gsid);
 			}
 			pickHome.setVer("2.0");
@@ -328,9 +334,15 @@ public class BundleArriveServiceImpl implements IBundleArriveService {
 					if((ObjectUtils.isEmpty(jianshu) || jianshu == 0) && ObjectUtils.isEmpty(tiji) && ObjectUtils.isEmpty(zhongliang)){
 						Assert.trueIsWrong("DispatchCarPickGoodsDetail",true,"货物明细中的件数、体积、重量至少填一个 ！");
 					}
-					if(ObjectUtils.isEmpty(jianshu) || jianshu == 0) goodsList.get(i).setJianshu(0);
-					if(ObjectUtils.isEmpty(tiji)) goodsList.get(i).setTj(0.00);
-					if(ObjectUtils.isEmpty(zhongliang)) goodsList.get(i).setZl(0.00);
+					if(ObjectUtils.isEmpty(jianshu) || jianshu == 0) {
+            goodsList.get(i).setJianshu(0);
+          }
+					if(ObjectUtils.isEmpty(tiji)) {
+            goodsList.get(i).setTj(0.00);
+          }
+					if(ObjectUtils.isEmpty(zhongliang)) {
+            goodsList.get(i).setZl(0.00);
+          }
 					goodsList.get(i).setGsid(gsid);
 					goodsList.get(i).setId(pcid);
 					if(detailId!=null) {
@@ -360,8 +372,9 @@ public class BundleArriveServiceImpl implements IBundleArriveService {
 						bundleArriveMapper.saveDispatchDetailTwo(dispatch);
 					}
 				}
-				if (orderEntity.getPcyes()== null || orderEntity.getPcyes() < 1)
-					orderEntity.setPcyes(1);// 派车
+				if (orderEntity.getPcyes()== null || orderEntity.getPcyes() < 1) {
+          orderEntity.setPcyes(1);// 派车
+        }
 				bundleArriveMapper.updateTCarIn(orderEntity);
 				isSaveSucc = true;
 				
@@ -408,10 +421,12 @@ public class BundleArriveServiceImpl implements IBundleArriveService {
 	 * @param canModifyGoods 
 	 */
 	public void checkSaveData(DispatchCarPickGoods transportInfo) throws ParameterException, BusinessException {
-		if (StringUtils.isEmpty(transportInfo.getShhrlxdh()))
-			transportInfo.setShhrlxdh(""); // 收货人[座机电话]
-		if (StringUtils.isEmpty(transportInfo.getShhrdzh()))
-			transportInfo.setShhrdzh("");//// 收货人[收货地址]
+		if (StringUtils.isEmpty(transportInfo.getShhrlxdh())) {
+      transportInfo.setShhrlxdh(""); // 收货人[座机电话]
+    }
+		if (StringUtils.isEmpty(transportInfo.getShhrdzh())) {
+      transportInfo.setShhrdzh("");//// 收货人[收货地址]
+    }
 		//Assert.trueIsWrong("hwdaozhanWangDian is null", StringUtils.isEmpty(transportInfo.getHwdaozhanWangDian()),
 		//		"请填写到站网点！");
 		Assert.trueIsWrong("shhryb is null", StringUtils.isEmpty(transportInfo.getShhryb()), "请填写手机号！");
@@ -527,8 +542,9 @@ public class BundleArriveServiceImpl implements IBundleArriveService {
 		String companyCode = (String) map.get("companyCode");
 		Integer rightNum = rightMapper.getRightNum(AuthorticationConstant.TJYHS, grid);
 		Assert.trueIsWrong("canot access menu", rightNum == null || rightNum == 0, "你没有权限使用这个功能，请与系统管理员联系！");
-		if (rightNum == 1)
-			saveButtonCanMondify = false;
+		if (rightNum == 1) {
+      saveButtonCanMondify = false;
+    }
 		// dwc_1
 		// dw_1.getchild("ckbh",dwc_1)
 		// dwc_1.SetSQLSelect("SELECT gs,yyb,ckmc,ckbh,beizhu,id FROM T_CKBH

@@ -498,7 +498,9 @@ public class FinanceReceiveMoneyServiceImpl implements FinanceReceiveMoneyServic
 		FinanceWealthInfo wealthInfo = new FinanceWealthInfo();
 		//TODO 注释
 		Integer ii_right = transportRightMapper.getRightNum(AuthorticationConstant.CWPZHCH, formFkfsh.getGrid());
-		if(ii_right==null) ii_right = 0;
+		if(ii_right==null) {
+      ii_right = 0;
+    }
 		//Integer superRight = transportRightMapper.getRightNum(AuthorticationConstant.SUP_CANCEL_RIGHT, formFkfsh.getGrid());
 		//boolean isSuperRight = superRight!=null&&superRight>0;//是否是撤销超级权限
 		//if(isSuperRight) {
@@ -515,19 +517,25 @@ public class FinanceReceiveMoneyServiceImpl implements FinanceReceiveMoneyServic
 			//if(StringUtils.isEmpty(formFkfsh.getYear())) return getJsonResult("400", "年份不能为空");
 			fiwt  = financeReceiveMoneyMapper.findTransportFinanceByTransportCode(formFkfsh.getTransportCode(), 0);
 		}else {//财务凭证号
-			if(StringUtils.isEmpty(formFkfsh.getCompanyCode())) return getJsonResult("400", "公司编码不能为空");
+			if(StringUtils.isEmpty(formFkfsh.getCompanyCode())) {
+        return getJsonResult("400", "公司编码不能为空");
+      }
 			Pattern pattern = Pattern.compile("[0-9]*");
 			if (!pattern.matcher(formFkfsh.getWealthNo().toString()).matches()) {
 				return getJsonResult("400", "财务凭证号必须全是数字");
 			} 
 			fiwt = financeReceiveMoneyMapper.findTransportFinance(formFkfsh.getCompanyCode(), formFkfsh.getWealthNo(), formFkfsh.getYear(),0);
 		}
-		if(fiwt==null) return getJsonResult("400", "该财凭号不存在或已冲红");
+		if(fiwt==null) {
+      return getJsonResult("400", "该财凭号不存在或已冲红");
+    }
 		long ldec_cwpzhbh= Long.valueOf(fiwt.getCwpzhbh());//财凭号
 		String ls_nf = formFkfsh.getYear();//年份
 		Map<String,String> chunaZhipiaoMap =  financeReceiveMoneyMapper.findChunaZhipiao(fiwt.getXianlu(), ldec_cwpzhbh, ls_nf, 0);
 		
-		if(chunaZhipiaoMap==null) return getJsonResult("400", "财凭信息查询不到！");
+		if(chunaZhipiaoMap==null) {
+      return getJsonResult("400", "财凭信息查询不到！");
+    }
 		int chonghongStatus = 0;
 		String ls_ydbhid = fiwt.getYdbh();//运单号
 		Date ld_scsj = fiwt.getScsj();//生成时间
@@ -543,7 +551,9 @@ public class FinanceReceiveMoneyServiceImpl implements FinanceReceiveMoneyServic
 		int li_isreport = fiwt.getIsreport();//是否生成报表
 		String ls_chuna = chunaZhipiaoMap.get("chuna");//出纳姓名
 		String ls_zhipiao = chunaZhipiaoMap.get("zhipiao");//制票姓名
-		if(StringUtils.isEmpty(ls_zhipiao) ) return getJsonResult("400", "财凭信息中未保存制票姓名！");
+		if(StringUtils.isEmpty(ls_zhipiao) ) {
+      return getJsonResult("400", "财凭信息中未保存制票姓名！");
+    }
 		
 		String ls_fazhan = transportOrderCancelMapper.findFazhanByTransportCode(ls_ydbhid);//起始站，发站
 		if(!formFkfsh.getCompanyName().equals(ls_fazhan)){
@@ -622,7 +632,9 @@ public class FinanceReceiveMoneyServiceImpl implements FinanceReceiveMoneyServic
 		ld_edatetime = new Date();
 		boolean lb_ineighthours = false;
 		Double rtn = (new Double(ld_edatetime.getTime() - ld_scsj.getTime()) / 3600000.00);
-		if (rtn < 8) lb_ineighthours = true;
+		if (rtn < 8) {
+      lb_ineighthours = true;
+    }
 		
 		//判断货物是否已提或已送
 		//查询提货签收单表,判断是否提货
@@ -746,18 +758,24 @@ public class FinanceReceiveMoneyServiceImpl implements FinanceReceiveMoneyServic
 			}
 			fiwt = financeReceiveMoneyMapper.findTransportFinance(formFkfsh.getCompanyCode(), formFkfsh.getWealthNo(), formFkfsh.getYear(),0);
 		}
-		if(fiwt==null) return getJsonResult("400", "该运单的财凭不存在或已冲红");
+		if(fiwt==null) {
+      return getJsonResult("400", "该运单的财凭不存在或已冲红");
+    }
 		long ldec_cwpzhbh= Long.valueOf(fiwt.getCwpzhbh());//财凭号
 		String ls_nf = fiwt.getNf();//年份
 		Map<String,String> chunaZhipiaoMap =  financeReceiveMoneyMapper.findChunaZhipiao(fiwt.getXianlu(), ldec_cwpzhbh, ls_nf, 0);
 		
-		if(chunaZhipiaoMap==null) return getJsonResult("400", "财凭信息查询不到！");
+		if(chunaZhipiaoMap==null) {
+      return getJsonResult("400", "财凭信息查询不到！");
+    }
 		int chonghongStatus = 0;
 		String ls_ydbhid = fiwt.getYdbh();//运单号
 		Date ld_scsj = fiwt.getScsj();//生成时间
 		
 		String ls_zhipiao = chunaZhipiaoMap.get("zhipiao");//制票姓名
-		if(StringUtils.isEmpty(ls_zhipiao)) return getJsonResult("400", "财凭信息中未保存制票姓名！");
+		if(StringUtils.isEmpty(ls_zhipiao)) {
+      return getJsonResult("400", "财凭信息中未保存制票姓名！");
+    }
 		
 		List<FinanceReceiveMoneyPrint> financePrintList = financeReceiveMoneyMapper.findReceiveMoneyPrint(fiwt.getXianlu(), ldec_cwpzhbh, ls_nf, 0);
 		if(financePrintList.isEmpty()){
@@ -856,7 +874,9 @@ public class FinanceReceiveMoneyServiceImpl implements FinanceReceiveMoneyServic
 		if(StringUtils.isEmpty(formFkfsh.getTransportCode()) && ObjectUtils.isEmpty(formFkfsh.getWealthNo())){
 			Assert.notNull("formFkfsh.getWealthNo()", true, "运单号和财凭号请任意输入一个！");
 		}else if(ObjectUtils.isEmpty(formFkfsh.getWealthNo())) {//运单号
-			if(StringUtils.isEmpty(formFkfsh.getYear())) Assert.notNull("formFkfsh.getYear()", true, "年份不能为空");
+			if(StringUtils.isEmpty(formFkfsh.getYear())) {
+        Assert.notNull("formFkfsh.getYear()", true, "年份不能为空");
+      }
 			fiwt  = financeReceiveMoneyMapper.findTransportFinanceByTransportCode(formFkfsh.getTransportCode(), 0);
 		}else {//财务凭证号
 			Assert.trueIsWrong("formFkfsh.getCompanyCode()", StringUtils.isEmpty(formFkfsh.getCompanyCode()), "公司编码不能为空");

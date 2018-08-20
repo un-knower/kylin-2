@@ -119,8 +119,9 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
         String after = CommonDateUtil.DateToString(new Date(fchrq.getTime() + 1000), "yyyy-MM-dd HH:mm:ss");
 
         List<BundleReceipt> list = bundleReceiptMapper.getBundleReceiptByChxhAndFchrq(chxh, before, after);
-        if (CollectionUtils.isEmpty(list))
-            throw new ParameterException("查询参数有误");
+        if (CollectionUtils.isEmpty(list)) {
+          throw new ParameterException("查询参数有误");
+        }
 
         list.forEach(receipt -> {
             TransportOrder order = transportOrderService.getTransportOrderByYdbhid(receipt.getYdbhid());
@@ -230,12 +231,15 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
         map.put("sysName", "麒麟");
         map.put("newbill", 1);
         map.put("autoArrive", 0);
-        if (StringUtils.isEmpty(map.getString("daozhan")))
-            map.put("daozhan", map.get("arriveStation"));
-        if (StringUtils.isEmpty(map.getString("dzshhd")))
-            map.put("dzshhd", map.get("freightStation"));
-        if (StringUtils.isEmpty(map.getString("fazhan")))
-            map.put("fazhan", map.getString("company"));
+        if (StringUtils.isEmpty(map.getString("daozhan"))) {
+          map.put("daozhan", map.get("arriveStation"));
+        }
+        if (StringUtils.isEmpty(map.getString("dzshhd"))) {
+          map.put("dzshhd", map.get("freightStation"));
+        }
+        if (StringUtils.isEmpty(map.getString("fazhan"))) {
+          map.put("fazhan", map.getString("company"));
+        }
         map.remove("arriveStation");                        //到站
         map.remove("freightStation");                        //到站网点
         Assert.hasLength("daozhan", map.getString("daozhan"), "目的地不能为空");
@@ -337,8 +341,9 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
                         BigDecimal entruckingzhl = new BigDecimal(ordertail.getString("entruckingzhl"));
                         BigDecimal entruckingtiji = new BigDecimal(ordertail.getString("entruckingtiji"));
                         BigDecimal entruckingjianshu = new BigDecimal(ordertail.getString("entruckingjianshu"));
-                        if (entruckingzhl.compareTo(BigDecimal.ZERO) <= 0 && entruckingtiji.compareTo(BigDecimal.ZERO) <= 0 && entruckingjianshu.compareTo(BigDecimal.ZERO) <= 0)
-                            throw new ParameterException("请输入装载的数量");
+                        if (entruckingzhl.compareTo(BigDecimal.ZERO) <= 0 && entruckingtiji.compareTo(BigDecimal.ZERO) <= 0 && entruckingjianshu.compareTo(BigDecimal.ZERO) <= 0) {
+                          throw new ParameterException("请输入装载的数量");
+                        }
                         Integer ydxzh = ordertail.getInteger("ydxzh");
                         TransportOrderDetail orderDetailByYdbhidAndYdxzh = detailService.getOrderDetailByYdbhidAndYdxzh(ydbhid, ydxzh);
                         map.put("xh", orderDetailByYdbhidAndYdxzh.getXh());
@@ -754,8 +759,9 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
         BigDecimal entruckingtiji = orderDetail.getBigDecimal("entruckingtiji");
         Integer entruckingjianshu = orderDetail.getInteger("entruckingjianshu");
         if (entruckingjianshu > kucunjianshu || entruckingtiji.compareTo(kucuntiji) == 1
-                || entruckingzhl.compareTo(kucunzhl) == 1)
-            return false;
+                || entruckingzhl.compareTo(kucunzhl) == 1) {
+          return false;
+        }
         return true;
     }
 
@@ -764,14 +770,16 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
         incomeMap.put("insNo", "");
         adjunctSomethingMapper.genincomecostno(incomeMap);
         String insNo = incomeMap.get("insNo");
-        if (insNo == null || insNo.length() < 1)
-            throw new BusinessException("成本号生成失败");
+        if (insNo == null || insNo.length() < 1) {
+          throw new BusinessException("成本号生成失败");
+        }
         return insNo;
     }
 
     boolean checkKucun(Integer jianshu, BigDecimal zhl, BigDecimal tiji) {
-        if (jianshu <= 0 && zhl.compareTo(new BigDecimal(0)) != 1 && tiji.compareTo(new BigDecimal(0)) != 1)
-            return false;
+        if (jianshu <= 0 && zhl.compareTo(new BigDecimal(0)) != 1 && tiji.compareTo(new BigDecimal(0)) != 1) {
+          return false;
+        }
         return true;
     }
 
@@ -779,14 +787,18 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
         FiwtResult xianlu = signRecordService.getXianluByYdbhid(ydbhid);
         if (xianlu != null) {
             FkfshResult fkfshResult = signRecordService.getFkfshResult(xianlu);
-            if (fkfshResult.getXianjin_b() || fkfshResult.getYhshr_b() == 1)
-                return "款清";
-            if (fkfshResult.getYshk_b() == 1 && fkfshResult.getHdfk_b() == 0)
-                return "月结";
-            if (fkfshResult.getHdfk_b() == 1)
-                return "货到付款";
-            if (fkfshResult.getYshzhk_b())
-                return "款未付,等通知";
+            if (fkfshResult.getXianjin_b() || fkfshResult.getYhshr_b() == 1) {
+              return "款清";
+            }
+            if (fkfshResult.getYshk_b() == 1 && fkfshResult.getHdfk_b() == 0) {
+              return "月结";
+            }
+            if (fkfshResult.getHdfk_b() == 1) {
+              return "货到付款";
+            }
+            if (fkfshResult.getYshzhk_b()) {
+              return "款未付,等通知";
+            }
         }
         return null;
     }
@@ -795,12 +807,15 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
     public JsonResult queryBundleConvey(String ydbhid, String iType, String companyName) {
         //1.查有没有该运单号
         List<TransportOrder> list = transportOrderMapper.get(ydbhid);
-        if (CollectionUtils.isEmpty(list))
-            return JsonResult.getConveyResult("400", "该运单不存在");
+        if (CollectionUtils.isEmpty(list)) {
+          return JsonResult.getConveyResult("400", "该运单不存在");
+        }
         Integer qszt = adjunctSomethingService.isReceivedByYdbhid(ydbhid);
         // select * from T_QSZT_BASE 签收状态
         if (qszt != null && qszt > 0)  // 已经签收过的运单
-            return JsonResult.getConveyResult("400", "已签收运单不可重复装载");
+        {
+          return JsonResult.getConveyResult("400", "已签收运单不可重复装载");
+        }
 
         //运单在运单表里是唯一的
         TransportOrder order = list.get(0);
@@ -809,18 +824,20 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
         //如果是提货检查库存
         boolean flag = false; //库存是否有数据的标志 ,默认是没有库存的
 
-        if (iType.equals("2") && !companyName.equals(order.getFazhan()))
-            return JsonResult.getConveyResult("400", "只有该运单的发站公司可以做提货装载");
+        if (iType.equals("2") && !companyName.equals(order.getFazhan())) {
+          return JsonResult.getConveyResult("400", "只有该运单的发站公司可以做提货装载");
+        }
 
         //先从库存看是否有库存
         List<KucunEntity> kucunList = adjunctSomethingService.queryKucunByYdbhid(ydbhid);
         Iterator<KucunEntity> iterator = kucunList.iterator();
         while (iterator.hasNext()) {
             KucunEntity kucun = iterator.next();
-            if (checkKucun(Integer.parseInt(kucun.getJianshu()), new BigDecimal(kucun.getZhl()), new BigDecimal(kucun.getTiji())))
-                flag = true; //但凡有一条库存是足够的,那么就代表可以进行装载
-            else
-                iterator.remove();
+            if (checkKucun(Integer.parseInt(kucun.getJianshu()), new BigDecimal(kucun.getZhl()), new BigDecimal(kucun.getTiji()))) {
+              flag = true; //但凡有一条库存是足够的,那么就代表可以进行装载
+            } else {
+              iterator.remove();
+            }
         }
         //提货装载如果库存没有了就不能再装载了
         if ("2".equals(iType)) {
@@ -845,10 +862,11 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
                     Iterator<FenliKucunEntity> fenliiterator = fenLiKucunList.iterator();
                     while (fenliiterator.hasNext()) {
                         FenliKucunEntity next = fenliiterator.next();
-                        if (checkKucun(Integer.parseInt(next.getJianshu()), new BigDecimal(next.getZhl()), new BigDecimal(next.getTiji())))
-                            flag = true; //但凡有一条库存是足够的,那么就代表可以进行装载
-                        else
-                            fenliiterator.remove();
+                        if (checkKucun(Integer.parseInt(next.getJianshu()), new BigDecimal(next.getZhl()), new BigDecimal(next.getTiji()))) {
+                          flag = true; //但凡有一条库存是足够的,那么就代表可以进行装载
+                        } else {
+                          fenliiterator.remove();
+                        }
                     }
                     if (!flag) {
                         return JsonResult.getConveyResult("400", "库存不足或无权限操作该运单");
@@ -863,24 +881,30 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
                     Iterator<FenliKucunEntity> fenliiterator = fenLiKucunList.iterator();
                     while (fenliiterator.hasNext()) {
                         FenliKucunEntity kucun = fenliiterator.next();
-                        if (checkKucun(Integer.parseInt(kucun.getJianshu()), new BigDecimal(kucun.getZhl()), new BigDecimal(kucun.getTiji())))
-                            flag = true; //但凡有一条库存是足够的,那么就代表可以进行装载
-                        else
-                            fenliiterator.remove();
+                        if (checkKucun(Integer.parseInt(kucun.getJianshu()), new BigDecimal(kucun.getZhl()), new BigDecimal(kucun.getTiji()))) {
+                          flag = true; //但凡有一条库存是足够的,那么就代表可以进行装载
+                        } else {
+                          fenliiterator.remove();
+                        }
                     }
-                    if (!flag)
-                        return JsonResult.getConveyResult("400", "库存不足或无权限操作该运单");
+                    if (!flag) {
+                      return JsonResult.getConveyResult("400", "库存不足或无权限操作该运单");
+                    }
                     //如果不是发站公司,肯定是被中转到了该公司的库存表中
                     List<BundleReceipt> bundleReceipt = bundleReceiptMapper.getBundleReceiptByYDBHID(new String[]{ydbhid});
                     for (BundleReceipt receipt : bundleReceipt) {
                         if (companyName.equals(receipt.getDaozhan())) {    //就是本次装载的货物到达该公司的
                             if (receipt.getiType() == 1 && fenLiKucunList.size() == 0)//如果还有分理库存就给配送
-                                return JsonResult.getConveyResult("400", "该运单在" + companyName + "已配送,请核实该运单的物流状态");
+                            {
+                              return JsonResult.getConveyResult("400", "该运单在" + companyName + "已配送,请核实该运单的物流状态");
+                            }
                             if (receipt.getiType() == 0) {    //上一次是干线,那么这一次是干或者配送
                                 String transferFlag = receipt.getTransferFlag();
                                 if (StringUtils.isNotEmpty(transferFlag)) {    //干线的中转标志
                                     if (transferFlag.trim().equals("不中转") && !iType.equals("1"))    //上一次不中转,这次一定是配送
-                                        return JsonResult.getConveyResult("400", "该运单已经做过干线不中转，当前只能进行配送装载");
+                                    {
+                                      return JsonResult.getConveyResult("400", "该运单已经做过干线不中转，当前只能进行配送装载");
+                                    }
                                 }
                             }
                         }
@@ -952,14 +976,16 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
             List<BundleReceiptHomePageEntity> pageEntityList = bundleReceiptMapper.getBundleReceiptHomePageEntityByMap(entity.getChxh(), entity.getFchrq());
             pageEntityList.forEach(subentity -> {
                 String fhdwmch;
-                if (StringUtils.isEmpty((fhdwmch = subentity.getFhdwmch())))
-                    fhdwmch = transportOrderMapper.getTransportOrderByYdbhid(subentity.getYdbhid()).getFhdwmch();
+                if (StringUtils.isEmpty((fhdwmch = subentity.getFhdwmch()))) {
+                  fhdwmch = transportOrderMapper.getTransportOrderByYdbhid(subentity.getYdbhid()).getFhdwmch();
+                }
                 subentity.setFhdwmch(fhdwmch);
             });
             entity = pageEntityList.get(0);
             //本来只是为了适应tms自动为空,后来又因分理装载的成本组合问题再加一个判断
-            if (entity.getBuildIncome() == null || entity.getBuildIncome() == 0)
-                entity.setBuildIncome(bundleReceiptMapper.countIncome(pageEntityList.get(0)) <= 0 ? 0 : 1);
+            if (entity.getBuildIncome() == null || entity.getBuildIncome() == 0) {
+              entity.setBuildIncome(bundleReceiptMapper.countIncome(pageEntityList.get(0)) <= 0 ? 0 : 1);
+            }
             //--end
             entity.setDetailData(pageEntityList);
             resultCollection.add(entity);
@@ -984,9 +1010,9 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
         List<BundleReceipt> list = bundleReceiptMapper.getBundleReceiptByChxhAndFchrq
                 (entity.getString("chxh"), entity.getString("fchrq"), entity.getString("end"));
 
-        if (CollectionUtils.isEmpty(list))
-            return JsonResult.getConveyResult("400", "该装载有异常,请联系管理员");
-        else {
+        if (CollectionUtils.isEmpty(list)) {
+          return JsonResult.getConveyResult("400", "该装载有异常,请联系管理员");
+        } else {
             BundleReceipt receipt = list.get(0);
             TransportOrder order = transportOrderMapper.getTransportOrderByYdbhid(receipt.getYdbhid());
             Integer rightNum = rightMapper.getRightNum(AuthorticationConstant.EDIT_COST, entity.getString("account"));
@@ -995,8 +1021,9 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
             }
             rightNum = rightNum == null ? 0 : rightNum;
             if (rightNum < 3) {
-                if (!company.equals(receipt.getFazhan()))
-                    return JsonResult.getConveyResult("400", "不能操作其他公司的装载成本");
+                if (!company.equals(receipt.getFazhan())) {
+                  return JsonResult.getConveyResult("400", "不能操作其他公司的装载成本");
+                }
 //				if(receipt.getiType() != 2 && !company.equals(receipt.getFazhan())) 
 //					return JsonResult.getConveyResult("400", "非本公司的装载清单,无法修改");
                 Date lrsjafterhalfhour = new Date(receipt.getLrsj().getTime() + 30 * 60 * 1000);
@@ -1005,7 +1032,9 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
                 rightNum = rightMapper.getRightNum(AuthorticationConstant.EDIT_COST, entity.getString("account"));
                 if (rightNum == null || rightNum < 1) {        //无财凭冲红权限
                     if (new Date().compareTo(lrsjafterhalfhour) == 1)    //三十分钟之内不用判断权限
-                        return JsonResult.getConveyResult("400", "无权限,超过半小时如有需要修改成本,请联系管理员申请权限");
+                    {
+                      return JsonResult.getConveyResult("400", "无权限,超过半小时如有需要修改成本,请联系管理员申请权限");
+                    }
                 }
             }
         }
@@ -1055,8 +1084,9 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
     @Override
     public JsonResult createIncome(RequestJsonEntity entity) throws ParseException {
         Integer rightNum = rightMapper.getRightNum(AuthorticationConstant.HCZZQD, entity.getString("account"));
-        if (rightNum == null || rightNum < 1)
-            return JsonResult.getConveyResult("400", AuthorticationConstant.MESSAGE);
+        if (rightNum == null || rightNum < 1) {
+          return JsonResult.getConveyResult("400", AuthorticationConstant.MESSAGE);
+        }
         String company = entity.getString("company");
 
         Date fchrq = entity.getDate("fchrq");
@@ -1066,16 +1096,18 @@ public class BundleReceiptServiceImpl implements BundleReceiptService {
         List<BundleReceipt> list = bundleReceiptMapper.getBundleReceiptByChxhAndFchrq
                 (entity.getString("chxh"), entity.getString("fchrq"), entity.getString("end"));
 
-        if (CollectionUtils.isEmpty(list))
-            return JsonResult.getConveyResult("400", "该装载有异常,请联系管理员");
+        if (CollectionUtils.isEmpty(list)) {
+          return JsonResult.getConveyResult("400", "该装载有异常,请联系管理员");
+        }
         BundleReceipt bundlereceipt = list.get(0);
         TransportOrder order = transportOrderMapper.getTransportOrderByYdbhid(bundlereceipt.getYdbhid());
         //提货的随便进行
         if (bundlereceipt.getiType() == 2 && !company.equals(order.getFazhan())) {    //提货,并且是当前登陆公司可以装载
             return JsonResult.getConveyResult("400", "提货装载请在运单的始发站做成本");
         }
-        if (bundlereceipt.getiType() != 2 && !company.equals(bundlereceipt.getFazhan()))
-            return JsonResult.getConveyResult("400", "不能操作其他公司的装载成本");
+        if (bundlereceipt.getiType() != 2 && !company.equals(bundlereceipt.getFazhan())) {
+          return JsonResult.getConveyResult("400", "不能操作其他公司的装载成本");
+        }
 
         entity.put("num", 1);
         bundleReceiptMapper.modifyHczzqd_sourceIncome(entity);

@@ -9,8 +9,9 @@ public class UtilHelper {
 	private static volatile ObjectMapper defaultObjectMapper;
 	
 	public synchronized static ObjectMapper getdefaultObjectMapper() {
-		if(defaultObjectMapper == null) 
-			defaultObjectMapper = new ObjectMapper();
+		if(defaultObjectMapper == null) {
+      defaultObjectMapper = new ObjectMapper();
+    }
 		return defaultObjectMapper;
 	}
 	

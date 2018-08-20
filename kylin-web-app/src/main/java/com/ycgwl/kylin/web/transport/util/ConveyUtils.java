@@ -396,16 +396,18 @@ public class ConveyUtils {
 		cell14_2.setCellValue(entity.getHyy());
 		HSSFCell cell14_3 = row.createCell(i++);
 		Integer releaseWaiting = entity.getReleaseWaiting();
-		if(releaseWaiting != null)
-			cell14_3.setCellValue(releaseWaiting);
+		if(releaseWaiting != null) {
+      cell14_3.setCellValue(releaseWaiting);
+    }
 		HSSFCell cell14_4 = row.createCell(i++);
 		cell14_4.setCellValue(entity.getYsfs());
 
 
 		HSSFCell cell15 = row.createCell(i++);
 		Integer daodatianshu = entity.getDaodatianshu();
-		if(daodatianshu != null)
-			cell15.setCellValue(daodatianshu);
+		if(daodatianshu != null) {
+      cell15.setCellValue(daodatianshu);
+    }
 		HSSFCell cell16 = row.createCell(i++);
 		cell16.setCellValue(entity.getIsfd());
 		HSSFCell cell17 = row.createCell(i++);
@@ -428,8 +430,9 @@ public class ConveyUtils {
 		cell25.setCellValue(entity.getXh());
 		HSSFCell cell26 = row.createCell(i++);
 		Integer jianshu = entity.getJianshu();
-		if(jianshu != null)
-			cell26.setCellValue(jianshu);
+		if(jianshu != null) {
+      cell26.setCellValue(jianshu);
+    }
 		HSSFCell cell26_5 = row.createCell(i++);
 		cell26_5.setCellValue(entity.getBzh());
 		HSSFCell cell27 = row.createCell(i++);
@@ -535,14 +538,18 @@ public class ConveyUtils {
 		row.createCell(i++).setCellValue(isfd ==1 ?"是":"否"); 		
 		Integer ywlx = handleToInteger(entity.get("ywlx"));
 		String ywlxPrint = "";
-		if(ywlx == 2)
-			ywlxPrint ="特快(2)";
-		if(ywlx == 1)
-			ywlxPrint ="快件(1)";
-		if(ywlx == 0)
-			ywlxPrint ="普件(0)";
-		if(ywlx == -1)
-			ywlxPrint ="慢件(-1)";
+		if(ywlx == 2) {
+      ywlxPrint ="特快(2)";
+    }
+		if(ywlx == 1) {
+      ywlxPrint ="快件(1)";
+    }
+		if(ywlx == 0) {
+      ywlxPrint ="普件(0)";
+    }
+		if(ywlx == -1) {
+      ywlxPrint ="慢件(-1)";
+    }
 		row.createCell(i++).setCellValue(ywlxPrint); 
 		Integer jffs = handleToInteger(entity.get("jffs"));
 		BigDecimal zhl = handleToBigDecimal(entity.get("ZHL"));
@@ -593,10 +600,12 @@ public class ConveyUtils {
 		row.createCell(i++).setCellValue(handleToString(entity.get("ky_kind")));
 	}
 	public static Boolean handleToBoolean(Object o) {
-		if(o == null) 
-			return false;
-		if(o instanceof Boolean)
-			return (Boolean) o;
+		if(o == null) {
+      return false;
+    }
+		if(o instanceof Boolean) {
+      return (Boolean) o;
+    }
 		if(o instanceof Integer) {
 			Integer flag = (Integer) o;
 			return flag == 1?true:false;
@@ -604,29 +613,36 @@ public class ConveyUtils {
 		return false;
 	}
 	public static String handleToString(Object o) {
-		if(o == null)
-			return "";
-		if(o instanceof String)
-			return (String) o;
+		if(o == null) {
+      return "";
+    }
+		if(o instanceof String) {
+      return (String) o;
+    }
 		return String.valueOf(o);
 	}
 	public static Integer handleToInteger(Object o) {
-		if(o == null) 
-			return 0;
-		if(o instanceof Integer)
-			return (Integer) o;
+		if(o == null) {
+      return 0;
+    }
+		if(o instanceof Integer) {
+      return (Integer) o;
+    }
 		return Integer.parseInt(handleToString(o));
 	}
 	public static BigDecimal handleToBigDecimal(Object o) {
-		if(o == null) 
-			return BigDecimal.ZERO;
-		if(o instanceof BigDecimal)
-			return (BigDecimal) o;
+		if(o == null) {
+      return BigDecimal.ZERO;
+    }
+		if(o instanceof BigDecimal) {
+      return (BigDecimal) o;
+    }
 		return new BigDecimal(handleToString(o));
 	}
 	public static Date handleToDate(Object o) {
-		if(o instanceof Date || o instanceof Timestamp)
-			return (Date) o;
+		if(o instanceof Date || o instanceof Timestamp) {
+      return (Date) o;
+    }
 		return null;
 	}
 }

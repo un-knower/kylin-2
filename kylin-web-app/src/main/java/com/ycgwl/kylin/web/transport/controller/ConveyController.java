@@ -597,15 +597,17 @@ public class ConveyController extends BaseController {
 				Collection<TransportOrderDetail> detail = orderDetailService.queryTransportOrderDetailByYdbhid(ydbhid);
 				Map<String, String> describe = BeanUtils.describe(transportOrder);
 				for (Entry<String, String> entry : describe.entrySet()) {
-					if(StringUtils.isEmpty(entry.getValue()))
-						entry.setValue("");
+					if(StringUtils.isEmpty(entry.getValue())) {
+            entry.setValue("");
+          }
 				}
 				Map<String,Object> finance = Maps.newHashMap();
 				ReleaseWaiting releaseWaiting = adjunctSomethingService.getReleaseWaitingByYdbhid(ydbhidArray);
-				if (releaseWaiting != null) 
-					finance.put("releaseWaiting", releaseWaiting.getDdfhzt());
-				else 
-					finance.put("releaseWaiting", 0);
+				if (releaseWaiting != null) {
+          finance.put("releaseWaiting", releaseWaiting.getDdfhzt());
+        } else {
+          finance.put("releaseWaiting", 0);
+        }
 				
 				FinanceCertify certify = orderService.getFinanceCertifyByYdbhid(ydbhid);
 				if(certify == null){
@@ -645,15 +647,17 @@ public class ConveyController extends BaseController {
 			JsonResult result = JsonResult.getConveyResult("200", "查询成功");
 			Map<String, String> describe = BeanUtils.describe(transportOrder);
 			for (Entry<String, String> entry : describe.entrySet()) {
-				if(StringUtils.isEmpty(entry.getValue()))
-					entry.setValue("");
+				if(StringUtils.isEmpty(entry.getValue())) {
+          entry.setValue("");
+        }
 			}
 			Map<String,Object> finance = Maps.newHashMap();
 			ReleaseWaiting releaseWaiting = adjunctSomethingService.getReleaseWaitingByYdbhid(ydbhid);
-			if (releaseWaiting != null) 
-				finance.put("releaseWaiting", releaseWaiting.getDdfhzt());
-			else 
-				finance.put("releaseWaiting", 0);
+			if (releaseWaiting != null) {
+        finance.put("releaseWaiting", releaseWaiting.getDdfhzt());
+      } else {
+        finance.put("releaseWaiting", 0);
+      }
 			
 			FinanceCertify certify = orderService.getFinanceCertifyByYdbhid(ydbhid);
 			if(certify == null){
@@ -934,24 +938,28 @@ public class ConveyController extends BaseController {
 				request.getSession().setAttribute(LASTSUCCESSCONVEY, Lists.newArrayList(entity));
 			}else {
 				List<BatchTransportOrderEntity> sucessList = (List<BatchTransportOrderEntity>) request.getSession().getAttribute(LASTSUCCESSCONVEY);
-				if(sucessList == null) 
-					request.getSession().setAttribute(LASTSUCCESSCONVEY, Lists.newArrayList(entity));
-				else 
-					sucessList.add(entity);
+				if(sucessList == null) {
+          request.getSession().setAttribute(LASTSUCCESSCONVEY, Lists.newArrayList(entity));
+        } else {
+          sucessList.add(entity);
+        }
 			}
 		} catch (Exception e) {
-			if(e instanceof BusinessException)
-				entity.setErrorMsg(((BusinessException)e).getTipMessage());
-			if(e instanceof ParameterException)
-				entity.setErrorMsg(((ParameterException)e).getTipMessage());
+			if(e instanceof BusinessException) {
+        entity.setErrorMsg(((BusinessException)e).getTipMessage());
+      }
+			if(e instanceof ParameterException) {
+        entity.setErrorMsg(((ParameterException)e).getTipMessage());
+      }
 			if(flag) {	//新数据
 				request.getSession().setAttribute(LASTFALSECONVEY, Lists.newArrayList(entity));
 			}else {
 				List<BatchTransportOrderEntity> falseList = (List<BatchTransportOrderEntity>) request.getSession().getAttribute(LASTFALSECONVEY);
-				if(falseList == null) 
-					request.getSession().setAttribute(LASTFALSECONVEY, Lists.newArrayList(entity));
-				else 
-					falseList.add(entity);
+				if(falseList == null) {
+          request.getSession().setAttribute(LASTFALSECONVEY, Lists.newArrayList(entity));
+        } else {
+          falseList.add(entity);
+        }
 			}
 			JsonResult result = JsonResult.getConveyResult("200", "失败,请检查数据后重新导入");
 			result.put("success", false);

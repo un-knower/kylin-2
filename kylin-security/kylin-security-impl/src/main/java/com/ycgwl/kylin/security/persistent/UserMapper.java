@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- * 
+ *
  * <p>Title: UserMapper.java</p> 
  *@date 2018年6月28日 
  *@author ltao 112656
@@ -27,7 +27,7 @@ public interface UserMapper extends BaseMapper<User> {
 
 	/**
 	 * 查询用户的所有权限
-	 * @param userId  用户ID
+	 * @param grid  用户ID
 	 */
 	List<String> queryAllPerms(String grid);
 	

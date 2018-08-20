@@ -17,7 +17,8 @@ if(window.top==window.self){/*判断当前窗口是否是顶层窗口*/
 			content: '登录失效，将影响您的操作<br/>是否重新登陆？',
 			btn: ['是','否'],
 			yes: function(){
-				window.top.location.href = "${pageContext.request.contextPath}/views/loginPage.jsp";
+				window.top.location.href =
+                    "${pageContext.request.contextPath}/views/loginPage.jsp";
 			},
 			btn2: function(){
 				

@@ -54,8 +54,9 @@ public class UndoLoadingServiceImpl implements UndoLoadingService{
 	@Override
 	public JsonResult queryBundle(String ydbhid) throws Exception {
 		List<BundleReceipt> receiptList = receiptService.queryBundleReceiptByYdbhidDesc(ydbhid);
-		if(CollectionUtils.isEmpty(receiptList)) 
-			return JsonResult.getConveyResult("400", "不存在该运单的装载清单");
+		if(CollectionUtils.isEmpty(receiptList)) {
+      return JsonResult.getConveyResult("400", "不存在该运单的装载清单");
+    }
 		TransportOrder order = orderService.getTransportOrderByYdbhid(ydbhid);
 		receiptList.forEach(bundleReceipt->{
 			bundleReceipt.setYdbeginplace(order.getFazhan());
@@ -81,8 +82,9 @@ public class UndoLoadingServiceImpl implements UndoLoadingService{
 	@Transactional
 	public JsonResult deleteBundle(String company,String account,String grid,List<String> xuhaos) throws ParameterException,BusinessException,Exception{
 		 Integer rightNum = rightMapper.getRightNum(AuthorticationConstant.HCZZQD_CANCEL, account);
-		 if(rightNum == null || rightNum <1) 
-			 throw new BusinessException(AuthorticationConstant.MESSAGE);
+		 if(rightNum == null || rightNum <1) {
+       throw new BusinessException(AuthorticationConstant.MESSAGE);
+     }
 		 
 		 //根据运单号查询出所有的装载清单
 		 List<BundleReceipt> allBundleList = null;
@@ -97,7 +99,9 @@ public class UndoLoadingServiceImpl implements UndoLoadingService{
 				 }
 				for (BundleReceipt bundleReceipt : allBundleList) {
 					isNewBill = (bundleReceipt.getNewbill()!=null&&bundleReceipt.getNewbill()==1)?true:false;//通过装载清单序号来查分理库存
-					if(isNewBill == false) break;//只要有一个不是就不是
+					if(isNewBill == false) {
+            break;//只要有一个不是就不是
+          }
 				}
 			 }
 			Integer isReceived = adjunctSomethingService.isReceivedByYdbhid(ydbhid);
@@ -108,18 +112,22 @@ public class UndoLoadingServiceImpl implements UndoLoadingService{
 			if(checkuserdelrec == 1){
 				throw new ParameterException("存在提货单或送货派车单，请先撤销提货单或送货派车单"); 
 			}
-			if(rightNum ==1 && !HalfMonthWithIn(receipt.getFchrq(), 15L))	
-				throw new ParameterException("权限不足,仅能撤销15天之内的装载记录"); 
+			if(rightNum ==1 && !HalfMonthWithIn(receipt.getFchrq(), 15L)) {
+        throw new ParameterException("权限不足,仅能撤销15天之内的装载记录");
+      }
 			
-			if(receipt.getYdzh()>0) 
-				throw new ParameterException("该装载已到站："+receipt.getDaozhan()+"，请联系到站公司做撤销到货后再撤销装载!");
+			if(receipt.getYdzh()>0) {
+        throw new ParameterException("该装载已到站："+receipt.getDaozhan()+"，请联系到站公司做撤销到货后再撤销装载!");
+      }
 			//时间:2018-01-31:增加一个逻辑判断,如果有做过提货/送货单的话不可以撤销
 			Integer countTiHuodan = undoLoadingMapper.CountTiHuodan(ydbhid);
 			Integer countSonghuoHuodan = undoLoadingMapper.CountSonghuoHuodan(ydbhid);
-			if(countTiHuodan != null && countTiHuodan >0)
-				throw new ParameterException("该运单已经生成提货签收单,无权限删除!");
-			if(countSonghuoHuodan != null && countSonghuoHuodan >0)
-				throw new ParameterException("该运单已经生成送货签收单,无权限删除!");
+			if(countTiHuodan != null && countTiHuodan >0) {
+        throw new ParameterException("该运单已经生成提货签收单,无权限删除!");
+      }
+			if(countSonghuoHuodan != null && countSonghuoHuodan >0) {
+        throw new ParameterException("该运单已经生成送货签收单,无权限删除!");
+      }
 			//所有判断已经结束,正式开始删除装载清单操作
 			//1.恢复库存表的数据
 //				String zhchrq = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(receipt.getZhchrq());
@@ -247,19 +255,24 @@ public class UndoLoadingServiceImpl implements UndoLoadingService{
 			String ydbhid = receipt.getYdbhid();
 			Integer isReceived = adjunctSomethingService.isReceivedByYdbhid(ydbhid);
 			
-			if(isReceived !=null && isReceived > 0)	
-				throw new ParameterException("运单:"+ ydbhid + "已签收运单无法撤销");	
-			if(adjunctSomethingService.checkuserdelrec(ydbhid) == 1)
-				throw new ParameterException("存在提货单或送货派车单，请先撤销提货单或送货派车单"); 
-			if(receipt.getYdzh() != null && receipt.getYdzh()>0) 
-				throw new ParameterException("运单已经到货,请联系到站公司做撤销到货操作后再进行装载撤销!");
+			if(isReceived !=null && isReceived > 0) {
+        throw new ParameterException("运单:"+ ydbhid + "已签收运单无法撤销");
+      }
+			if(adjunctSomethingService.checkuserdelrec(ydbhid) == 1) {
+        throw new ParameterException("存在提货单或送货派车单，请先撤销提货单或送货派车单");
+      }
+			if(receipt.getYdzh() != null && receipt.getYdzh()>0) {
+        throw new ParameterException("运单已经到货,请联系到站公司做撤销到货操作后再进行装载撤销!");
+      }
 			//时间:2018-01-31:增加一个逻辑判断,如果有做过提货/送货单的话不可以撤销
 			Integer countTiHuodan = undoLoadingMapper.CountTiHuodan(ydbhid);
 			Integer countSonghuoHuodan = undoLoadingMapper.CountSonghuoHuodan(ydbhid);
-			if(countTiHuodan != null && countTiHuodan >0)
-				throw new ParameterException("该运单已经生成提货签收单,无权限删除!");
-			if(countSonghuoHuodan != null && countSonghuoHuodan >0)
-				throw new ParameterException("该运单已经生成送货签收单,无权限删除!");
+			if(countTiHuodan != null && countTiHuodan >0) {
+        throw new ParameterException("该运单已经生成提货签收单,无权限删除!");
+      }
+			if(countSonghuoHuodan != null && countSonghuoHuodan >0) {
+        throw new ParameterException("该运单已经生成送货签收单,无权限删除!");
+      }
 			//所有判断已经结束,正式开始删除装载清单操作
 			//1.恢复库存表的数据
 			if(receipt.getiType()==2) {		//提货

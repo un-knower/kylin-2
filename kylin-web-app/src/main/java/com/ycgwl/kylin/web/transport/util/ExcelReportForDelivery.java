@@ -34,8 +34,9 @@ public class ExcelReportForDelivery {
 	 * @throws FileNotFoundException 
 	 */
 	public static HSSFWorkbook BuildDeliveryWorkSheet(List<Map<String,Object>> list,String excelPath) throws FileNotFoundException, IOException{
-		if(CollectionUtils.isEmpty(list)) 
-			throw new ParameterException("无数据,无意义的操作");
+		if(CollectionUtils.isEmpty(list)) {
+      throw new ParameterException("无数据,无意义的操作");
+    }
 		HSSFWorkbook workBook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(excelPath)));
 		HSSFSheet sheet = workBook.getSheetAt(0);
 		for (int i = 0; i < list.size(); i++) {
@@ -82,8 +83,9 @@ public class ExcelReportForDelivery {
 	}
 	
 	public static HSSFWorkbook BuildDeliveryDriverWorkSheet(List<Map<String, Object>> list, String excelPath) throws FileNotFoundException, IOException {
-		if(CollectionUtils.isEmpty(list)) 
-			throw new ParameterException("无数据,无意义的操作");
+		if(CollectionUtils.isEmpty(list)) {
+      throw new ParameterException("无数据,无意义的操作");
+    }
 		HSSFWorkbook workBook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(excelPath)));
 		HSSFSheet sheet = workBook.getSheetAt(0);
 		for (int i = 0; i < list.size() ; i++) {
@@ -137,8 +139,9 @@ public class ExcelReportForDelivery {
 		return workBook;
 	}
 	public static String checkValue(Object o) {
-		if(o == null)
-			return "";
+		if(o == null) {
+      return "";
+    }
 		return String.valueOf(o);
 	}
 	
@@ -201,8 +204,9 @@ public class ExcelReportForDelivery {
 	@SuppressWarnings("unlikely-arg-type")
 	public static HSSFWorkbook BuildBundleArriveWorkSheet(List<BundleArriveEntity> list,
 			String excelPath,List<TransportBasicData> basicList) throws FileNotFoundException, IOException {
-		if(CollectionUtils.isEmpty(list)) 
-			throw new ParameterException("无数据,无意义的操作");
+		if(CollectionUtils.isEmpty(list)) {
+      throw new ParameterException("无数据,无意义的操作");
+    }
 		HSSFWorkbook workBook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(excelPath)));
 		HSSFSheet sheet = workBook.getSheetAt(0);
 		
@@ -280,9 +284,9 @@ public class ExcelReportForDelivery {
 			for (TransportBasicData transportBasicData : basicList) {
 				String name = transportBasicData.getName();
 				
-				if(result.containsKey(name))
-					result.get(name).put(transportBasicData.getKeyValue(), transportBasicData.getKeyName());
-				else {
+				if(result.containsKey(name)) {
+          result.get(name).put(transportBasicData.getKeyValue(), transportBasicData.getKeyName());
+        } else {
 					HashMap<String, String> submap = new HashMap<String,String>();
 					submap.put(transportBasicData.getKeyValue(), transportBasicData.getKeyName());
 					result.put(name, submap);

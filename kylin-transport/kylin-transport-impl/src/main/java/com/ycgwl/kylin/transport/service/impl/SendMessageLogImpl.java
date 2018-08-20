@@ -42,8 +42,9 @@ public class SendMessageLogImpl implements ISendMessageLogService{
 				Integer jianshuhj = 0;
 				TransportOrderDetail detail = null;
 				for (TransportOrderDetail orderdetail : transportOrder.getDetailList()) {
-					if(detail == null)
-						detail = orderdetail;
+					if(detail == null) {
+            detail = orderdetail;
+          }
 					jianshuhj += orderdetail.getJianshu();
 				}
 				detail.setJianshu(jianshuhj);

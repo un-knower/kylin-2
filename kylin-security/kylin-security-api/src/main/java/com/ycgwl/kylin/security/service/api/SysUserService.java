@@ -29,7 +29,7 @@ public interface SysUserService {
     /**
      * 查询用户的所有权限
      *
-     * @param userId 用户ID
+     * @param  grid
      */
     List<String> queryAllPerms(String grid);
 

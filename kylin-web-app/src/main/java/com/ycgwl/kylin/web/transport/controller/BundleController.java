@@ -178,7 +178,9 @@ public class BundleController extends BaseController {
 			BundleReceipt bundleReceipt = bundleReceiptService.getBundleReceipt(chxhresult, fchrq);
 			try{
 				if(bundleReceipt.getElseCost()==null)	//从tms录单的时候,其他成本并不保存在装载表中,需要从成本表中获取
-					bundleReceipt.setElseCost(adjunctSomethingService.getElseCost(chxhresult,bundleReceipt.getZhchrq()));
+        {
+          bundleReceipt.setElseCost(adjunctSomethingService.getElseCost(chxhresult,bundleReceipt.getZhchrq()));
+        }
 			}catch(Exception exp){
 				bundleReceipt.setElseCost(new BigDecimal(0));//防止tms录单的时候可能会报错,如果报错就设置成0
 			}
@@ -430,22 +432,25 @@ public class BundleController extends BaseController {
 		String[] fcdates = DateRangeUtil.finds(searchModel.getFcdate(), 2);
 		if (fcdates.length > 0) {
 			receiptsearch.setFchstarttime(fcdates[0]);
-			if (fcdates.length > 1) 
-				receiptsearch.setFchendtime(LocalDate.parse(fcdates[1]).plusDays(1).toString());
+			if (fcdates.length > 1) {
+        receiptsearch.setFchendtime(LocalDate.parse(fcdates[1]).plusDays(1).toString());
+      }
 		}
 		// 预计达到时间
 		String[] dddates = DateRangeUtil.finds(searchModel.getDddate(), 2);
 		if (dddates.length > 0) {
 			receiptsearch.setYjstarttime(dddates[0]);
-			if (dddates.length > 1) 
-				receiptsearch.setYjendtime(LocalDate.parse(dddates[1]).plusDays(1).toString());
+			if (dddates.length > 1) {
+        receiptsearch.setYjendtime(LocalDate.parse(dddates[1]).plusDays(1).toString());
+      }
 		}
 		// 录入时间
 		String[] lrdates = DateRangeUtil.finds(searchModel.getLrdate(), 2);
 		if (lrdates.length > 0) {
 			receiptsearch.setLrsjstarttime(lrdates[0]);
-			if (lrdates.length > 1) 
-				receiptsearch.setLrsjendtime(LocalDate.parse(lrdates[1]).plusDays(1).toString());
+			if (lrdates.length > 1) {
+        receiptsearch.setLrsjendtime(LocalDate.parse(lrdates[1]).plusDays(1).toString());
+      }
 		}
 		return receiptsearch;
 	}

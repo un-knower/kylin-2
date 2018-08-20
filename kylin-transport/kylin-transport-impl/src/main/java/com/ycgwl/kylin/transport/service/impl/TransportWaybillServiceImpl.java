@@ -342,8 +342,9 @@ public class TransportWaybillServiceImpl implements TransportWaybillService {
 		 * transportOrder.getDhAddr()); } else {
 		 * transportOrder.setEndPlacename(transportOrder.getDhAddr()); }
 		 */
-		if (transportOrder.getFhshj() == null)
-			transportOrder.setFhshj(new Date());
+		if (transportOrder.getFhshj() == null) {
+      transportOrder.setFhshj(new Date());
+    }
 		String date = DateFormatUtils.format(transportOrder.getFhshj(), "MMdd");// 取发货时间的月和日
 		String fazhanShort = adjunctSomethingMapper.getCompanyByName(transportOrder.getFazhan()).getCompanyShort();// 获取发站简称
 		String daozhanShort = adjunctSomethingMapper.getCompanyByName(transportOrder.getDaozhan()).getCompanyShort();// 获取到站简称

@@ -79,12 +79,15 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 		ShqsdResult payInfo = signRecordService.getReachAfterPayInfo(ydbhid);
 		if(payInfo.getDsk() > 0 || payInfo.getHdfk() > 0 || fwfsandcar > 0) {
 			FinancialReceiptsMaster financial = financialReceiptsService.queryFinancialReceiptsMasterByYdbhid(ydbhid);
-			if(financial == null )
-				throw new ParameterException("此运单号为"+ydbhid+",要求到站付款或代收款,在分理之前必须生成分理收据,请确认");
+			if(financial == null ) {
+        throw new ParameterException("此运单号为"+ydbhid+",要求到站付款或代收款,在分理之前必须生成分理收据,请确认");
+      }
 			//2018-04-10： jira:943 提货单送货单：判断分理收据是否交钱
 			//判断是否收过钱
 			if(financial.getIsShq() != 1)	//没收过钱
-					throw new ParameterException("此运单号为"+ydbhid+",已生成分理收据,请进行分理数据交钱后再来");
+      {
+        throw new ParameterException("此运单号为"+ydbhid+",已生成分理收据,请进行分理数据交钱后再来");
+      }
 		}
 
 	}
@@ -96,46 +99,56 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 	public Integer getdispatchAdvice(String ydbhid) {
 		HashMap<String, Short> result = deliveryOperateMapper.getdispatchAdvice(ydbhid);
 		if(result == null || result.getOrDefault("ddfhzt", DEFAULT_SHORT) == 0)		//不存在代表不用等待放货通知
-			return 2;
+    {
+      return 2;
+    }
 		return result.getOrDefault("tzfhzt", DEFAULT_SHORT).intValue();
 	}
 
 	@Override
 	public JsonResult getBillOfdeliveryByYdbhid(List<String> xuhaos,String account,String username,String company) throws ParameterException,BusinessException,Exception {
 		Integer rightNum = rightMapper.getRightNum(AuthorticationConstant.THQSHD,account);
-		if(rightNum == null || rightNum < 1) 
-			return JsonResult.getConveyResult("400", AuthorticationConstant.MESSAGE);
+		if(rightNum == null || rightNum < 1) {
+      return JsonResult.getConveyResult("400", AuthorticationConstant.MESSAGE);
+    }
 		
 		String ydbhid = null;
 		for (String xuhao : xuhaos) {
 			BundleReceipt receipt = receiptService.getBundleReceiptByXuhao(xuhao.trim());
-			if(ydbhid == null)
-				ydbhid = receipt.getYdbhid();
-			else if(!ydbhid .equals(receipt.getYdbhid()))
-				throw new ParameterException("请保持运单统一");
+			if(ydbhid == null) {
+        ydbhid = receipt.getYdbhid();
+      } else if(!ydbhid .equals(receipt.getYdbhid())) {
+        throw new ParameterException("请保持运单统一");
+      }
 			String ydxzh = String.valueOf(receipt.getYdxzh());
 			//1.查询装载是否是装载到本公司的记录
-			if( !(company .equals(receipt.getDaozhan())  || company .equals(receipt.getFazhan())))
-				throw new ParameterException("该货物是装载到站"+receipt.getDaozhan()+"，发站是"+receipt.getFazhan()+"，只有发站到站公司可以生成提货单！");
+			if( !(company .equals(receipt.getDaozhan())  || company .equals(receipt.getFazhan()))) {
+        throw new ParameterException("该货物是装载到站"+receipt.getDaozhan()+"，发站是"+receipt.getFazhan()+"，只有发站到站公司可以生成提货单！");
+      }
 			//2.查看是否存在提货签收单
 			Integer deliveryNumber = DeliveryNumber(ydbhid, ydxzh);
-			if( deliveryNumber!=null &&deliveryNumber ==2 )
-				throw new ParameterException("系统检测到运单号" + ydbhid+ "细则号" + ydxzh + "相应的送货单已生成，禁止继续生成！");
+			if( deliveryNumber!=null &&deliveryNumber ==2 ) {
+        throw new ParameterException("系统检测到运单号" + ydbhid+ "细则号" + ydxzh + "相应的送货单已生成，禁止继续生成！");
+      }
 			Integer dispatchAdvice = getdispatchAdvice(ydbhid);
-			if(dispatchAdvice!=2 || dispatchAdvice <0)
-				throw new ParameterException(ydbhid + "该票货需要等客户通知才能放货！");
+			if(dispatchAdvice!=2 || dispatchAdvice <0) {
+        throw new ParameterException(ydbhid + "该票货需要等客户通知才能放货！");
+      }
 			//3.判断是否已经到站
-			if(receipt.getYdzh() ==0)
-				throw new ParameterException("运单号为 "+ydbhid+",细则号为 "+ydxzh+"的该货物还未到，不能生成提货签收单！");
+			if(receipt.getYdzh() ==0) {
+        throw new ParameterException("运单号为 "+ydbhid+",细则号为 "+ydxzh+"的该货物还未到，不能生成提货签收单！");
+      }
 			//4.是否生成运输受理单
 			FiwtResult fiwtResult = signRecordService.getXianluByYdbhid(ydbhid);
-			if(fiwtResult == null || StringUtils.isEmpty(fiwtResult.getXianlu())) 
-				throw new ParameterException("运单号为 "+ydbhid+"的货物还未生成财务凭证，不能生成提货签收单！");
+			if(fiwtResult == null || StringUtils.isEmpty(fiwtResult.getXianlu())) {
+        throw new ParameterException("运单号为 "+ydbhid+"的货物还未生成财务凭证，不能生成提货签收单！");
+      }
 			//5.是否款未付并且未放货通知
 			FkfshResult fkfshResult = signRecordService.getFkfshResult(fiwtResult);
 			if(fkfshResult!= null  && fkfshResult.getYshzhk_b()) {
-				if(deliveryOperateMapper.getUnpaidByYdbhid(ydbhid) == 0)
-					throw new ParameterException("运单号为 "+ydbhid+"的货物是款未付并且还未发放货通知，不能生成提货签收单！");
+				if(deliveryOperateMapper.getUnpaidByYdbhid(ydbhid) == 0) {
+          throw new ParameterException("运单号为 "+ydbhid+"的货物是款未付并且还未发放货通知，不能生成提货签收单！");
+        }
 			}
 			TransportOrder order = orderService.getTransportOrderByYdbhid(ydbhid);
 			Integer fzfk = order.getFzfk();
@@ -146,12 +159,15 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 			//检查发付的必须收钱才能生成提货单
 			//6.yiti字段的判断
 			Integer yiti = receipt.getYiti();
-			if(yiti == 1)
-				throw new ParameterException("运单号为 "+ydbhid+",细则号为 "+ydxzh+"的该货物已提，不能再生成提货签收单！");
-			if(yiti == 2)
-				throw new ParameterException("运单号为 "+ydbhid+",细则号为 "+ydxzh+"的该货物已送货，不能再生成提货签收单！");
-			if(yiti >= 3)
-				throw new ParameterException("运单号为 "+ydbhid+",细则号为 "+ydxzh+"的该货物已中转，不能再生成提货签收单！");
+			if(yiti == 1) {
+        throw new ParameterException("运单号为 "+ydbhid+",细则号为 "+ydxzh+"的该货物已提，不能再生成提货签收单！");
+      }
+			if(yiti == 2) {
+        throw new ParameterException("运单号为 "+ydbhid+",细则号为 "+ydxzh+"的该货物已送货，不能再生成提货签收单！");
+      }
+			if(yiti >= 3) {
+        throw new ParameterException("运单号为 "+ydbhid+",细则号为 "+ydxzh+"的该货物已中转，不能再生成提货签收单！");
+      }
 			CommonCheck(ydbhid, ydxzh,account);
 			//2018-01-31 :新增查询是否有成本信息,如果没有成本信息始不可以进行提货的
 			checkIncome(xuhao);
@@ -165,18 +181,22 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 	public void checkIncome(String xuhao) {
 		BigDecimal cost = deliveryOperateMapper.getTCostFromTIncomeDByXuhao(xuhao);
 		if(cost == null )//|| cost.compareTo( BigDecimal.ZERO) != 1
-			throw new ParameterException("该装载没有生成成本,请先生成成本再进行提货");
+    {
+      throw new ParameterException("该装载没有生成成本,请先生成成本再进行提货");
+    }
 	}
 	
 
 	@Override
 	public JsonResult deliverydocuments(List<String> xuhaos,String account,String company) throws BusinessException,ParameterException, Exception {
 		Integer rightNum = rightMapper.getRightNum(AuthorticationConstant.PC_SHOUT,account);
-		if(rightNum == null || rightNum < 1) 
-			return JsonResult.getConveyResult("400", AuthorticationConstant.MESSAGE);
+		if(rightNum == null || rightNum < 1) {
+      return JsonResult.getConveyResult("400", AuthorticationConstant.MESSAGE);
+    }
 
-		if(xuhaos.size()>3)
-			throw new ParameterException("选择的清单不能超过3条！");
+		if(xuhaos.size()>3) {
+      throw new ParameterException("选择的清单不能超过3条！");
+    }
 		String ydbhid = null;
 		for (String xuhao : xuhaos) {
 			BundleReceipt receipt = receiptService.getBundleReceiptByXuhao(xuhao);
@@ -184,44 +204,56 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 			String ydxzh = String.valueOf(receipt.getYdxzh());
 //			if( !company.equals(receipt.getDaozhan()) )
 //				throw new ParameterException("该货物是装载到"+receipt.getDaozhan()+"公司的货物！");
-			if( !(company .equals(receipt.getDaozhan())  || company .equals(receipt.getFazhan())))
-				throw new ParameterException("该货物是装载到站"+receipt.getDaozhan()+"，发站是"+receipt.getFazhan()+"，只有发站到站公司可以生成提货单！");
+			if( !(company .equals(receipt.getDaozhan())  || company .equals(receipt.getFazhan()))) {
+        throw new ParameterException("该货物是装载到站"+receipt.getDaozhan()+"，发站是"+receipt.getFazhan()+"，只有发站到站公司可以生成提货单！");
+      }
 			Integer deliveryNumber = DeliveryNumber(ydbhid, ydxzh);
-			if(deliveryNumber == 2 )
-				throw new ParameterException("该运单号的细则号" + ydxzh + "相应的送货单已生成，禁止继续生成！");
-			if(deliveryNumber == 1 )
-				throw new ParameterException("该运单号的细则号" + ydxzh + "相应的提货单已生成，禁止继续生成！");
+			if(deliveryNumber == 2 ) {
+        throw new ParameterException("该运单号的细则号" + ydxzh + "相应的送货单已生成，禁止继续生成！");
+      }
+			if(deliveryNumber == 1 ) {
+        throw new ParameterException("该运单号的细则号" + ydxzh + "相应的提货单已生成，禁止继续生成！");
+      }
 			Integer dispatchAdvice = getdispatchAdvice(ydbhid);
-			if(dispatchAdvice!= 2 || dispatchAdvice < 0)
-				throw new ParameterException(ydbhid + "该票货需要等客户通知才能放货！");
-			if(receipt.getYdzh() == 0)
-				throw new ParameterException("运单号的细则号为 "+ydxzh+"的该货物还未到，不能生成送货签收派车单！");
+			if(dispatchAdvice!= 2 || dispatchAdvice < 0) {
+        throw new ParameterException(ydbhid + "该票货需要等客户通知才能放货！");
+      }
+			if(receipt.getYdzh() == 0) {
+        throw new ParameterException("运单号的细则号为 "+ydxzh+"的该货物还未到，不能生成送货签收派车单！");
+      }
 			Integer yiti = receipt.getYiti();
-			if(yiti == 1)
-				throw new ParameterException("运单号的细则号为 "+ydxzh+"的该货物已提，不能再生成送货签收派车单！");
-			if(yiti == 2)
-				throw new ParameterException("运单号的细则号为 "+ydxzh+"的该货物已送货，不能再生成送货签收派车单！");
-			if(yiti >= 3)
-				throw new ParameterException("该运单的细则号为 "+ydxzh+"的该货物已中转，不能再生成送货签收派车单！");
+			if(yiti == 1) {
+        throw new ParameterException("运单号的细则号为 "+ydxzh+"的该货物已提，不能再生成送货签收派车单！");
+      }
+			if(yiti == 2) {
+        throw new ParameterException("运单号的细则号为 "+ydxzh+"的该货物已送货，不能再生成送货签收派车单！");
+      }
+			if(yiti >= 3) {
+        throw new ParameterException("该运单的细则号为 "+ydxzh+"的该货物已中转，不能再生成送货签收派车单！");
+      }
 
 			//等托指令放货勾选不能生成送货单
-			if(adjunctSomethingService.isReleaseWaiting(ydbhid)) 
-				throw new ParameterException("该运单是等托指令放货，没有放货通知,不能生成送货签收派车单");
+			if(adjunctSomethingService.isReleaseWaiting(ydbhid)) {
+        throw new ParameterException("该运单是等托指令放货，没有放货通知,不能生成送货签收派车单");
+      }
 			
 			Date yxfhsj = deliveryOperateMapper.getyxfhsjfromt_qs(ydbhid);
 			LocalDate localDate = LocalDate.of(2002, 01, 01);	
 			Date date = new Date(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
-			if(yxfhsj == null || yxfhsj.before(date) || yxfhsj.after(new Date()))
-				throw new ParameterException("该运单的货物暂时还不能送货，请等候发站公司的放货通知！");
+			if(yxfhsj == null || yxfhsj.before(date) || yxfhsj.after(new Date())) {
+        throw new ParameterException("该运单的货物暂时还不能送货，请等候发站公司的放货通知！");
+      }
 
 			ShqsdResult payInfo = signRecordService.getReachAfterPayInfo(ydbhid);
 			FiwtResult fiwtResult = signRecordService.getXianluByYdbhid(ydbhid);
-			if(fiwtResult == null || StringUtils.isEmpty(fiwtResult.getXianlu())) 
-				throw new ParameterException("该运单货物还未生成财凭，不能生成送货签收单！");
+			if(fiwtResult == null || StringUtils.isEmpty(fiwtResult.getXianlu())) {
+        throw new ParameterException("该运单货物还未生成财凭，不能生成送货签收单！");
+      }
 			FkfshResult fkfshResult = signRecordService.getFkfshResult(fiwtResult);
 			if(fkfshResult!= null  && fkfshResult.getYshzhk_b()) {
-				if(deliveryOperateMapper.getUnpaidByYdbhid(ydbhid) == 0)
-					throw new ParameterException("此运单号的货物是款未付，不能生成送货签收单！");
+				if(deliveryOperateMapper.getUnpaidByYdbhid(ydbhid) == 0) {
+          throw new ParameterException("此运单号的货物是款未付，不能生成送货签收单！");
+        }
 			}
 			Map<String,Object> map = new HashMap<>();
 			map.put("ydbhid", ydbhid);
@@ -238,8 +270,9 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 //				if(financial.getIsShq() != 1)	//提货单送货单：判断分理收据是否交钱
 //						throw new ParameterException("此运单号为"+ydbhid+",已生成分理收据,请进行分理数据交钱后再来");
 				FinancialReceiptsMaster financial = financialReceiptsService.queryFinancialReceiptsMasterByYdbhid(ydbhid);
-				if(financial == null )
-					throw new ParameterException("该运单要求到站付款或代收款,在分理之前必须生成分理收据,请确认");
+				if(financial == null ) {
+          throw new ParameterException("该运单要求到站付款或代收款,在分理之前必须生成分理收据,请确认");
+        }
 			}
 			//CommonCheck(ydbhid, ydxzh,account);
 		}
@@ -274,16 +307,21 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 
 		if(xianjin .compareTo(hjje) == 0 ||
 				yhshr.compareTo(hjje) == 0 ||
-				(xianjin.add(yhshr)) .compareTo(hjje) == 0)
-			sb.append("款清");
-		if(yshk.compareTo(BigDecimal.ZERO) != -1 && hdfk .compareTo(BigDecimal.ZERO) != 1 )
-			sb.append("月结");
-		if(yshzhk.compareTo(BigDecimal.ZERO) == 1)
-			sb.append("款未付,等通知");
-		if(hdfk.compareTo(BigDecimal.ZERO) == 1)
-			sb.append("货单付款:").append(hdfk);
-		if(dsk.compareTo(BigDecimal.ZERO) == 1)
-			sb.append("代收款:").append(dsk);
+				(xianjin.add(yhshr)) .compareTo(hjje) == 0) {
+      sb.append("款清");
+    }
+		if(yshk.compareTo(BigDecimal.ZERO) != -1 && hdfk .compareTo(BigDecimal.ZERO) != 1 ) {
+      sb.append("月结");
+    }
+		if(yshzhk.compareTo(BigDecimal.ZERO) == 1) {
+      sb.append("款未付,等通知");
+    }
+		if(hdfk.compareTo(BigDecimal.ZERO) == 1) {
+      sb.append("货单付款:").append(hdfk);
+    }
+		if(dsk.compareTo(BigDecimal.ZERO) == 1) {
+      sb.append("代收款:").append(dsk);
+    }
 		return sb.toString();
 	}
 	/**
@@ -294,13 +332,16 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 		try {
 			Integer result = deliveryOperateMapper.getthqshdidByYdbhidAndYdxzh(ydbhid, ydxzh);
 			if(result != null &&  result > -1)	//代表有提货单号
-				return 1;		//提货单已经存在
+      {
+        return 1;		//提货单已经存在
+      }
 			//不存在提货单号,继续查找是否存在派车单号
 			result = deliveryOperateMapper.getCarOutDetail1IdByYdbhidAndYdxzh(ydbhid,ydxzh);
-			if(result != null &&  result > -1) 
-				return 2;
-			else 
-				return 0;
+			if(result != null &&  result > -1) {
+        return 2;
+      } else {
+        return 0;
+      }
 		}catch(Exception e) {
 			return -1;
 		}
@@ -309,13 +350,16 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 		try {
 			Integer result = deliveryOperateMapper.top1thqshdid(ydbhid);
 			if(result != null &&  result > -1)	//代表有提货单号
-				return 1;		//提货单已经存在
+      {
+        return 1;		//提货单已经存在
+      }
 			//不存在提货单号,继续查找是否存在派车单号
 			result = deliveryOperateMapper.top1tCarOut(ydbhid);
-			if(result != null &&  result > -1) 
-				return 2;
-			else 
-				return 0;
+			if(result != null &&  result > -1) {
+        return 2;
+      } else {
+        return 0;
+      }
 		}catch(Exception e) {
 			return -1;
 		}
@@ -348,8 +392,9 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 		//thqshdid提货签收id就是数据库中最大值加一;  thqsd表
 		
 		Integer rightNum = rightMapper.getRightNum(AuthorticationConstant.THQSHD,entity.getString("account"));
-		if(rightNum == null || rightNum < 1) 
-			return JsonResult.getConveyResult("400", AuthorticationConstant.MESSAGE);
+		if(rightNum == null || rightNum < 1) {
+      return JsonResult.getConveyResult("400", AuthorticationConstant.MESSAGE);
+    }
 		
 		String company = entity.getString("company");
 		Integer thqshdid = deliveryOperateMapper.getMaxThqsdByCompany(company);
@@ -363,19 +408,22 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 			String xuhao = String.valueOf(submap.get("xuhao"));
 			String cangwei1 = String.valueOf(submap.get("cangwei1"));
 			BundleReceipt receipt = receiptService.getBundleReceiptByXuhao(xuhao);
-			if(ydbhid == null)
-				ydbhid = receipt.getYdbhid();
-			else if(!ydbhid.equals(receipt.getYdbhid()))
-				throw new ParameterException("运单号不一致");
+			if(ydbhid == null) {
+        ydbhid = receipt.getYdbhid();
+      } else if(!ydbhid.equals(receipt.getYdbhid())) {
+        throw new ParameterException("运单号不一致");
+      }
 			Integer ydxzh = receipt.getYdxzh();
 			//读取财凭看是不是到付或代收款
 			Map<String, BigDecimal> hdfkAndDsk = deliveryOperateMapper.getHdfkAndDskByYdbhid(ydbhid);
-			if(hdfkAndDsk == null  || hdfkAndDsk.get("hdfk") == null || hdfkAndDsk.get("dsk") == null )
-				throw new BusinessException("此票货物发站未生成财凭请先生成财凭!");
+			if(hdfkAndDsk == null  || hdfkAndDsk.get("hdfk") == null || hdfkAndDsk.get("dsk") == null ) {
+        throw new BusinessException("此票货物发站未生成财凭请先生成财凭!");
+      }
 			if(hdfkAndDsk.get("hdfk").compareTo(BigDecimal.ZERO) != 1  || 
 					hdfkAndDsk.get("dsk").compareTo(BigDecimal.ZERO) != 1) {
-				if(signRecordService.getXianluByYdbhid(ydbhid)==null)
-					throw new BusinessException("此运单号为"+ydbhid+",要求到站付款或代收款,在分理之前必须生成分理收据,请确认");
+				if(signRecordService.getXianluByYdbhid(ydbhid)==null) {
+          throw new BusinessException("此运单号为"+ydbhid+",要求到站付款或代收款,在分理之前必须生成分理收据,请确认");
+        }
 			}
 			//查询分理库存
 			List<FenliKucunEntity> fenlikucunList = adjunctSomethingService.queryFenliKucunEntity(ydbhid, ydxzh.intValue(), company);
@@ -390,19 +438,22 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 				fenliTiji = fenliTiji.add(new BigDecimal(fenli.getTiji()));
 				fenliZhl = fenliZhl.add(new BigDecimal(fenli.getZhl()));
 			}
-			if(fenliTiji.compareTo(receipt.getTiji()) == -1 ||	fenliZhl.compareTo(receipt.getZhl()) == -1 || fenliJianshu < receipt.getJianshu())
-				throw new BusinessException("库存数量小于本次装载到货的数量！");
+			if(fenliTiji.compareTo(receipt.getTiji()) == -1 ||	fenliZhl.compareTo(receipt.getZhl()) == -1 || fenliJianshu < receipt.getJianshu()) {
+        throw new BusinessException("库存数量小于本次装载到货的数量！");
+      }
 			Integer deliveryNumber = DeliveryNumber(ydbhid, ydxzh.toString());
-			if(deliveryNumber == 2)
-				throw new BusinessException("系统检测到运单号" + ydbhid+ "细则号" + ydxzh + "相应的送货单已生成，当前提货单禁止保存！");
+			if(deliveryNumber == 2) {
+        throw new BusinessException("系统检测到运单号" + ydbhid+ "细则号" + ydxzh + "相应的送货单已生成，当前提货单禁止保存！");
+      }
 
 			//开始更新相关表中的数据
 			deliveryOperateMapper.modifyHczzqdSourceYitiByXuhao(xuhao,1);
 			//			deliveryOperateMapper.modifyT_QSFlag(ydbhid,0+"");			//不明确的用处,刘娇20170615 增加的是否撤销签收
 			//			deliveryOperateMapper.deleteSignHWYD_ROUTEByYdbhid(ydbhid);
 			//时间原因,先这样,以后优先考虑优化
-			if(StringUtil.isEmpty(entity.getString("beizhu2")))
-				entity.put("beizhu2", receipt.getBeizhu());
+			if(StringUtil.isEmpty(entity.getString("beizhu2"))) {
+        entity.put("beizhu2", receipt.getBeizhu());
+      }
 			entity.put("dzshhd", receipt.getDzshhd());
 			entity.put("ydbhid", receipt.getYdbhid());
 			entity.put("ydxzh", receipt.getYdxzh());
@@ -469,33 +520,40 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 	@Transactional
 	public JsonResult savedeliverydocuments(RequestJsonEntity entity) {
 		Integer rightNum = rightMapper.getRightNum(AuthorticationConstant.PC_SHOUT,entity.getString("account"));
-		if(rightNum == null || rightNum < 1) 
-			return JsonResult.getConveyResult("400", AuthorticationConstant.MESSAGE);
+		if(rightNum == null || rightNum < 1) {
+      return JsonResult.getConveyResult("400", AuthorticationConstant.MESSAGE);
+    }
 
 		List<String> xuhaos = JSON.parseArray(entity.getString("xuhaos"), String.class);
 		String company = entity.getString("company");
 		entity.put("id", deliveryOperateMapper.getMaxT_CAR_OUTByCompany(company));
 		
-		if(com.alibaba.dubbo.common.utils.StringUtils.isBlank(entity.getString("kdtime")))
-			entity.put("kdtime", new Date());
+		if(com.alibaba.dubbo.common.utils.StringUtils.isBlank(entity.getString("kdtime"))) {
+      entity.put("kdtime", new Date());
+    }
 		if(org.apache.commons.lang.StringUtils.isBlank(entity.getString("jhshtime")))//如果传入空值,就给个null.防止到数据库中是一个1970年的数据
-			entity.put("jhshtime", null);
+    {
+      entity.put("jhshtime", null);
+    }
 
 		String ydbhid = null;
 		TransportOrder order = null;
 		for (String xuhao : xuhaos) {
 			BundleReceipt receipt = receiptService.getBundleReceiptByXuhao(xuhao);
-			if(ydbhid == null )
-				ydbhid = receipt.getYdbhid();
-			else if(!ydbhid.equals(receipt.getYdbhid()))
-				throw new BusinessException("数据有误,选中的运单号不一致");
-			if(order == null)
-				order = orderService.getTransportOrderByYdbhid(ydbhid);
+			if(ydbhid == null ) {
+        ydbhid = receipt.getYdbhid();
+      } else if(!ydbhid.equals(receipt.getYdbhid())) {
+        throw new BusinessException("数据有误,选中的运单号不一致");
+      }
+			if(order == null) {
+        order = orderService.getTransportOrderByYdbhid(ydbhid);
+      }
 
 			Integer ydxzh = receipt.getYdxzh();
 
-			if(DeliveryNumber(ydbhid, ydxzh.toString()) ==1 )
-				throw new BusinessException("系统检测到运单号" + ydbhid+ "细则号" + ydxzh + "相应的提货单已生成，禁止继续生成！");
+			if(DeliveryNumber(ydbhid, ydxzh.toString()) ==1 ) {
+        throw new BusinessException("系统检测到运单号" + ydbhid+ "细则号" + ydxzh + "相应的提货单已生成，禁止继续生成！");
+      }
 			
 			List<FenliKucunEntity> fenlikucunList = adjunctSomethingService.queryFenliKucunEntity(ydbhid, ydxzh.intValue(), company);
 			if(fenlikucunList.isEmpty()) {
@@ -510,14 +568,16 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 				fenliZhl = fenliZhl.add(new BigDecimal(fenli.getZhl()));
 			}
 			if(fenliTiji.compareTo(receipt.getTiji()) == -1 ||	
-					fenliZhl.compareTo(receipt.getZhl()) == -1 || fenliJianshu < receipt.getJianshu())
-				throw new BusinessException("提货数量有错！");
+					fenliZhl.compareTo(receipt.getZhl()) == -1 || fenliJianshu < receipt.getJianshu()) {
+        throw new BusinessException("提货数量有错！");
+      }
 			
 			deliveryOperateMapper.modifyHczzqdSourceYitiByXuhao(xuhao,2);
 
 			String cangwei = deliveryOperateMapper.getCangweiByYdbhid(ydbhid,entity.getString("company"));
-			if(org.apache.commons.lang.StringUtils.isNotEmpty(cangwei))
-				entity.put("beizhu", entity.getString("beizhu")+" 货物仓位"+ cangwei );
+			if(org.apache.commons.lang.StringUtils.isNotEmpty(cangwei)) {
+        entity.put("beizhu", entity.getString("beizhu")+" 货物仓位"+ cangwei );
+      }
 			entity.put("ydbhid", ydbhid);
 			entity.put("yshhm", order.getYshhm());
 			entity.put("dzshhd", order.getDzshhd());
@@ -553,7 +613,9 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 	@Override
 	public JsonResult billOfdeliverymanage(BillOfdeliveryRequestEntity entity) throws ParameterException,BusinessException,Exception{
 		if("总公司".equals(entity.getGs()) )		//总公司可以查询所有
-			entity.setGs("");
+    {
+      entity.setGs("");
+    }
 		Page<BillOfdeliveryEntity> page = deliveryOperateMapper.pagebillOfdeliverymanage(entity,new RowBounds(entity.getPageNums(), entity.getPageSizes()));
 		JsonResult result = JsonResult.getConveyResult("200", "查询成功");
 		List  resultList = new ArrayList<>(page.getPageSize());
@@ -571,10 +633,13 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 	@Override
 	public List<HashMap<String,Object>> deliverydocumentsmanage(RequestJsonEntity entity) throws ParameterException,Exception {
 		Integer rightNum = rightMapper.getRightNum(AuthorticationConstant.PC_SHOUT_QRY,entity.getString("account"));
-		if(rightNum == null || rightNum < 1) 
-			throw new ParameterException(AuthorticationConstant.MESSAGE);
+		if(rightNum == null || rightNum < 1) {
+      throw new ParameterException(AuthorticationConstant.MESSAGE);
+    }
 		if("总公司".equals(entity.getString("company")))		//总公司可以查询所有
-			entity.put("company", "");
+    {
+      entity.put("company", "");
+    }
 		entity.put("yipai", FUNC.apply(entity.getString("yipai")));
 		entity.put("endtime", DateUtils.fromDays(entity.getString("endtime"),1));
 		entity.put("starttime", DateUtils.fromDays(entity.getString("starttime"),-1));
@@ -594,8 +659,9 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 	@Override
 	public List<HashMap<String, Object>> deliverydocumentsmanageForDriver(RequestJsonEntity entity) throws ParameterException{
 		Integer rightNum = rightMapper.getRightNum(AuthorticationConstant.PC_SHOUT_QRY,entity.getString("account"));
-		if(rightNum == null || rightNum < 1) 
-			throw new ParameterException(AuthorticationConstant.MESSAGE);
+		if(rightNum == null || rightNum < 1) {
+      throw new ParameterException(AuthorticationConstant.MESSAGE);
+    }
 		entity.put("yipai", FUNC.apply(entity.getString("yipai")));
 		entity.put("endtime", DateUtils.fromDays(entity.getString("endtime"),1));
 		entity.put("starttime", DateUtils.fromDays(entity.getString("starttime"),-1));
@@ -607,28 +673,32 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 			Double chargeableTotalVolume = 0.00;
 			for (TransportOrderDetail detail : detailService.queryTransportOrderDetailByYdbhid(ydbhid)) {
 				Integer jffs = detail.getJffs();
-				if(jffs == 0)
-					chargeableTotalWeight += detail.getZhl();
-				if(jffs == 1)
-					chargeableTotalVolume += detail.getTiji();
+				if(jffs == 0) {
+          chargeableTotalWeight += detail.getZhl();
+        }
+				if(jffs == 1) {
+          chargeableTotalVolume += detail.getTiji();
+        }
 				if(jffs == 2 ) {
 					if(detail.getTiji()<0){//体积小于0
 						chargeableTotalWeight += detail.getZhl();
 					}else {
-						if ((detail.getZhl()-detail.getTiji()) < 0.3)
-							chargeableTotalVolume += detail.getTiji();
-						else 
-							chargeableTotalWeight += detail.getZhl();
+						if ((detail.getZhl()-detail.getTiji()) < 0.3) {
+              chargeableTotalVolume += detail.getTiji();
+            } else {
+              chargeableTotalWeight += detail.getZhl();
+            }
 					}
 				}
 			}
 			submap.put("ChargeableTotalWeight", chargeableTotalWeight);
 			submap.put("ChargeableTotalVolume", chargeableTotalVolume);
 			String pcyes = String.valueOf(submap.get("pcyes"));
-			if(com.alibaba.dubbo.common.utils.StringUtils.isBlank(pcyes))
-				submap.put("pcyes","未派车");
-			else 
-				submap.put("pcyes",Integer.valueOf(pcyes) ==1 ?"已派车":"未派车") ;
+			if(com.alibaba.dubbo.common.utils.StringUtils.isBlank(pcyes)) {
+        submap.put("pcyes","未派车");
+      } else {
+        submap.put("pcyes",Integer.valueOf(pcyes) ==1 ?"已派车":"未派车") ;
+      }
 			Integer pszhsh = (Integer)submap.get("pszhsh");
 			
 			submap.put("pszhsh", pszhsh == null ? "": ( pszhsh == 1?"假日运达(1)":"平日运达(0)"));
@@ -641,13 +711,15 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 	@Transactional
 	public void cancelBillOfdelivery(RequestJsonEntity entity) throws ParameterException,Exception {
 		Integer rightNum = rightMapper.getRightNum(AuthorticationConstant.TMSWEIHUMEN_1,entity.getString("account"));
-		if(rightNum == null || rightNum < 1) 
-			throw new ParameterException(AuthorticationConstant.MESSAGE);
+		if(rightNum == null || rightNum < 1) {
+      throw new ParameterException(AuthorticationConstant.MESSAGE);
+    }
 		String gs = entity.getString("gs");
 		String ydbhid = entity.getString("ydbhid");
 		Integer qszt = adjunctSomethingService.isReceivedByYdbhid(ydbhid);
-		if(qszt != null && qszt > 0)
-			throw new ParameterException("运单号:"+ydbhid+"存在签收状态请先撤销签收再执行撤销");
+		if(qszt != null && qszt > 0) {
+      throw new ParameterException("运单号:"+ydbhid+"存在签收状态请先撤销签收再执行撤销");
+    }
 		//开删
 		deliveryOperateMapper.deleteTHQSDByYdbhidAndGs(ydbhid,gs);
 		
@@ -693,17 +765,20 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 	@Override
 	public void canceldeliverydocuments(RequestJsonEntity entity)throws ParameterException,Exception {
 		Integer rightNum = rightMapper.getRightNum(AuthorticationConstant.TMSWEIHUMEN_1,entity.getString("account"));
-		if(rightNum == null || rightNum < 1) 
-			throw new ParameterException(AuthorticationConstant.MESSAGE);
+		if(rightNum == null || rightNum < 1) {
+      throw new ParameterException(AuthorticationConstant.MESSAGE);
+    }
 		String id = entity.getString("id");
 		String gsid = entity.getString("gsid");
 		String gs = entity.getString("gs");
 		String ydbhid = deliveryOperateMapper.getYDBHIDFromT_CAR_OUTByIdAndGsid(id,gsid);
 		Integer qszt = adjunctSomethingService.isReceivedByYdbhid(ydbhid);
-		if(qszt != null && qszt > 0)
-			throw new ParameterException("运单号:"+ydbhid+"存在签收状态请先撤销签收再执行撤销");
-		if(StringUtils.isEmpty(ydbhid))
-			throw new ParameterException("参数有误,不存在的数据");
+		if(qszt != null && qszt > 0) {
+      throw new ParameterException("运单号:"+ydbhid+"存在签收状态请先撤销签收再执行撤销");
+    }
+		if(StringUtils.isEmpty(ydbhid)) {
+      throw new ParameterException("参数有误,不存在的数据");
+    }
 		
 		deliveryOperateMapper.deleteT_CAR_OUTByIdAndGsid(id,gsid);
 		deliveryOperateMapper.deleteT_CAR_OUTDetail1ByIdAndGsid(id,gsid);
@@ -749,19 +824,22 @@ public class DeliveryOperateServiceImpl implements IDeliveryOperateService {
 		HashMap<String,Object> resultmap = null;
 		for (HashMap<String, Object> submap : resultList) {
 			Object cangwei = submap.get("cangwei");
-			if(cangwei == null  || "null".equals(cangwei))
-				submap.put("cangwei", "");
+			if(cangwei == null  || "null".equals(cangwei)) {
+        submap.put("cangwei", "");
+      }
 			HashMap<String, Object> currentMap = CommonDateUtil.FormatDate(submap);
-			if(resultmap == null) 
-				resultmap = (HashMap<String, Object>) currentMap.clone();
+			if(resultmap == null) {
+        resultmap = (HashMap<String, Object>) currentMap.clone();
+      }
 			list.add(currentMap);
 		}
 		resultmap.put("sub", list);
 		//修改jira：952引起的查询字段显示问题:将开票人从工号——>姓名
 		String kpr = String.valueOf(resultmap.get("kpr"));
 		Employee employee = adjunctSomethingService.getEmployeeByNumber(kpr);
-		if(employee != null)
-			resultmap.put("kpr", employee.getEmplyeeName());
+		if(employee != null) {
+      resultmap.put("kpr", employee.getEmplyeeName());
+    }
 		JsonResult res = JsonResult.getConveyResult("200", "查询成功");
 		res.put("reason", resultmap);
 		return res;

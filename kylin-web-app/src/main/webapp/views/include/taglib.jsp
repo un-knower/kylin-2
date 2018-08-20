@@ -6,5 +6,4 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <c:set var="ctx_static" value="${pageContext.request.contextPath}/static"/>
 <c:set var="ctx_statics" value="${pageContext.request.contextPath}/statics"/>
-
 <c:set var="base_url" value="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}"/>

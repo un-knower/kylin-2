@@ -62,12 +62,14 @@ public class GoodArriveServiceImpl implements IGoodArriveService {
 			return JsonResult.getConveyResult("400", "运单号不存在");
 		}
 		List<BundleReceipt> bundleReceiptByYDBHID = bundleReceiptMapper.getBundleReceiptByYDBHID(new String[] { ydbhid });
-		if (CollectionUtils.isEmpty(bundleReceiptByYDBHID)) 
-			return JsonResult.getConveyResult("400", "该运单未进行过装载");
+		if (CollectionUtils.isEmpty(bundleReceiptByYDBHID)) {
+      return JsonResult.getConveyResult("400", "该运单未进行过装载");
+    }
 		List<BundleReceipt> currentBundleReceipt = bundleReceiptByYDBHID.stream().
 			filter(receipt->company.equals(receipt.getDaozhan())).collect(Collectors.toList());
-		if(CollectionUtils.isEmpty(currentBundleReceipt)) 
-			return JsonResult.getConveyResult("400", "不存在有装载到本公司的装载信息");
+		if(CollectionUtils.isEmpty(currentBundleReceipt)) {
+      return JsonResult.getConveyResult("400", "不存在有装载到本公司的装载信息");
+    }
 		
 		List<StoreHouse> storeHouseBycompany = adjunctSomethingMapper.getStoreHouseBycompany(company);
 		jsonResult.put("storeHouse", storeHouseBycompany);
@@ -82,8 +84,9 @@ public class GoodArriveServiceImpl implements IGoodArriveService {
 	public JsonResult searchGoodArriveByChxh(String fchrq, String chxh, String company,String account) {
 		// 查询这一辆车拉的所有货物
 		String nextDay = DateUtils.fromDays(fchrq,1);
-		if(StringUtils.isEmpty(nextDay))
-			return JsonResult.getConveyResult("400", "日期格式有误");
+		if(StringUtils.isEmpty(nextDay)) {
+      return JsonResult.getConveyResult("400", "日期格式有误");
+    }
 		List<BundleReceipt> bundleReceiptList = bundleReceiptMapper.getBundleReceiptByChxh(fchrq, nextDay, chxh);
 		if (bundleReceiptList == null || bundleReceiptList.isEmpty()) {
 			return JsonResult.getConveyResult("400", "未查询到装载记录");
@@ -563,8 +566,9 @@ public class GoodArriveServiceImpl implements IGoodArriveService {
 				
 		//查看签收状态
 		Integer isReceived = adjunctSomethingMapper.isReceived(valueOf.split(","));				
-		if(isReceived ==null || isReceived > 0)				
-			return JsonResult.getConveyResult("400", "存在已签收的运单,请核实后再操作");
+		if(isReceived ==null || isReceived > 0) {
+      return JsonResult.getConveyResult("400", "存在已签收的运单,请核实后再操作");
+    }
 		
 		//撤销这个车牌号下的这几个运单到站是该公司下的到站情况
 		List<BundleReceipt> bundleReceiptList = bundleReceiptMapper
@@ -573,8 +577,9 @@ public class GoodArriveServiceImpl implements IGoodArriveService {
 				.filter(receipt->receipt.getYdzh() == 1 && company.equals(receipt.getDaozhan()))
 				.collect(Collectors.toList());
 		
-		if(CollectionUtils.isEmpty(bundleReceiptList))
-			return JsonResult.getConveyResult("400", "未查询到需要进行到货的装载清单");
+		if(CollectionUtils.isEmpty(bundleReceiptList)) {
+      return JsonResult.getConveyResult("400", "未查询到需要进行到货的装载清单");
+    }
 			bundleReceiptMapper.recoverGoodArriveState(chxh,map.getString("ydbhids").split(","));
 			adjunctSomethingMapper.batchRepealGoodArriveList(bundleReceiptList);
 		return JsonResult.getConveyResult("400", "操作成功!");

@@ -87,8 +87,9 @@ public class FenliKucunEntity extends BaseEntity {
 		BigDecimal zhl = new BigDecimal(this.zhl);
 		Integer jianshu = Integer.parseInt(this.jianshu);
 		if(tiji.compareTo(BigDecimal.ZERO) == 1 || zhl.compareTo(BigDecimal.ZERO) == 1 ||
-				jianshu > 0)
-			return true;
+				jianshu > 0) {
+      return true;
+    }
 		return false;
 	}
 	

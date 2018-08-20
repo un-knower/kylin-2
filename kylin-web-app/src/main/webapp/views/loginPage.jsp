@@ -47,9 +47,7 @@
                 <!--
                 <input type="submit" value="Login">
                 -->
-
-                <a href="javascript:void(0);" class="form-btn" id="submit">登 录</a>
-
+                <a href="javascript:void(0);" class="form-btn" id="submit">登录</a>
             </div>
             <div class="error"></div>
         </form>

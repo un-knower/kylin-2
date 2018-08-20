@@ -24,8 +24,9 @@ public class GuizhouMoutai implements Runnable {
 	 * @return
 	 */
 	public static boolean checkSendMessage(String company,String khbm) {
-		if(GUIZHOU.equals(company) && KHBM.equals(khbm))
-			return true;
+		if(GUIZHOU.equals(company) && KHBM.equals(khbm)) {
+      return true;
+    }
 		return false;
 	}
 	
